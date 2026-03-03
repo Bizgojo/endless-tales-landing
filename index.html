@@ -869,7 +869,7 @@
 <!-- NAV -->
 <nav>
   <a href="#" class="nav-logo">Endless<span>Tales</span></a>
-  <button class="nav-cta" onclick="scrollTo('signup')">Get 14 Days Free</button>
+  <button class="nav-cta" onclick="scrollToSection('signup')">Get 14 Days Free</button>
 </nav>
 
 <!-- HERO -->
@@ -900,7 +900,7 @@
   </p>
 
   <div class="hero-btn-stack">
-    <button class="btn-primary" onclick="scrollTo('stories')">
+    <button class="btn-primary" onclick="scrollToSection('stories')">
       <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
       Listen Free Now
     </button>
@@ -1226,7 +1226,7 @@
     <div class="success-title">You're on the list.</div>
     <div class="success-sub">
       We'll email you on April 1st with your early access link.<br><br>
-      In the meantime — <a href="#stories" onclick="scrollTo('stories')">go listen to a free story ↑</a>
+      In the meantime — <a href="#stories" onclick="scrollToSection('stories')">go listen to a free story ↑</a>
     </div>
   </div>
 </section>
@@ -1244,7 +1244,7 @@
 
 <!-- MINI PLAYER -->
 <div class="mini-player" id="miniPlayer">
-  <div class="nudge" id="nudge" onclick="scrollTo('signup')">👆 Enjoying this? Get 14 days free!</div>
+  <div class="nudge" id="nudge" onclick="scrollToSection('signup')">👆 Enjoying this? Get 14 days free!</div>
   <div class="mini-cover" id="miniCover">🎭</div>
   <div class="mini-info">
     <div class="mini-title" id="miniTitle">Story</div>
@@ -1265,7 +1265,7 @@
 
 <script>
   // Smooth scroll helper
-  function scrollTo(id) {
+  function scrollToSection(id) {
     document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
   }
 
@@ -1328,7 +1328,7 @@
   }
 
   // Email signup
-  function handleSignup() {
+  async function handleSignup() {
     const val = document.getElementById('emailInput').value.trim();
     if (!val || !val.includes('@') || !val.includes('.')) {
       const f = document.getElementById('emailInput');
@@ -1336,9 +1336,38 @@
       f.focus();
       return;
     }
-    document.getElementById('signupForm').style.display = 'none';
-    document.getElementById('successBox').classList.add('show');
-    // TODO: POST to your signup API / Supabase
+
+    const btn = document.querySelector('.signup-btn');
+    btn.textContent = 'Saving your spot...';
+    btn.disabled = true;
+
+    try {
+      const res = await fetch('https://vmyhlfeouzslixtkmddy.supabase.co/rest/v1/waitlist', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZteWhsZmVvdXpzbGl4dGttZGR5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjYwODk2MTIsImV4cCI6MjA4MTY2NTYxMn0.7asAd8ctLKJLdv2AojbF8WEo-N6dVheVA3mWxjkFwkk',
+          'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZteWhsZmVvdXpzbGl4dGttZGR5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjYwODk2MTIsImV4cCI6MjA4MTY2NTYxMn0.7asAd8ctLKJLdv2AojbF8WEo-N6dVheVA3mWxjkFwkk',
+          'Prefer': 'return=minimal',
+          'Content-Profile': 'public'
+        },
+        body: JSON.stringify({ email: val })
+      });
+
+      if (res.ok || res.status === 409) {
+        // 409 = duplicate email, still show success
+        document.getElementById('signupForm').style.display = 'none';
+        document.getElementById('successBox').classList.add('show');
+      } else {
+        const errText = await res.text();
+        console.error('Supabase error:', res.status, errText);
+        throw new Error('Server error');
+      }
+    } catch (err) {
+      btn.textContent = 'Something went wrong — try again';
+      btn.disabled = false;
+      btn.style.background = '#dc2626';
+    }
   }
 
   document.getElementById('emailInput').addEventListener('keydown', e => {
