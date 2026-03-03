@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Waitlist Admin — Endless Tales</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #f4f5f7;
+    color: #111;
+    font-size: 14px;
+    min-height: 100vh;
+  }
+
+  /* TOPBAR */
+  .topbar {
+    background: #fff;
+    border-bottom: 1px solid #e2e4e8;
+    padding: 0 28px;
+    height: 56px;
+    display: flex; align-items: center; justify-content: space-between;
+    position: sticky; top: 0; z-index: 100;
+  }
+  .topbar-left { display: flex; align-items: center; gap: 16px; }
+  .topbar-logo {
+    font-size: 16px; font-weight: 700; color: #111;
+    text-decoration: none;
+  }
+  .topbar-logo span { color: #e8520a; }
+  .topbar-sep { color: #ccc; font-size: 18px; }
+  .topbar-title { font-size: 14px; font-weight: 600; color: #444; }
+  .topbar-right { display: flex; align-items: center; gap: 12px; }
+  .back-link {
+    font-size: 13px; color: #666; text-decoration: none;
+    display: flex; align-items: center; gap: 5px;
+    padding: 6px 12px; border: 1px solid #e2e4e8; border-radius: 6px;
+    background: #fff; transition: background 0.15s;
+  }
+  .back-link:hover { background: #f4f5f7; }
+
+  /* LAYOUT */
+  .page { padding: 28px; max-width: 1300px; margin: 0 auto; }
+
+  /* STAT CARDS */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+  .stat-card {
+    background: #fff;
+    border: 1px solid #e2e4e8;
+    border-radius: 10px;
+    padding: 20px 22px;
+  }
+  .stat-label {
+    font-size: 12px; font-weight: 600; color: #888;
+    text-transform: uppercase; letter-spacing: 0.06em;
+    margin-bottom: 8px;
+  }
+  .stat-num {
+    font-size: 32px; font-weight: 700; color: #111;
+    line-height: 1; margin-bottom: 4px;
+  }
+  .stat-sub { font-size: 12px; color: #aaa; }
+  .stat-card.highlight { border-color: #e8520a; background: #fff8f5; }
+  .stat-card.highlight .stat-num { color: #e8520a; }
+
+  /* FILTERS */
+  .filters-bar {
+    background: #fff;
+    border: 1px solid #e2e4e8;
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin-bottom: 20px;
+    display: flex; gap: 12px; align-items: center; flex-wrap: wrap;
+  }
+  .filter-group { display: flex; align-items: center; gap: 8px; }
+  .filter-label { font-size: 12px; font-weight: 600; color: #888; text-transform: uppercase; letter-spacing: 0.06em; }
+  select, input[type="text"], input[type="date"] {
+    border: 1px solid #e2e4e8;
+    border-radius: 6px;
+    padding: 7px 10px;
+    font-size: 13px;
+    color: #111;
+    background: #fff;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  select:focus, input:focus { border-color: #e8520a; }
+  .filter-sep { width: 1px; height: 28px; background: #e2e4e8; }
+  .btn-export {
+    margin-left: auto;
+    background: #e8520a;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex; align-items: center; gap: 6px;
+    transition: background 0.15s;
+  }
+  .btn-export:hover { background: #c94509; }
+  .btn-refresh {
+    background: #fff;
+    color: #444;
+    border: 1px solid #e2e4e8;
+    padding: 8px 14px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex; align-items: center; gap: 6px;
+    transition: background 0.15s;
+  }
+  .btn-refresh:hover { background: #f4f5f7; }
+
+  /* CHARTS ROW */
+  .charts-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+  .chart-card {
+    background: #fff;
+    border: 1px solid #e2e4e8;
+    border-radius: 10px;
+    padding: 20px 22px;
+  }
+  .chart-title {
+    font-size: 13px; font-weight: 700; color: #111;
+    margin-bottom: 16px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .chart-title span { font-size: 11px; font-weight: 500; color: #aaa; }
+
+  /* Bar chart */
+  .bar-chart { display: flex; flex-direction: column; gap: 10px; }
+  .bar-row { display: flex; align-items: center; gap: 10px; }
+  .bar-name { font-size: 12px; color: #444; width: 100px; flex-shrink: 0; text-align: right; }
+  .bar-track { flex: 1; background: #f4f5f7; border-radius: 4px; height: 22px; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 4px; background: #e8520a; transition: width 0.8s ease; display: flex; align-items: center; padding-left: 8px; }
+  .bar-fill.blue { background: #2563eb; }
+  .bar-fill.green { background: #16a34a; }
+  .bar-fill.purple { background: #9333ea; }
+  .bar-fill.teal { background: #0891b2; }
+  .bar-val { font-size: 11px; font-weight: 600; color: #111; width: 30px; flex-shrink: 0; }
+
+  /* Sparkline */
+  .sparkline-wrap { height: 80px; position: relative; }
+  .sparkline-bars { display: flex; align-items: flex-end; gap: 4px; height: 100%; }
+  .spark-bar {
+    flex: 1; background: #fde8de; border-radius: 3px 3px 0 0;
+    transition: background 0.2s; cursor: pointer; position: relative;
+  }
+  .spark-bar:hover { background: #e8520a; }
+  .spark-bar .tooltip {
+    display: none; position: absolute; bottom: 100%; left: 50%;
+    transform: translateX(-50%);
+    background: #111; color: #fff; font-size: 11px;
+    padding: 4px 8px; border-radius: 4px; white-space: nowrap;
+    margin-bottom: 4px; pointer-events: none;
+  }
+  .spark-bar:hover .tooltip { display: block; }
+
+  /* TABLE */
+  .table-card {
+    background: #fff;
+    border: 1px solid #e2e4e8;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .table-header {
+    padding: 16px 20px;
+    border-bottom: 1px solid #e2e4e8;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 12px;
+  }
+  .table-header-left { display: flex; align-items: center; gap: 12px; }
+  .table-count {
+    font-size: 13px; font-weight: 700; color: #111;
+  }
+  .table-count span { color: #888; font-weight: 400; }
+  .search-input {
+    padding: 7px 12px 7px 32px;
+    border: 1px solid #e2e4e8;
+    border-radius: 6px;
+    font-size: 13px;
+    width: 220px;
+    position: relative;
+  }
+  .search-wrap { position: relative; }
+  .search-icon {
+    position: absolute; left: 10px; top: 50%;
+    transform: translateY(-50%);
+    color: #aaa; pointer-events: none;
+  }
+
+  table { width: 100%; border-collapse: collapse; }
+  thead tr { background: #f8f9fa; }
+  th {
+    padding: 10px 16px;
+    text-align: left;
+    font-size: 11px;
+    font-weight: 700;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    border-bottom: 1px solid #e2e4e8;
+    white-space: nowrap;
+    cursor: pointer;
+    user-select: none;
+  }
+  th:hover { color: #333; }
+  th.sorted { color: #e8520a; }
+  td {
+    padding: 11px 16px;
+    border-bottom: 1px solid #f0f1f3;
+    color: #111;
+    font-size: 13px;
+  }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #fafafa; }
+
+  .badge {
+    display: inline-flex; align-items: center; gap: 4px;
+    padding: 3px 9px;
+    border-radius: 100px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+  .badge-instagram { background: #fce7f3; color: #be185d; }
+  .badge-facebook  { background: #dbeafe; color: #1d4ed8; }
+  .badge-tiktok    { background: #f0fdf4; color: #15803d; }
+  .badge-twitter   { background: #e0f2fe; color: #0369a1; }
+  .badge-direct    { background: #f4f5f7; color: #555; }
+  .badge-email     { background: #fef9c3; color: #854d0e; }
+  .badge-other     { background: #f4f5f7; color: #555; }
+
+  .badge-organic  { background: #dcfce7; color: #15803d; }
+  .badge-reel     { background: #ede9fe; color: #7c3aed; }
+  .badge-story    { background: #fce7f3; color: #be185d; }
+  .badge-post     { background: #dbeafe; color: #1d4ed8; }
+  .badge-ad       { background: #fef3c7; color: #b45309; }
+  .badge-bio      { background: #f0fdf4; color: #15803d; }
+
+  .email-cell { font-family: 'SF Mono', monospace; font-size: 12px; }
+  .date-cell { color: #666; font-size: 12px; white-space: nowrap; }
+
+  /* Pagination */
+  .pagination {
+    padding: 14px 20px;
+    border-top: 1px solid #e2e4e8;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .page-info { font-size: 12px; color: #888; }
+  .page-btns { display: flex; gap: 6px; }
+  .page-btn {
+    width: 30px; height: 30px;
+    border: 1px solid #e2e4e8;
+    border-radius: 6px;
+    background: #fff;
+    font-size: 12px; font-weight: 500;
+    cursor: pointer; color: #444;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.15s;
+  }
+  .page-btn:hover { background: #f4f5f7; }
+  .page-btn.active { background: #e8520a; color: white; border-color: #e8520a; }
+  .page-btn:disabled { opacity: 0.4; cursor: default; }
+
+  /* Loading */
+  .loading {
+    text-align: center; padding: 60px 20px;
+    color: #aaa; font-size: 14px;
+  }
+  .spinner {
+    width: 32px; height: 32px;
+    border: 3px solid #f0f1f3;
+    border-top-color: #e8520a;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    margin: 0 auto 12px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .empty { text-align: center; padding: 60px 20px; color: #aaa; }
+  .empty-icon { font-size: 40px; margin-bottom: 12px; }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    .stats-row { grid-template-columns: repeat(2, 1fr); }
+    .charts-row { grid-template-columns: 1fr; }
+    .page { padding: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-left">
+    <a href="/admin" class="topbar-logo">Endless<span>Tales</span></a>
+    <span class="topbar-sep">/</span>
+    <span class="topbar-title">Waitlist</span>
+  </div>
+  <div class="topbar-right">
+    <a href="/admin" class="back-link">← Admin</a>
+  </div>
+</div>
+
+<div class="page">
+
+  <!-- STATS -->
+  <div class="stats-row" id="statsRow">
+    <div class="stat-card highlight">
+      <div class="stat-label">Total Signups</div>
+      <div class="stat-num" id="statTotal">—</div>
+      <div class="stat-sub">All time</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Today</div>
+      <div class="stat-num" id="statToday">—</div>
+      <div class="stat-sub" id="statTodayDate">—</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">This Week</div>
+      <div class="stat-num" id="statWeek">—</div>
+      <div class="stat-sub">Last 7 days</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Top Source</div>
+      <div class="stat-num" id="statTopSource" style="font-size:20px">—</div>
+      <div class="stat-sub" id="statTopSourceCount">—</div>
+    </div>
+  </div>
+
+  <!-- CHARTS -->
+  <div class="charts-row">
+    <div class="chart-card">
+      <div class="chart-title">Signups by Source <span id="chartSourceSub"></span></div>
+      <div class="bar-chart" id="sourceChart">
+        <div class="loading"><div class="spinner"></div>Loading...</div>
+      </div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title">Signups by Day <span id="chartDaySub">Last 14 days</span></div>
+      <div class="sparkline-wrap">
+        <div class="sparkline-bars" id="sparklineChart"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FILTERS -->
+  <div class="filters-bar">
+    <div class="filter-group">
+      <span class="filter-label">Source</span>
+      <select id="filterSource" onchange="applyFilters()">
+        <option value="">All Sources</option>
+        <option value="instagram">Instagram</option>
+        <option value="facebook">Facebook</option>
+        <option value="tiktok">TikTok</option>
+        <option value="twitter">Twitter/X</option>
+        <option value="email">Email</option>
+        <option value="direct">Direct</option>
+      </select>
+    </div>
+    <div class="filter-sep"></div>
+    <div class="filter-group">
+      <span class="filter-label">Medium</span>
+      <select id="filterMedium" onchange="applyFilters()">
+        <option value="">All Mediums</option>
+        <option value="reel">Reel</option>
+        <option value="story">Story</option>
+        <option value="post">Post</option>
+        <option value="ad">Ad</option>
+        <option value="bio">Bio Link</option>
+        <option value="organic">Organic</option>
+      </select>
+    </div>
+    <div class="filter-sep"></div>
+    <div class="filter-group">
+      <span class="filter-label">From</span>
+      <input type="date" id="filterFrom" onchange="applyFilters()">
+    </div>
+    <div class="filter-group">
+      <span class="filter-label">To</span>
+      <input type="date" id="filterTo" onchange="applyFilters()">
+    </div>
+    <button class="btn-refresh" onclick="loadData()">↻ Refresh</button>
+    <button class="btn-export" onclick="exportCSV()">↓ Export CSV</button>
+  </div>
+
+  <!-- TABLE -->
+  <div class="table-card">
+    <div class="table-header">
+      <div class="table-header-left">
+        <div class="table-count" id="tableCount">Loading...</div>
+      </div>
+      <div class="search-wrap">
+        <svg class="search-icon" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input type="text" class="search-input" id="searchInput" placeholder="Search email..." oninput="applyFilters()">
+      </div>
+    </div>
+
+    <div id="tableWrap">
+      <div class="loading"><div class="spinner"></div>Loading waitlist...</div>
+    </div>
+
+    <div class="pagination" id="pagination" style="display:none">
+      <div class="page-info" id="pageInfo"></div>
+      <div class="page-btns" id="pageBtns"></div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  const SUPABASE_URL = 'https://vmyhlfeouzslixtkmddy.supabase.co';
+  const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZteWhsZmVvdXpzbGl4dGttZGR5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjYwODk2MTIsImV4cCI6MjA4MTY2NTYxMn0.7asAd8ctLKJLdv2AojbF8WEo-N6dVheVA3mWxjkFwkk';
+
+  let allData = [];
+  let filtered = [];
+  let currentPage = 1;
+  const PER_PAGE = 25;
+  let sortCol = 'created_at';
+  let sortDir = 'desc';
+
+  async function fetchWaitlist() {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/waitlist?select=*&order=created_at.desc&limit=1000`, {
+      headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` }
+    });
+    if (!res.ok) throw new Error('Failed to fetch');
+    return res.json();
+  }
+
+  async function loadData() {
+    document.getElementById('tableWrap').innerHTML = '<div class="loading"><div class="spinner"></div>Loading waitlist...</div>';
+    try {
+      allData = await fetchWaitlist();
+      buildStats();
+      buildCharts();
+      applyFilters();
+    } catch (e) {
+      document.getElementById('tableWrap').innerHTML = `<div class="empty"><div class="empty-icon">⚠️</div>Failed to load data. Check your connection.</div>`;
+    }
+  }
+
+  function buildStats() {
+    const now = new Date();
+    const todayStr = now.toISOString().slice(0, 10);
+    const weekAgo = new Date(now - 7 * 86400000).toISOString();
+
+    const total = allData.length;
+    const today = allData.filter(r => r.created_at?.slice(0, 10) === todayStr).length;
+    const week  = allData.filter(r => r.created_at >= weekAgo).length;
+
+    // Top source
+    const srcCounts = {};
+    allData.forEach(r => {
+      const s = r.source || 'direct';
+      srcCounts[s] = (srcCounts[s] || 0) + 1;
+    });
+    const topSrc = Object.entries(srcCounts).sort((a,b) => b[1]-a[1])[0];
+
+    document.getElementById('statTotal').textContent = total;
+    document.getElementById('statToday').textContent = today;
+    document.getElementById('statTodayDate').textContent = now.toLocaleDateString('en-US', { month:'short', day:'numeric' });
+    document.getElementById('statWeek').textContent = week;
+    document.getElementById('statTopSource').textContent = topSrc ? capitalize(topSrc[0]) : '—';
+    document.getElementById('statTopSourceCount').textContent = topSrc ? `${topSrc[1]} signups` : 'No data yet';
+  }
+
+  function buildCharts() {
+    // Source bar chart
+    const srcCounts = {};
+    allData.forEach(r => {
+      const s = r.source || 'direct';
+      srcCounts[s] = (srcCounts[s] || 0) + 1;
+    });
+    const srcEntries = Object.entries(srcCounts).sort((a,b) => b[1]-a[1]);
+    const maxSrc = srcEntries[0]?.[1] || 1;
+    const colors = ['', 'blue', 'green', 'purple', 'teal', ''];
+    const srcHtml = srcEntries.length ? srcEntries.map(([name, count], i) => `
+      <div class="bar-row">
+        <div class="bar-name">${capitalize(name)}</div>
+        <div class="bar-track">
+          <div class="bar-fill ${colors[i] || ''}" style="width:${Math.round(count/maxSrc*100)}%">
+            <span style="color:white;font-size:11px;font-weight:600">${count}</span>
+          </div>
+        </div>
+        <div class="bar-val">${Math.round(count/allData.length*100)}%</div>
+      </div>
+    `).join('') : '<div style="color:#aaa;font-size:13px;padding:20px 0;text-align:center">No data yet</div>';
+    document.getElementById('sourceChart').innerHTML = srcHtml;
+
+    // Sparkline - last 14 days
+    const days = [];
+    for (let i = 13; i >= 0; i--) {
+      const d = new Date(Date.now() - i * 86400000);
+      const str = d.toISOString().slice(0, 10);
+      const count = allData.filter(r => r.created_at?.slice(0, 10) === str).length;
+      days.push({ date: d.toLocaleDateString('en-US', { month:'short', day:'numeric' }), count });
+    }
+    const maxDay = Math.max(...days.map(d => d.count), 1);
+    const sparkHtml = days.map(d => `
+      <div class="spark-bar" style="height:${Math.max(d.count/maxDay*100, 4)}%">
+        <div class="tooltip">${d.date}: ${d.count}</div>
+      </div>
+    `).join('');
+    document.getElementById('sparklineChart').innerHTML = sparkHtml;
+  }
+
+  function applyFilters() {
+    const src = document.getElementById('filterSource').value;
+    const med = document.getElementById('filterMedium').value;
+    const from = document.getElementById('filterFrom').value;
+    const to = document.getElementById('filterTo').value;
+    const search = document.getElementById('searchInput').value.toLowerCase();
+
+    filtered = allData.filter(r => {
+      if (src && (r.source || 'direct') !== src) return false;
+      if (med && (r.medium || '') !== med) return false;
+      if (from && r.created_at < from) return false;
+      if (to && r.created_at.slice(0,10) > to) return false;
+      if (search && !r.email?.toLowerCase().includes(search)) return false;
+      return true;
+    });
+
+    // Sort
+    filtered.sort((a, b) => {
+      let av = a[sortCol] || '';
+      let bv = b[sortCol] || '';
+      if (sortDir === 'asc') return av > bv ? 1 : -1;
+      return av < bv ? 1 : -1;
+    });
+
+    currentPage = 1;
+    renderTable();
+  }
+
+  function renderTable() {
+    const start = (currentPage - 1) * PER_PAGE;
+    const page = filtered.slice(start, start + PER_PAGE);
+    const total = filtered.length;
+
+    document.getElementById('tableCount').innerHTML = `<strong>${total}</strong> <span>signup${total !== 1 ? 's' : ''}</span>`;
+
+    if (total === 0) {
+      document.getElementById('tableWrap').innerHTML = `<div class="empty"><div class="empty-icon">📭</div>No signups match your filters.</div>`;
+      document.getElementById('pagination').style.display = 'none';
+      return;
+    }
+
+    const rows = page.map(r => `
+      <tr>
+        <td class="email-cell">${r.email || '—'}</td>
+        <td>${sourceBadge(r.source)}</td>
+        <td>${mediumBadge(r.medium)}</td>
+        <td style="font-size:12px;color:#666">${r.campaign || '—'}</td>
+        <td class="date-cell">${formatDate(r.created_at)}</td>
+        <td class="date-cell">${r.referrer ? `<span title="${r.referrer}" style="cursor:help">${truncate(r.referrer, 30)}</span>` : '—'}</td>
+      </tr>
+    `).join('');
+
+    document.getElementById('tableWrap').innerHTML = `
+      <table>
+        <thead>
+          <tr>
+            <th onclick="setSort('email')" class="${sortCol==='email'?'sorted':''}">Email ${sortCol==='email'?(sortDir==='asc'?'↑':'↓'):''}</th>
+            <th onclick="setSort('source')" class="${sortCol==='source'?'sorted':''}">Source ${sortCol==='source'?(sortDir==='asc'?'↑':'↓'):''}</th>
+            <th onclick="setSort('medium')" class="${sortCol==='medium'?'sorted':''}">Medium</th>
+            <th onclick="setSort('campaign')" class="${sortCol==='campaign'?'sorted':''}">Campaign</th>
+            <th onclick="setSort('created_at')" class="${sortCol==='created_at'?'sorted':''}">Signed Up ${sortCol==='created_at'?(sortDir==='asc'?'↑':'↓'):''}</th>
+            <th>Referrer</th>
+          </tr>
+        </thead>
+        <tbody>${rows}</tbody>
+      </table>
+    `;
+
+    // Pagination
+    const totalPages = Math.ceil(total / PER_PAGE);
+    document.getElementById('pagination').style.display = totalPages > 1 ? 'flex' : 'none';
+    document.getElementById('pageInfo').textContent = `Showing ${start+1}–${Math.min(start+PER_PAGE, total)} of ${total}`;
+
+    const btns = [];
+    btns.push(`<button class="page-btn" onclick="goPage(${currentPage-1})" ${currentPage===1?'disabled':''}>‹</button>`);
+    for (let i = 1; i <= totalPages; i++) {
+      if (i === 1 || i === totalPages || Math.abs(i - currentPage) <= 1) {
+        btns.push(`<button class="page-btn ${i===currentPage?'active':''}" onclick="goPage(${i})">${i}</button>`);
+      } else if (Math.abs(i - currentPage) === 2) {
+        btns.push(`<button class="page-btn" disabled>…</button>`);
+      }
+    }
+    btns.push(`<button class="page-btn" onclick="goPage(${currentPage+1})" ${currentPage===totalPages?'disabled':''}>›</button>`);
+    document.getElementById('pageBtns').innerHTML = btns.join('');
+  }
+
+  function setSort(col) {
+    if (sortCol === col) sortDir = sortDir === 'asc' ? 'desc' : 'asc';
+    else { sortCol = col; sortDir = 'desc'; }
+    applyFilters();
+  }
+
+  function goPage(p) {
+    const total = Math.ceil(filtered.length / PER_PAGE);
+    if (p < 1 || p > total) return;
+    currentPage = p;
+    renderTable();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function exportCSV() {
+    const headers = ['email', 'source', 'medium', 'campaign', 'created_at', 'referrer'];
+    const rows = [headers.join(',')];
+    filtered.forEach(r => {
+      rows.push(headers.map(h => `"${(r[h] || '').toString().replace(/"/g, '""')}"`).join(','));
+    });
+    const blob = new Blob([rows.join('\n')], { type: 'text/csv' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `waitlist-${new Date().toISOString().slice(0,10)}.csv`;
+    a.click();
+  }
+
+  // Helpers
+  function sourceBadge(src) {
+    const s = (src || 'direct').toLowerCase();
+    const map = { instagram:'badge-instagram', facebook:'badge-facebook', tiktok:'badge-tiktok', twitter:'badge-twitter', direct:'badge-direct', email:'badge-email' };
+    const icons = { instagram:'📸', facebook:'👤', tiktok:'🎵', twitter:'🐦', direct:'🔗', email:'✉️' };
+    const cls = map[s] || 'badge-other';
+    return `<span class="badge ${cls}">${icons[s]||'🌐'} ${capitalize(s)}</span>`;
+  }
+
+  function mediumBadge(med) {
+    if (!med) return '<span style="color:#aaa">—</span>';
+    const m = med.toLowerCase();
+    const map = { organic:'badge-organic', reel:'badge-reel', story:'badge-story', post:'badge-post', ad:'badge-ad', bio:'badge-bio' };
+    return `<span class="badge ${map[m]||'badge-other'}">${capitalize(m)}</span>`;
+  }
+
+  function formatDate(iso) {
+    if (!iso) return '—';
+    const d = new Date(iso);
+    return d.toLocaleDateString('en-US', { month:'short', day:'numeric', year:'numeric' }) + ' ' +
+           d.toLocaleTimeString('en-US', { hour:'numeric', minute:'2-digit' });
+  }
+
+  function capitalize(s) { return s ? s.charAt(0).toUpperCase() + s.slice(1) : ''; }
+  function truncate(s, n) { return s.length > n ? s.slice(0, n) + '…' : s; }
+
+  // Init
+  loadData();
+</script>
+</body>
+</html>
