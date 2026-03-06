@@ -1236,25 +1236,61 @@
 
   let current = null, playing = false, prog = 0, timer = null, nudgeShown = false;
 
+  let audioEl = null;
   function playStory(idx) {
     current = idx;
     playing = true;
     prog = 0;
     const s = stories[idx];
-    document.getElementById('miniCover').textContent = s.cover;
+    const coverEl = document.getElementById('miniCover');
+    if (s.audio) {
+      coverEl.innerHTML = '<img src="' + s.cover + '" style="width:100%;height:100%;object-fit:cover;border-radius:6px">';
+    } else {
+      coverEl.textContent = s.cover;
+    }
     document.getElementById('miniTitle').textContent = s.title;
     document.getElementById('miniSub').textContent = s.sub;
     document.getElementById('miniBar').style.width = '0%';
     document.getElementById('playIcon').innerHTML = '<path d="M6 4h4v16H6zm8 0h4v16h-4z"/>';
     document.getElementById('miniPlayer').classList.add('up');
     clearInterval(timer);
-    const dur = s.mins * 60;
-    timer = setInterval(() => {
-      if (!playing) return;
-      prog = Math.min(prog + 100 / dur, 100);
-      document.getElementById('miniBar').style.width = prog + '%';
-      if (prog >= 100) { clearInterval(timer); showNudge(); }
-    }, 1000);
+    if (audioEl) { audioEl.pause(); audioEl = null; }
+    if (s.audio) {
+      audioEl = new Audio(s.audio);
+      audioEl.play();
+      audioEl.addEventListener('timeupdate', () => {
+        if (!audioEl) return;
+        prog = (audioEl.currentTime / audioEl.duration) * 100 || 0;
+        document.getElementById('miniBar').style.width = prog + '%';
+      });
+      audioEl.addEventListener('ended', () => { clearInterval(timer); showNudge(); });
+    } else {
+      const dur = s.mins * 60;
+      timer = setInterval(() => {
+        if (!playing) return;
+        prog = Math.min(prog + 100 / dur, 100);
+        document.getElementById('miniBar').style.width = prog + '%';
+        if (prog >= 100) { clearInterval(timer); showNudge(); }
+      }, 1000);
+    }
+    if (!nudgeShown) setTimeout(() => { if (playing) showNudge(); }, 10000);
+  }
+
+      audioEl.addEventListener('timeupdate', () => {
+        if (!audioEl) return;
+        prog = (audioEl.currentTime / audioEl.duration) * 100 || 0;
+        document.getElementById('miniBar').style.width = prog + '%';
+      });
+      audioEl.addEventListener('ended', () => { clearInterval(timer); showNudge(); });
+    } else {
+      const dur = s.mins * 60;
+      timer = setInterval(() => {
+        if (!playing) return;
+        prog = Math.min(prog + 100 / dur, 100);
+        document.getElementById('miniBar').style.width = prog + '%';
+        if (prog >= 100) { clearInterval(timer); showNudge(); }
+      }, 1000);
+    }
     if (!nudgeShown) setTimeout(() => { if (playing) showNudge(); }, 10000);
   }
 
