@@ -18,10 +18,8 @@
     --border: rgba(255,255,255,0.07);
     --border-ember: rgba(232,82,10,0.3);
   }
-
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
-
   body {
     background: var(--ink);
     color: var(--white);
@@ -29,6 +27,8 @@
     font-weight: 400;
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
+    max-width: 480px;
+    margin: 0 auto;
   }
 
   /* ── NAV ── */
@@ -39,1099 +39,501 @@
     display: flex; align-items: center; justify-content: space-between;
     background: rgba(9,9,14,0.92);
     backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--border);
+    max-width: 480px;
+    margin: 0 auto;
   }
   .nav-logo {
     font-family: 'Playfair Display', serif;
-    font-size: 20px;
-    font-weight: 700;
-    color: var(--white);
-    text-decoration: none;
-    letter-spacing: 0.01em;
+    font-size: 40px; font-weight: 700;
+    color: var(--white); text-decoration: none;
   }
   .nav-logo span { color: var(--ember); }
   .nav-cta {
-    background: var(--ember);
-    color: white;
-    border: none;
-    padding: 10px 18px;
-    border-radius: 6px;
+    background: var(--ember); color: white; border: none;
+    padding: 10px 18px; border-radius: 6px;
     font-family: 'DM Sans', sans-serif;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    white-space: nowrap;
-    -webkit-tap-highlight-color: transparent;
+    font-size: 14px; font-weight: 600; cursor: pointer;
     transition: background 0.2s;
   }
-  .nav-cta:active { background: var(--ember2); }
+  .nav-cta:hover { background: var(--ember2); }
 
   /* ── HERO ── */
   .hero {
-    padding: 108px 20px 64px;
-    position: relative;
-    overflow: hidden;
-    min-height: 100svh;
+    padding: 90px 20px 36px;
+    position: relative; overflow: hidden;
     display: flex; flex-direction: column; justify-content: center;
   }
   .hero-glow {
-    position: absolute;
-    top: -10%; right: -30%;
+    position: absolute; top: -10%; right: -30%;
     width: 70vw; height: 70vw;
     max-width: 500px; max-height: 500px;
     background: radial-gradient(circle, rgba(232,82,10,0.18) 0%, transparent 70%);
     pointer-events: none;
   }
-  .hero-glow2 {
-    position: absolute;
-    bottom: 0; left: -20%;
-    width: 60vw; height: 60vw;
-    max-width: 400px; max-height: 400px;
-    background: radial-gradient(circle, rgba(201,168,76,0.07) 0%, transparent 70%);
-    pointer-events: none;
-  }
-
   .hero-eyebrow {
     display: inline-flex; align-items: center; gap: 8px;
     font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--ember);
-    margin-bottom: 22px;
+    font-size: 14px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--ember); font-weight: 700; margin-bottom: 20px;
   }
-  .pulse-dot {
-    width: 7px; height: 7px;
-    background: var(--ember);
-    border-radius: 50%;
-    flex-shrink: 0;
-    animation: pulse 2s ease-in-out infinite;
+  .hero-eyebrow::before {
+    content: ''; width: 20px; height: 1px; background: var(--ember);
   }
-  @keyframes pulse {
-    0%,100% { opacity:1; transform:scale(1); }
-    50% { opacity:0.35; transform:scale(0.65); }
-  }
-
-  .hero-headline {
+  .hero h1 {
     font-family: 'Playfair Display', serif;
-    font-size: clamp(40px, 11vw, 72px);
-    font-weight: 900;
-    line-height: 1.0;
-    letter-spacing: -0.02em;
-    margin-bottom: 20px;
+    font-size: clamp(38px, 10vw, 52px);
+    font-weight: 900; line-height: 1.08;
+    letter-spacing: -0.02em; margin-bottom: 20px;
   }
-  .hero-headline em {
-    font-style: italic;
-    color: var(--ember);
-    display: block;
-  }
-
-  /* Rotating audience words */
-  .rotate-wrap {
-    display: inline-block;
-    overflow: hidden;
-    vertical-align: bottom;
-    height: 1.02em;
-  }
-  .rotate-inner {
-    display: flex; flex-direction: column;
-    animation: rotate 10s ease-in-out infinite;
-  }
-  .rotate-inner span {
-    display: block;
-    height: 1.02em;
-    line-height: 1.02;
-  }
-  @keyframes rotate {
-    0%,18%  { transform: translateY(0); }
-    22%,40% { transform: translateY(-1.02em); }
-    44%,62% { transform: translateY(-2.04em); }
-    66%,84% { transform: translateY(-3.06em); }
-    88%,100%{ transform: translateY(0); }
-  }
-
+  .hero h1 em { font-style: italic; color: var(--ember); }
   .hero-sub {
-    font-size: 17px;
-    line-height: 1.65;
-    color: rgba(255,255,255,0.55);
-    margin-bottom: 36px;
-    font-weight: 300;
-    max-width: 480px;
+    font-size: 20px; color: rgba(255,255,255,1);
+    line-height: 1.6; margin-bottom: 36px; max-width: 360px;
+    font-weight: 400;
   }
-  .hero-sub strong { color: var(--cream); font-weight: 500; }
-
-  .hero-btn-stack {
-    display: flex; flex-direction: column; gap: 12px;
-    margin-bottom: 44px;
-  }
-
+  .hero-cta-row { display: flex; flex-direction: column; gap: 12px; }
   .btn-primary {
-    display: flex; align-items: center; justify-content: center; gap: 10px;
-    background: var(--ember);
-    color: white;
-    border: none;
-    padding: 18px 28px;
-    border-radius: 8px;
+    background: var(--ember); color: white; border: none;
+    padding: 16px 28px; border-radius: 8px;
     font-family: 'DM Sans', sans-serif;
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    letter-spacing: 0.02em;
-    text-decoration: none;
-    -webkit-tap-highlight-color: transparent;
-    transition: background 0.2s, transform 0.15s;
-    width: 100%;
-  }
-  .btn-primary:active { background: var(--ember2); transform: scale(0.98); }
-
-  .btn-ghost {
+    font-size: 16px; font-weight: 600; cursor: pointer;
     display: flex; align-items: center; justify-content: center; gap: 8px;
-    color: rgba(255,255,255,0.55);
-    font-size: 15px;
-    font-weight: 500;
-    cursor: pointer;
-    background: none; border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 17px 28px;
-    letter-spacing: 0.02em;
-    text-decoration: none;
-    -webkit-tap-highlight-color: transparent;
+    transition: background 0.2s;
+  }
+  .btn-primary:hover { background: var(--ember2); }
+  .btn-secondary {
+    background: transparent; color: rgba(255,255,255,0.7);
+    border: 1px solid rgba(255,255,255,0.15);
+    padding: 15px 28px; border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px; font-weight: 500; cursor: pointer;
     transition: border-color 0.2s, color 0.2s;
-    width: 100%;
+    text-align: center;
   }
-  .btn-ghost:active { border-color: var(--ember); color: white; }
+  .btn-secondary:hover { border-color: rgba(255,255,255,0.35); color: white; }
 
-  .hero-trust {
-    display: flex; gap: 24px;
-    padding-top: 28px;
-    border-top: 1px solid var(--border);
-  }
-  .trust-item {
-    display: flex; flex-direction: column; gap: 3px;
-  }
-  .trust-num {
-    font-family: 'Playfair Display', serif;
-    font-size: 26px;
-    font-weight: 700;
-    color: var(--white);
-    line-height: 1;
-  }
-  .trust-num span { color: var(--ember); }
-  .trust-label {
-    font-size: 11px;
-    color: rgba(255,255,255,0.35);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    font-family: 'DM Mono', monospace;
-  }
-
-  /* ── TICKER ── */
+  /* Ticker */
   .ticker-wrap {
-    background: var(--ink2);
-    border-top: 1px solid var(--border);
+    overflow: hidden; border-top: 1px solid var(--border);
     border-bottom: 1px solid var(--border);
-    overflow: hidden;
-    padding: 14px 0;
+    padding: 12px 0; background: var(--ink2);
   }
   .ticker {
-    display: flex;
-    animation: ticker 25s linear infinite;
-    white-space: nowrap;
-    width: max-content;
+    display: flex; gap: 48px; width: max-content;
+    animation: ticker 20s linear infinite;
   }
   .ticker-item {
-    display: inline-flex; align-items: center; gap: 16px;
-    padding: 0 24px;
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.3);
-    flex-shrink: 0;
+    font-family: 'DM Mono', monospace; font-size: 11px;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: rgba(255,255,255,0.35); white-space: nowrap;
+    display: flex; align-items: center; gap: 16px;
   }
-  .ticker-dot { width: 4px; height: 4px; background: var(--ember); border-radius: 50%; }
-  @keyframes ticker {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
-  }
+  .ticker-item::before { content: '◆'; color: var(--ember); font-size: 8px; }
+  @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
-  /* ── SECTION COMMON ── */
+  /* ── SECTIONS ── */
+  section { padding: 40px 20px; }
   .section-label {
-    display: flex; align-items: center; gap: 10px;
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--ember);
-    margin-bottom: 14px;
+    font-family: 'DM Mono', monospace; font-size: 13px;
+    letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--ember); font-weight: 700; margin-bottom: 12px;
+    display: flex; align-items: center; gap: 12px;
   }
-  .section-label::after {
-    content: '';
-    height: 1px;
-    width: 48px;
-    background: linear-gradient(to right, rgba(232,82,10,0.5), transparent);
-  }
-
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border-ember); }
   .section-title {
     font-family: 'Playfair Display', serif;
-    font-size: clamp(28px, 8vw, 48px);
-    font-weight: 700;
-    line-height: 1.1;
-    margin-bottom: 14px;
+    font-size: clamp(28px, 7vw, 38px);
+    font-weight: 900; line-height: 1.1;
+    letter-spacing: -0.01em; margin-bottom: 12px;
   }
   .section-sub {
-    font-size: 16px;
-    color: rgba(255,255,255,0.45);
-    line-height: 1.65;
-    font-weight: 300;
-    margin-bottom: 36px;
+    font-size: 16px; color: rgba(255,255,255,1);
+    line-height: 1.6; margin-bottom: 32px;
   }
 
-  /* ── STORIES ── */
-  .stories-section {
-    padding: 64px 20px 72px;
-    background: var(--ink);
-  }
-
+  /* ── STORY CARDS ── */
+  .stories-section { padding: 64px 20px; }
   .story-card {
     background: var(--ink2);
     border: 1px solid var(--border);
-    border-radius: 12px;
+    border-radius: 14px;
     overflow: hidden;
-    margin-bottom: 16px;
+    margin-bottom: 24px;
     cursor: pointer;
-    -webkit-tap-highlight-color: transparent;
-    transition: border-color 0.25s, transform 0.2s;
-    display: flex;
-    align-items: stretch;
+    transition: border-color 0.25s, transform 0.18s;
   }
   .story-card:last-child { margin-bottom: 0; }
-  .story-card:active { transform: scale(0.99); border-color: var(--border-ember); }
+  .story-card:hover { border-color: var(--border-ember); transform: translateY(-2px); }
 
-  .story-thumb {
-    width: 110px;
-    flex-shrink: 0;
+  .story-cover {
+    width: 100%;
+    aspect-ratio: 1 / 1;
     position: relative;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 52px;
-    min-height: 110px;
+    overflow: hidden;
   }
-  .story-thumb .play-circle {
-    position: absolute; inset: 0;
-    background: rgba(232,82,10,0.0);
+  .story-cover img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .story-cover .cover-placeholder {
+    width: 100%; height: 100%;
     display: flex; align-items: center; justify-content: center;
-    transition: background 0.25s;
+    font-size: 90px;
   }
-  .story-card:hover .play-circle { background: rgba(232,82,10,0.25); }
-  .play-icon-overlay {
-    width: 40px; height: 40px;
-    background: rgba(232,82,10,0.9);
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    opacity: 0;
-    transform: scale(0.7);
-    transition: opacity 0.25s, transform 0.25s;
-  }
-  .story-card:hover .play-icon-overlay { opacity: 1; transform: scale(1); }
+  .cover-rosie { background: linear-gradient(135deg, #1a0800 0%, #3d1a06 40%, #6b2d0d 70%, #2a1000 100%); }
+  .cover-mystery { background: linear-gradient(135deg, #050514 0%, #0a1028 50%, #0f1e45 100%); }
+  .cover-vanish { background: linear-gradient(135deg, #050510 0%, #0a0a20 40%, #0d1535 70%, #081028 100%); }
 
-  .story-thumb-badge {
-    position: absolute; top: 10px; left: 10px;
-    background: var(--ember);
+  .free-badge {
+    position: absolute; top: 12px; left: 12px;
+    background: var(--ember); color: white;
     font-family: 'DM Mono', monospace;
-    font-size: 9px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    padding: 3px 8px;
-    border-radius: 3px;
-    font-weight: 500;
+    font-size: 10px; font-weight: 700; letter-spacing: 0.1em;
+    padding: 4px 8px; border-radius: 5px; z-index: 2;
+  }
+  .cover-play {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 50%);
+    display: flex; align-items: flex-end; justify-content: flex-end;
+    padding: 16px; opacity: 0; transition: opacity 0.2s;
+  }
+  .story-card:hover .cover-play { opacity: 1; }
+  .play-circle {
+    width: 52px; height: 52px; border-radius: 50%;
+    background: var(--ember);
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 20px rgba(232,82,10,0.5);
   }
 
-  .story-body {
-    padding: 16px 16px 16px 14px;
-    flex: 1;
-    min-width: 0;
-    display: flex; flex-direction: column; justify-content: space-between;
+  .story-title-bar {
+    padding: 14px 16px 12px;
+    background: var(--ink3);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
   }
   .story-genre {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--ember);
-    margin-bottom: 5px;
+    font-family: 'DM Mono', monospace; font-size: 10px;
+    letter-spacing: 0.13em; text-transform: uppercase;
+    color: var(--ember); margin-bottom: 5px;
   }
   .story-title {
     font-family: 'Playfair Display', serif;
-    font-size: 17px;
-    font-weight: 700;
-    line-height: 1.25;
-    margin-bottom: 6px;
-    color: var(--white);
+    font-size: 22px; font-weight: 700;
+    color: var(--white); line-height: 1.2;
   }
+
+  .story-bottom {
+    display: flex; align-items: center; gap: 14px;
+    padding: 14px 16px 16px;
+  }
+  .story-desc-col { flex: 1; }
   .story-desc {
-    font-size: 13px;
-    color: rgba(255,255,255,0.42);
+    font-size: 16px; color: rgba(255,255,255,1);
     line-height: 1.55;
-    font-weight: 300;
-    margin-bottom: 12px;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-  .story-footer-row {
-    display: flex; align-items: center; justify-content: space-between;
   }
   .story-meta {
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    color: rgba(255,255,255,0.28);
+    font-family: 'DM Mono', monospace; font-size: 11px;
+    color: rgba(255,255,255,0.7); letter-spacing: 0.05em;
+    margin-top: 7px;
   }
   .play-tap {
-    display: flex; align-items: center; gap: 5px;
-    color: var(--ember);
-    font-size: 13px;
-    font-weight: 600;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    background: none; border: none;
-    cursor: pointer;
-    -webkit-tap-highlight-color: transparent;
-    padding: 6px 0;
-  }
-
-  /* ── QUALITY BAR ── */
-  .quality-section {
-    padding: 48px 20px;
-    background: var(--ink2);
-    border-top: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
-  }
-  .quality-items {
-    display: flex; flex-direction: column; gap: 0;
-  }
-  .quality-item {
-    display: flex; gap: 18px; align-items: flex-start;
-    padding: 22px 0;
-    border-bottom: 1px solid var(--border);
-  }
-  .quality-item:last-child { border-bottom: none; }
-  .quality-icon {
-    font-size: 28px;
     flex-shrink: 0;
-    width: 44px; height: 44px;
-    display: flex; align-items: center; justify-content: center;
-    background: rgba(232,82,10,0.1);
-    border-radius: 8px;
+    background: var(--ember); color: white; border: none;
+    padding: 11px 16px; border-radius: 7px;
+    font-size: 13px; font-weight: 600; cursor: pointer;
+    display: flex; align-items: center; gap: 6px;
+    font-family: 'DM Sans', sans-serif;
+    white-space: nowrap;
+    transition: background 0.2s;
   }
-  .quality-text {}
-  .quality-name {
-    font-size: 16px;
-    font-weight: 600;
-    color: var(--cream);
-    margin-bottom: 4px;
-    letter-spacing: 0.01em;
-  }
-  .quality-desc {
-    font-size: 14px;
-    color: rgba(255,255,255,0.38);
-    line-height: 1.6;
-    font-weight: 300;
-  }
+  .play-tap:hover { background: var(--ember2); }
+
+  /* ── QUALITY ── */
+  .quality-section { background: var(--ink2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .quality-items { display: flex; flex-direction: column; gap: 24px; margin-top: 28px; }
+  .quality-item { display: flex; gap: 16px; align-items: flex-start; }
+  .quality-icon { font-size: 28px; flex-shrink: 0; margin-top: 2px; filter: brightness(0) saturate(100%) invert(70%) sepia(80%) saturate(400%) hue-rotate(10deg); }
+  .quality-name { font-weight: 600; font-size: 16px; margin-bottom: 4px; color: white; }
+  .quality-desc { font-size: 14px; color: rgba(255,255,255,1); line-height: 1.55; }
 
   /* ── GENRES ── */
-  .genres-section {
-    padding: 64px 20px 72px;
-    background: var(--ink);
+  .genre-scroll { display: flex; flex-wrap: wrap; gap: 8px; margin: 20px 0; }
+  .genre-pill {
+    padding: 9px 16px; border-radius: 20px;
+    font-size: 13px; font-weight: 600;
+    color: white; cursor: default;
+    user-select: none;
   }
-  .genre-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-  }
-  .genre-tile {
-    border-radius: 10px;
-    overflow: hidden;
-    position: relative;
-    aspect-ratio: 3/2;
-    display: flex; align-items: flex-end;
-    border: 1px solid var(--border);
-    cursor: pointer;
-    -webkit-tap-highlight-color: transparent;
-    transition: transform 0.2s;
-  }
-  .genre-tile:active { transform: scale(0.97); }
-  .genre-tile.wide { grid-column: span 2; aspect-ratio: 16/6; }
-  .genre-bg { position: absolute; inset: 0; }
-  .genre-overlay {
-    position: absolute; inset: 0;
-    background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.1) 60%, transparent 100%);
-  }
-  .genre-label { position: relative; z-index: 1; padding: 12px 14px; width: 100%; }
-  .genre-name {
-    font-family: 'Playfair Display', serif;
-    font-size: 16px;
-    font-weight: 700;
-    display: block;
-    line-height: 1.2;
-  }
-  .genre-tile.wide .genre-name { font-size: 22px; }
-  .genre-emoji {
-    position: absolute; top: 12px; right: 12px;
-    font-size: 22px; opacity: 0.7;
-  }
-  .genre-tile.wide .genre-emoji { font-size: 30px; }
-
-  .g-mystery  { background: linear-gradient(135deg,#0d0d2b,#1a1040); }
-  .g-thriller { background: linear-gradient(135deg,#1a0505,#2d0a0a); }
-  .g-romance  { background: linear-gradient(135deg,#1a0510,#2d0a1f); }
-  .g-horror   { background: linear-gradient(135deg,#080808,#1a0505); }
-  .g-doc      { background: linear-gradient(135deg,#031520,#062840); }
-  .g-warm     { background: linear-gradient(135deg,#1a1005,#2d1f0a); }
-  .g-edu      { background: linear-gradient(135deg,#051a0a,#0a2d12); }
-  .g-scifi    { background: linear-gradient(135deg,#050d1a,#0a1a2d); }
+  .gp-mystery   { background: #1e3a5f; border: 1px solid #2d5a8e; }
+  .gp-thriller  { background: #4a1942; border: 1px solid #7a2a70; }
+  .gp-horror    { background: #3d1212; border: 1px solid #6b1e1e; }
+  .gp-romance   { background: #5c1a3a; border: 1px solid #8e2a5a; }
+  .gp-warm      { background: #3d2800; border: 1px solid #7a5000; }
+  .gp-doc       { background: #1a3d2a; border: 1px solid #2a6b45; }
+  .gp-edu       { background: #1a2a3d; border: 1px solid #2a4a6b; }
+  .gp-scifi     { background: #0d2a3d; border: 1px solid #1a5070; }
+  .gp-western   { background: #3d2a1a; border: 1px solid #6b4a2a; }
+  .gp-super     { background: #1a1a3d; border: 1px solid #2a2a6b; }
+  .gp-comedy    { background: #3d3800; border: 1px solid #6b6200; }
+  .gp-crime     { background: #2a1a1a; border: 1px solid #5a2a2a; }
+  .genre-tagline { font-size: 16px; color: rgba(255,255,255,1); line-height: 1.6; margin-top: 16px; }
 
   /* ── PROOF ── */
-  .proof-section {
-    padding: 56px 20px;
-    background: var(--ink2);
-    border-top: 1px solid var(--border);
-  }
-  .proof-row {
-    display: flex; flex-direction: column; gap: 0;
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    overflow: hidden;
-  }
-  .proof-item {
-    display: flex; align-items: center; gap: 20px;
-    padding: 24px 24px;
-    border-bottom: 1px solid var(--border);
-    background: var(--ink3);
-  }
-  .proof-item:last-child { border-bottom: none; }
+  .proof-section { padding: 64px 20px; }
+  .proof-row { display: flex; flex-direction: column; gap: 20px; }
+  .proof-item { display: flex; gap: 20px; align-items: flex-start; }
   .proof-num {
     font-family: 'Playfair Display', serif;
-    font-size: 40px;
-    font-weight: 900;
-    color: var(--ember);
-    line-height: 1;
-    flex-shrink: 0;
-    min-width: 80px;
+    font-size: 42px; font-weight: 900;
+    color: var(--white); line-height: 1; flex-shrink: 0; width: 80px;
   }
-  .proof-num sup { font-size: 22px; vertical-align: super; }
-  .proof-text {}
-  .proof-name {
-    font-size: 16px;
-    font-weight: 600;
-    color: var(--cream);
-    margin-bottom: 3px;
-  }
-  .proof-desc {
-    font-size: 13px;
-    color: rgba(255,255,255,0.38);
-    line-height: 1.5;
-    font-weight: 300;
-  }
-
-  /* ── HOW IT WORKS ── */
-  .how-section {
-    padding: 64px 20px 72px;
-    background: var(--ink);
-  }
-  .how-steps {
-    display: flex; flex-direction: column; gap: 0;
-    margin-top: 8px;
-  }
-  .how-step {
-    display: flex; gap: 20px; align-items: flex-start;
-    padding: 24px 0;
-    border-bottom: 1px solid var(--border);
-    position: relative;
-  }
-  .how-step:last-child { border-bottom: none; }
-  .step-num-badge {
-    width: 40px; height: 40px;
-    background: rgba(232,82,10,0.12);
-    border: 1px solid rgba(232,82,10,0.25);
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0;
-    font-family: 'DM Mono', monospace;
-    font-size: 14px;
-    font-weight: 500;
-    color: var(--ember);
-  }
-  .how-step-content {}
-  .step-title {
-    font-size: 16px;
-    font-weight: 600;
-    color: var(--cream);
-    margin-bottom: 5px;
-    padding-top: 9px;
-  }
-  .step-desc {
-    font-size: 14px;
-    color: rgba(255,255,255,0.38);
-    line-height: 1.65;
-    font-weight: 300;
-  }
+  .proof-num sup { font-size: 18px; color: var(--ember); }
+  .proof-name { font-weight: 600; font-size: 15px; margin-bottom: 4px; color: white; }
+  .proof-desc { font-size: 14px; color: rgba(255,255,255,1); line-height: 1.55; }
 
   /* ── SIGNUP ── */
   .signup-section {
-    padding: 72px 20px 80px;
+    padding: 64px 20px;
     background: var(--ink2);
-    position: relative;
-    overflow: hidden;
-  }
-  .signup-glow {
-    position: absolute; bottom: -20%; left: 50%;
-    transform: translateX(-50%);
-    width: 120vw; height: 60vw;
-    max-height: 300px;
-    background: radial-gradient(ellipse, rgba(232,82,10,0.12) 0%, transparent 70%);
-    pointer-events: none;
-  }
-  .signup-inner { position: relative; z-index: 1; }
-
-  .offer-pills {
-    display: flex; gap: 8px;
-    flex-wrap: wrap;
-    margin-bottom: 28px;
-  }
-  .offer-pill {
-    display: inline-flex; align-items: center; gap: 6px;
-    background: rgba(232,82,10,0.1);
-    border: 1px solid rgba(232,82,10,0.25);
-    border-radius: 100px;
-    padding: 8px 14px;
-    font-size: 13px;
-    font-weight: 500;
-    color: rgba(255,255,255,0.75);
-  }
-  .offer-pill span { font-size: 15px; }
-
-  .signup-title {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(32px, 9vw, 56px);
-    font-weight: 900;
-    line-height: 1.05;
-    margin-bottom: 16px;
-  }
-  .signup-title em { font-style: italic; color: var(--ember); }
-
-  .signup-sub {
-    font-size: 16px;
-    color: rgba(255,255,255,0.45);
-    line-height: 1.65;
-    font-weight: 300;
-    margin-bottom: 32px;
-  }
-  .signup-sub strong { color: var(--cream); font-weight: 500; }
-
-  .email-field {
-    width: 100%;
-    background: rgba(255,255,255,0.05);
-    border: 1.5px solid var(--border);
-    border-radius: 8px;
-    padding: 18px 20px;
-    color: white;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 16px;
-    outline: none;
-    margin-bottom: 12px;
-    transition: border-color 0.2s;
-    -webkit-appearance: none;
-  }
-  .email-field::placeholder { color: rgba(255,255,255,0.28); }
-  .email-field:focus { border-color: var(--ember); }
-
-  .signup-btn {
-    width: 100%;
-    background: var(--ember);
-    color: white;
-    border: none;
-    padding: 18px 24px;
-    border-radius: 8px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    letter-spacing: 0.02em;
-    margin-bottom: 16px;
-    -webkit-tap-highlight-color: transparent;
-    transition: background 0.2s, transform 0.15s;
-  }
-  .signup-btn:active { background: var(--ember2); transform: scale(0.99); }
-
-  .signup-fine {
-    font-size: 12px;
-    color: rgba(255,255,255,0.22);
-    font-family: 'DM Mono', monospace;
-    letter-spacing: 0.04em;
-    line-height: 1.7;
-    text-align: center;
-  }
-  .signup-fine a { color: rgba(255,255,255,0.35); text-decoration: none; }
-
-  /* Success */
-  .success-box {
-    display: none;
-    text-align: center;
-    padding: 40px 20px;
-  }
-  .success-box.show { display: block; }
-  .success-emoji { font-size: 52px; display: block; margin-bottom: 16px; }
-  .success-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 28px;
-    font-weight: 700;
-    margin-bottom: 12px;
-  }
-  .success-sub {
-    font-size: 15px;
-    color: rgba(255,255,255,0.45);
-    line-height: 1.65;
-    font-weight: 300;
-  }
-  .success-sub a { color: var(--ember); text-decoration: none; font-weight: 500; }
-
-  /* ── FOOTER ── */
-  footer {
-    padding: 36px 20px;
-    background: var(--ink);
     border-top: 1px solid var(--border);
     text-align: center;
   }
+  .signup-section .section-title { margin-bottom: 8px; }
+  .signup-section .section-sub { margin-bottom: 28px; }
+  .email-row { display: flex; flex-direction: column; gap: 10px; margin-bottom: 14px; }
+  .email-input {
+    width: 100%; padding: 14px 16px;
+    background: #d0d0d8; border: 1px solid #b0b0bc;
+    border-radius: 8px; color: #111; font-size: 15px;
+    font-family: 'DM Sans', sans-serif; outline: none;
+    transition: border-color 0.2s;
+  }
+  .email-input:focus { border-color: var(--ember); }
+  .email-input::placeholder { color: rgba(0,0,0,0.45); }
+  .fine-print { font-size: 12px; color: rgba(255,255,255,0.3); line-height: 1.5; }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 32px 20px;
+    border-top: 1px solid var(--border);
+    display: flex; flex-direction: column; gap: 12px;
+  }
   .footer-logo {
     font-family: 'Playfair Display', serif;
-    font-size: 18px;
-    font-weight: 700;
-    margin-bottom: 12px;
+    font-size: 36px; font-weight: 700;
   }
   .footer-logo span { color: var(--ember); }
-  .footer-links {
-    display: flex; gap: 20px; justify-content: center;
-    margin-bottom: 16px;
-  }
-  .footer-links a {
-    font-size: 12px;
-    color: rgba(255,255,255,0.28);
-    text-decoration: none;
-    font-family: 'DM Mono', monospace;
-  }
-  .footer-copy {
-    font-size: 11px;
-    color: rgba(255,255,255,0.15);
-    font-family: 'DM Mono', monospace;
-  }
+  .footer-text { font-size: 12px; color: rgba(255,255,255,0.3); line-height: 1.6; }
 
-  /* ── MINI PLAYER ── */
-  .mini-player {
-    position: fixed;
-    bottom: -120px;
-    left: 12px; right: 12px;
-    background: var(--ink3);
-    border: 1px solid rgba(232,82,10,0.35);
-    border-radius: 14px;
-    padding: 14px 16px;
-    z-index: 300;
-    display: flex; align-items: center; gap: 12px;
-    box-shadow: 0 -4px 40px rgba(0,0,0,0.7), 0 0 0 1px rgba(232,82,10,0.08);
-    transition: bottom 0.4s cubic-bezier(0.34,1.4,0.64,1);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+  /* In-card progress bar */
+  .card-progress {
+    height: 3px; background: var(--border);
+    border-radius: 0; overflow: hidden;
   }
-  .mini-player.up { bottom: 16px; }
-  .mini-cover {
-    width: 46px; height: 46px;
-    border-radius: 8px;
-    font-size: 26px;
-    display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0;
-    background: var(--ink2);
+  .card-progress-bar {
+    height: 100%; background: var(--ember);
+    width: 0%; transition: width 0.5s linear;
+    border-radius: 0;
   }
-  .mini-info { flex: 1; min-width: 0; }
-  .mini-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 14px;
-    font-weight: 700;
-    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-    margin-bottom: 2px;
+  .play-tap.playing { background: rgba(232,82,10,0.2); border: 1px solid var(--ember); color: var(--ember); }
+  .play-tap.done { background: var(--ink3); border: 1px solid var(--border); color: rgba(255,255,255,0.5); }
+  /* Scrolling audience word */
+  .audience-scroll {
+    display: inline-block;
+    overflow: hidden;
+    height: 1.15em;
+    vertical-align: bottom;
   }
-  .mini-sub {
-    font-size: 11px;
-    color: rgba(255,255,255,0.38);
-    font-family: 'DM Mono', monospace;
-    letter-spacing: 0.05em;
+  .audience-inner {
+    display: flex;
+    flex-direction: column;
+    animation: wordScroll 7s cubic-bezier(0.4,0,0.2,1) infinite;
   }
-  .mini-btn {
-    width: 44px; height: 44px;
-    background: var(--ember);
-    border-radius: 50%;
-    border: none;
-    display: flex; align-items: center; justify-content: center;
-    cursor: pointer; flex-shrink: 0;
-    -webkit-tap-highlight-color: transparent;
-    transition: background 0.2s;
-  }
-  .mini-btn:active { background: var(--ember2); }
-  .mini-close-btn {
-    background: none; border: none;
-    color: rgba(255,255,255,0.3);
-    cursor: pointer; padding: 8px; flex-shrink: 0;
-    -webkit-tap-highlight-color: transparent;
-  }
-  .mini-bar {
-    position: absolute; bottom: 0; left: 0;
-    height: 3px; background: var(--ember);
-    border-radius: 0 0 14px 14px;
-    width: 0%; transition: width 1s linear;
-  }
-
-  /* Signup nudge bubble */
-  .nudge {
-    position: absolute;
-    top: -52px; left: 50%;
-    transform: translateX(-50%);
-    background: var(--ember);
-    color: white;
-    padding: 10px 16px;
-    border-radius: 8px;
-    font-size: 13px;
-    font-weight: 500;
+  .audience-inner span {
+    display: block;
+    line-height: 1.15;
+    font-style: italic;
+    color: var(--ember);
     white-space: nowrap;
-    display: none;
-    animation: pop 0.3s cubic-bezier(0.34,1.56,0.64,1);
-    cursor: pointer;
   }
-  .nudge.show { display: block; }
-  .nudge::after {
-    content: '';
-    position: absolute; bottom: -6px; left: 50%;
-    transform: translateX(-50%);
-    border: 6px solid transparent;
-    border-bottom: none;
-    border-top: 6px solid var(--ember);
-  }
-  @keyframes pop {
-    from { opacity:0; transform: translateX(-50%) scale(0.85) translateY(6px); }
-    to { opacity:1; transform: translateX(-50%) scale(1) translateY(0); }
+  @keyframes wordScroll {
+    0%,12%   { transform: translateY(0); }
+    16%,28%  { transform: translateY(-1.15em); }
+    32%,44%  { transform: translateY(-2.3em); }
+    48%,60%  { transform: translateY(-3.45em); }
+    64%,76%  { transform: translateY(-4.6em); }
+    80%,92%  { transform: translateY(-5.75em); }
+    96%,100% { transform: translateY(0); }
   }
 
-  /* ── FADE ANIMATIONS ── */
-  .fade-up {
-    opacity: 0;
-    transform: translateY(24px);
-    transition: opacity 0.65s ease, transform 0.65s ease;
-  }
+  .fade-up { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
   .fade-up.in { opacity: 1; transform: translateY(0); }
 
-  /* ── TABLET / DESKTOP UPGRADES ── */
-  @media (min-width: 640px) {
-    nav { padding: 18px 40px; }
-    .hero { padding: 120px 40px 80px; }
-    .stories-section, .genres-section, .quality-section,
-    .proof-section, .how-section, .signup-section { padding-left: 40px; padding-right: 40px; }
-    .hero-btn-stack { flex-direction: row; }
-    .btn-primary, .btn-ghost { width: auto; }
-    .genre-grid { grid-template-columns: repeat(3, 1fr); }
-    .genre-tile.wide { grid-column: span 3; }
-    .proof-row { flex-direction: row; }
-    .proof-item { border-bottom: none; border-right: 1px solid var(--border); flex: 1; flex-direction: column; align-items: flex-start; gap: 10px; }
-    .proof-item:last-child { border-right: none; }
-  }
 
-  @media (min-width: 900px) {
-    nav { padding: 20px 56px; }
-    .hero { padding: 130px 56px 100px; min-height: auto; }
-    .stories-section, .genres-section, .quality-section,
-    .proof-section, .how-section, .signup-section { padding-left: 56px; padding-right: 56px; }
-    .hero-headline { font-size: clamp(56px, 6vw, 80px); }
-    .genre-grid { grid-template-columns: repeat(4, 1fr); }
-    .genre-tile.wide { grid-column: span 2; aspect-ratio: 3/2; }
-    .how-steps { flex-direction: row; gap: 0; }
-    .how-step { flex-direction: column; gap: 16px; padding: 32px; border-bottom: none; border-right: 1px solid var(--border); flex: 1; }
-    .how-step:last-child { border-right: none; }
-    .step-title { padding-top: 0; }
-    .story-card { max-width: 480px; }
-    .stories-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-    .story-card { flex-direction: column; margin-bottom: 0; }
-    .story-thumb { width: 100%; min-height: 200px; aspect-ratio: 1; }
-    .story-thumb .play-icon-overlay { opacity: 0; }
-    .story-card:hover .play-icon-overlay { opacity: 1; }
-  }
 </style>
 </head>
 <body>
 
 <!-- NAV -->
 <nav>
-  <a href="#" class="nav-logo">Endless<span>Tales</span></a>
-  <button class="nav-cta" onclick="scrollTo('signup')">Get 14 Days Free</button>
+  <a class="nav-logo" href="#">Endless<span>Tales</span></a>
+  <button class="nav-cta">Get 14 Days Free</button>
 </nav>
 
 <!-- HERO -->
 <section class="hero">
   <div class="hero-glow"></div>
-  <div class="hero-glow2"></div>
-
-  <div class="hero-eyebrow">
-    <span class="pulse-dot"></span>
-    Launching April 1, 2026 &nbsp;·&nbsp; Early Access Open
+  <div class="hero-eyebrow">Launching April 1, 2026</div>
+  <h1>Stories for<br><span class="audience-scroll"><span class="audience-inner">
+    <span>Commuters.</span>
+    <span>Chore Doers.</span>
+    <span>Runners.</span>
+    <span>Walkers.</span>
+    <span>Gym Goers.</span>
+    <span>Long Haulers.</span>
+    <span>Commuters.</span>
+  </span></span></h1>
+  <p class="hero-sub"><strong>Short stories. Big productions. Made for your me-time.</strong><br><br>Full cast. Original score. Zero ads. A new story every week — mystery, thriller, drama, romance. Hit play and go.</p>
+  <div class="hero-cta-row">
+    <button class="btn-primary">▶ Listen Free Now</button>
   </div>
 
-  <h1 class="hero-headline">
-    Stories for<br>
-    <div class="rotate-wrap">
-      <div class="rotate-inner">
-        <span>Commuters.</span>
-        <span>Road Warriors.</span>
-        <span>Chore Doers.</span>
-        <span>Gym Goers.</span>
-      </div>
-    </div>
-    <em>Ears in motion.</em>
-  </h1>
-
-  <p class="hero-sub">
-    <strong>Professionally produced audio dramas</strong> — mysteries, thrillers, heartwarming tales, and more. Press play. Your imagination does the rest.
-  </p>
-
-  <div class="hero-btn-stack">
-    <button class="btn-primary" onclick="scrollTo('stories')">
-      <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-      Listen Free Now
-    </button>
-    <a href="#signup" class="btn-ghost">Claim Early Bird Trial →</a>
-  </div>
-
-  <div class="hero-trust">
-    <div class="trust-item">
-      <div class="trust-num">14<span>d</span></div>
-      <div class="trust-label">Free Trial</div>
-    </div>
-    <div class="trust-item">
-      <div class="trust-num">0<span>★</span></div>
-      <div class="trust-label" style="white-space:nowrap">Ads. Ever.</div>
-    </div>
-    <div class="trust-item">
-      <div class="trust-num">12<span>+</span></div>
-      <div class="trust-label">Genres</div>
-    </div>
-  </div>
 </section>
-
-<!-- TICKER -->
-<div class="ticker-wrap">
-  <div class="ticker">
-    <div class="ticker-item"><span class="ticker-dot"></span>Long-Haul Truckers</div>
-    <div class="ticker-item"><span class="ticker-dot"></span>Morning Commuters</div>
-    <div class="ticker-item"><span class="ticker-dot"></span>Home Makers</div>
-    <div class="ticker-item"><span class="ticker-dot"></span>Gym Goers</div>
-    <div class="ticker-item"><span class="ticker-dot"></span>Evening Walkers</div>
-    <div class="ticker-item"><span class="ticker-dot"></span>Road Trippers</div>
-    <div class="ticker-item"><span class="ticker-dot"></span>Night Shift Workers</div>
-    <div class="ticker-item"><span class="ticker-dot"></span>Me-Time Seekers</div>
-    <div class="ticker-item"><span class="ticker-dot"></span>Runners</div>
-    <div class="ticker-item"><span class="ticker-dot"></span>Chore Doers</div>
-    <div class="ticker-item"><span class="ticker-dot"></span>Weekend Drivers</div>
-    <div class="ticker-item"><span class="ticker-dot"></span>Gardeners</div>
-    <!-- dupe for loop -->
-    <div class="ticker-item"><span class="ticker-dot"></span>Long-Haul Truckers</div>
-    <div class="ticker-item"><span class="ticker-dot"></span>Morning Commuters</div>
-    <div class="ticker-item"><span class="ticker-dot"></span>Home Makers</div>
-    <div class="ticker-item"><span class="ticker-dot"></span>Gym Goers</div>
-    <div class="ticker-item"><span class="ticker-dot"></span>Evening Walkers</div>
-    <div class="ticker-item"><span class="ticker-dot"></span>Road Trippers</div>
-    <div class="ticker-item"><span class="ticker-dot"></span>Night Shift Workers</div>
-    <div class="ticker-item"><span class="ticker-dot"></span>Me-Time Seekers</div>
-    <div class="ticker-item"><span class="ticker-dot"></span>Runners</div>
-    <div class="ticker-item"><span class="ticker-dot"></span>Chore Doers</div>
-    <div class="ticker-item"><span class="ticker-dot"></span>Weekend Drivers</div>
-    <div class="ticker-item"><span class="ticker-dot"></span>Gardeners</div>
-  </div>
-</div>
 
 <!-- SAMPLE STORIES -->
 <section class="stories-section fade-up" id="stories">
   <div class="section-label">No Account Required</div>
-  <h2 class="section-title">Taste the story.</h2>
+  <h2 class="section-title">Taste the stories.</h2>
   <p class="section-sub">Three complete stories, yours right now. No signup. No credit card. Just press play.</p>
 
-  <div class="stories-grid">
-
-    <div class="story-card" onclick="playStory(0)">
-      <div class="story-thumb g-mystery">
-        <div style="font-size:52px;z-index:1;position:relative">🕵️</div>
-        <div class="play-circle">
-          <div class="play-icon-overlay">
-            <svg width="18" height="18" fill="white" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-          </div>
-        </div>
-        <div class="story-thumb-badge">Free</div>
-      </div>
-      <div class="story-body">
-        <div>
-          <div class="story-genre">Mystery</div>
-          <div class="story-title">The Last Call from Room 9</div>
-          <div class="story-desc">A motel clerk receives a desperate call at 2am — from a room that's been empty for three years.</div>
-        </div>
-        <div class="story-footer-row">
-          <span class="story-meta">28 min</span>
-          <button class="play-tap">
-            Play <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-          </button>
-        </div>
+  <div class="story-card">
+    <div class="story-cover cover-rosie">
+      <img src="https://vmyhlfeouzslixtkmddy.supabase.co/storage/v1/object/public/Covers/dog_lover_stories_1772655114.jpg" alt="When Rosie Came Home">
+      <div class="free-badge">FREE</div>
+      <div class="cover-play">
+        <div class="play-circle"><svg width="18" height="18" fill="white" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
       </div>
     </div>
-
-    <div class="story-card" onclick="playStory(1)">
-      <div class="story-thumb g-warm">
-        <div style="font-size:52px;z-index:1;position:relative">🌅</div>
-        <div class="play-circle">
-          <div class="play-icon-overlay">
-            <svg width="18" height="18" fill="white" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-          </div>
-        </div>
-        <div class="story-thumb-badge">Free</div>
+    <div class="story-title-bar">
+      <div class="story-genre">Drama · Heartwarming</div>
+      <div class="story-title">When Rosie Came Home</div>
+    </div>
+    <div class="card-progress"><div class="card-progress-bar" id="bar0"></div></div>
+    <div class="story-bottom">
+      <div class="story-desc-col">
+        <div class="story-desc">A tear-jerker about a dog, a soldier, and the moment that changes everything. Get out your handkerchief.</div>
+        <div class="story-meta">3 min · Daniel Wren</div>
       </div>
-      <div class="story-body">
-        <div>
-          <div class="story-genre">Heartwarming</div>
-          <div class="story-title">Miles Between Us</div>
-          <div class="story-desc">A trucker and a rest-stop waitress exchange letters for five years before either dares to speak.</div>
-        </div>
-        <div class="story-footer-row">
-          <span class="story-meta">22 min</span>
-          <button class="play-tap">
-            Play <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-          </button>
-        </div>
+      <button class="play-tap" id="btn0" onclick="toggleStory(0)">
+        <svg width="13" height="13" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg> Play
+      </button>
+    </div>
+  </div>
+
+  <div class="story-card">
+    <div class="story-cover cover-mystery">
+      <div class="cover-placeholder">🕵️</div>
+      <div class="free-badge">FREE</div>
+      <div class="cover-play">
+        <div class="play-circle"><svg width="18" height="18" fill="white" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
       </div>
     </div>
-
-    <div class="story-card" onclick="playStory(2)">
-      <div class="story-thumb g-doc">
-        <div style="font-size:52px;z-index:1;position:relative">🌌</div>
-        <div class="play-circle">
-          <div class="play-icon-overlay">
-            <svg width="18" height="18" fill="white" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-          </div>
-        </div>
-        <div class="story-thumb-badge">Free</div>
+    <div class="story-title-bar">
+      <div class="story-genre">Mystery · Murder</div>
+      <div class="story-title">The Delacroix Method</div>
+    </div>
+    <div class="card-progress"><div class="card-progress-bar" id="bar1"></div></div>
+    <div class="story-bottom">
+      <div class="story-desc-col">
+        <div class="story-desc">A forensic accountant stumbles onto a decades-old murder hidden inside a Paris estate's books — and the killer is still collecting rent.</div>
+        <div class="story-meta">6 Episodes · Series</div>
       </div>
-      <div class="story-body">
-        <div>
-          <div class="story-genre">Documentary</div>
-          <div class="story-title">From Nothing to Something</div>
-          <div class="story-desc">Thirteen billion years of cosmic history, told like a thriller. The origin of everything — including you.</div>
-        </div>
-        <div class="story-footer-row">
-          <span class="story-meta">19 min · Marc Postlewaite</span>
-          <button class="play-tap">
-            Play <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-          </button>
-        </div>
+      <button class="play-tap" id="btn1" onclick="toggleStory(1)">
+        <svg width="13" height="13" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg> Play
+      </button>
+    </div>
+  </div>
+
+  <div class="story-card">
+    <div class="story-cover cover-vanish">
+      <div class="cover-placeholder">🌑</div>
+      <div class="free-badge">FREE</div>
+      <div class="cover-play">
+        <div class="play-circle"><svg width="18" height="18" fill="white" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
       </div>
     </div>
-
+    <div class="story-title-bar">
+      <div class="story-genre">Thriller · Series</div>
+      <div class="story-title">The Vanishing Hour</div>
+    </div>
+    <div class="card-progress"><div class="card-progress-bar" id="bar2"></div></div>
+    <div class="story-bottom">
+      <div class="story-desc-col">
+        <div class="story-desc">Every night at 3am, someone disappears from the same small town — and the detective assigned to the case hasn't slept in days.</div>
+        <div class="story-meta">Series · New Episodes Weekly</div>
+      </div>
+      <button class="play-tap" id="btn2" onclick="toggleStory(2)">
+        <svg width="13" height="13" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg> Play
+      </button>
+    </div>
   </div>
 </section>
 
 <!-- QUALITY -->
 <section class="quality-section fade-up">
-  <div class="section-label">Why Endless Tales</div>
-  <h2 class="section-title">Production you can hear.</h2>
-  <div class="quality-items">
-    <div class="quality-item">
-      <div class="quality-icon">🎙</div>
-      <div class="quality-text">
-        <div class="quality-name">Full Cast, Real Performances</div>
-        <div class="quality-desc">Every story features multiple voice actors matched to each character — not a single narrator reading prose.</div>
+  <div style="padding: 40px 20px;">
+    <div class="section-label">Why Endless Tales</div>
+    <h2 class="section-title">Production you can hear.</h2>
+    <div class="quality-items">
+      <div class="quality-item">
+        <div class="quality-icon">🎙</div>
+        <div>
+          <div class="quality-name">Full Cast, Real Performances</div>
+          <div class="quality-desc">Every story features multiple voice actors matched to each character — not a single narrator reading prose.</div>
+        </div>
       </div>
-    </div>
-    <div class="quality-item">
-      <div class="quality-icon">🎵</div>
-      <div class="quality-text">
-        <div class="quality-name">Original Score & Sound Design</div>
-        <div class="quality-desc">Custom music and layered sound effects create a world you can see with your ears.</div>
+      <div class="quality-item">
+        <div class="quality-icon">🎵</div>
+        <div>
+          <div class="quality-name">Original Score & Sound Design</div>
+          <div class="quality-desc">Custom music and layered sound effects create a world you can see with your ears.</div>
+        </div>
       </div>
-    </div>
-    <div class="quality-item">
-      <div class="quality-icon">⏱</div>
-      <div class="quality-text">
-        <div class="quality-name">Timed for Your Drive</div>
-        <div class="quality-desc">Stories run 15, 30, 45, or 60 minutes — crafted to fit a commute, errand run, or workout, not to pad runtime.</div>
+      <div class="quality-item">
+        <div class="quality-icon">⏱</div>
+        <div>
+          <div class="quality-name">Timed for Your Drive</div>
+          <div class="quality-desc">Stories run 5, 15, 30, 45, or 60 minutes — crafted to fit your commute, workout, or me-time.</div>
+        </div>
       </div>
-    </div>
-    <div class="quality-item">
-      <div class="quality-icon">🚫</div>
-      <div class="quality-text">
-        <div class="quality-name">Zero Ads. Always.</div>
-        <div class="quality-desc">No mid-story interruptions. No upsells. The story plays start to finish, the way it was meant to be heard.</div>
+      <div class="quality-item">
+        <div class="quality-icon">🚫</div>
+        <div>
+          <div class="quality-name">Zero Ads. Always.</div>
+          <div class="quality-desc">No mid-story interruptions. No upsells. The story plays start to finish, the way it was meant to be heard.</div>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
 <!-- GENRES -->
-<section class="genres-section fade-up">
+<section class="fade-up" style="padding: 40px 20px;">
   <div class="section-label">The Catalog</div>
   <h2 class="section-title">Every mood.<br>Every mile.</h2>
-  <p class="section-sub">Whatever headspace you're in — there's a story waiting.</p>
-
-  <div class="genre-grid">
-    <div class="genre-tile wide g-mystery">
-      <div class="genre-bg"></div>
-      <div class="genre-overlay"></div>
-      <div class="genre-emoji">🔍</div>
-      <div class="genre-label"><span class="genre-name">Mystery & Crime</span></div>
-    </div>
-    <div class="genre-tile g-thriller">
-      <div class="genre-bg"></div>
-      <div class="genre-overlay"></div>
-      <div class="genre-emoji">⚡</div>
-      <div class="genre-label"><span class="genre-name">Thriller</span></div>
-    </div>
-    <div class="genre-tile g-horror">
-      <div class="genre-bg"></div>
-      <div class="genre-overlay"></div>
-      <div class="genre-emoji">🌑</div>
-      <div class="genre-label"><span class="genre-name">Horror</span></div>
-    </div>
-    <div class="genre-tile g-romance">
-      <div class="genre-bg"></div>
-      <div class="genre-overlay"></div>
-      <div class="genre-emoji">💌</div>
-      <div class="genre-label"><span class="genre-name">Romance</span></div>
-    </div>
-    <div class="genre-tile g-warm">
-      <div class="genre-bg"></div>
-      <div class="genre-overlay"></div>
-      <div class="genre-emoji">🌅</div>
-      <div class="genre-label"><span class="genre-name">Heartwarming</span></div>
-    </div>
-    <div class="genre-tile g-doc">
-      <div class="genre-bg"></div>
-      <div class="genre-overlay"></div>
-      <div class="genre-emoji">🎙</div>
-      <div class="genre-label"><span class="genre-name">Documentary</span></div>
-    </div>
-    <div class="genre-tile g-edu">
-      <div class="genre-bg"></div>
-      <div class="genre-overlay"></div>
-      <div class="genre-emoji">🧠</div>
-      <div class="genre-label"><span class="genre-name">Educational</span></div>
-    </div>
-    <div class="genre-tile g-scifi">
-      <div class="genre-bg"></div>
-      <div class="genre-overlay"></div>
-      <div class="genre-emoji">🚀</div>
-      <div class="genre-label"><span class="genre-name">Sci-Fi</span></div>
-    </div>
+  <div class="genre-scroll">
+    <div class="genre-pill gp-mystery">🔍 Mystery &amp; Crime</div>
+    <div class="genre-pill gp-thriller">⚡ Thriller</div>
+    <div class="genre-pill gp-horror">🌑 Horror</div>
+    <div class="genre-pill gp-romance">💌 Romance</div>
+    <div class="genre-pill gp-warm">🌅 Heartwarming</div>
+    <div class="genre-pill gp-doc">🎙 Documentary</div>
+    <div class="genre-pill gp-edu">🧠 Educational</div>
+    <div class="genre-pill gp-scifi">🚀 Sci-Fi</div>
+    <div class="genre-pill gp-western">🤠 Western</div>
+    <div class="genre-pill gp-super">👻 Supernatural</div>
+    <div class="genre-pill gp-comedy">😂 Comedy</div>
+    <div class="genre-pill gp-crime">🌍 True Crime</div>
   </div>
+  <p class="genre-tagline">Something for every mile, every mood, every moment of free ears.</p>
 </section>
 
 <!-- PROOF -->
@@ -1140,213 +542,151 @@
   <div class="proof-row">
     <div class="proof-item">
       <div class="proof-num">14<sup>d</sup></div>
-      <div class="proof-text">
+      <div>
         <div class="proof-name">Completely Free to Start</div>
         <div class="proof-desc">Your card is saved, never charged until after your trial ends.</div>
       </div>
     </div>
     <div class="proof-item">
-      <div class="proof-num">∞</div>
-      <div class="proof-text">
-        <div class="proof-name">Full Access During Trial</div>
-        <div class="proof-desc">Every story, every series, every genre. Nothing locked.</div>
+      <div class="proof-num">0<sup>★</sup></div>
+      <div>
+        <div class="proof-name">No Ads. Ever.</div>
+        <div class="proof-desc">We don't sell your attention. We sell stories. That's it.</div>
       </div>
     </div>
     <div class="proof-item">
-      <div class="proof-num">0</div>
-      <div class="proof-text">
-        <div class="proof-name">Cancellation Friction</div>
-        <div class="proof-desc">One tap to cancel. No retention tricks, no guilt trips.</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- HOW IT WORKS -->
-<section class="how-section fade-up">
-  <div class="section-label">Simple as pressing play</div>
-  <h2 class="section-title">How it works.</h2>
-  <div class="how-steps">
-    <div class="how-step">
-      <div class="step-num-badge">01</div>
-      <div class="how-step-content">
-        <div class="step-title">Drop your email</div>
-        <div class="step-desc">Claim your spot below. No card needed yet — just your email.</div>
-      </div>
-    </div>
-    <div class="how-step">
-      <div class="step-num-badge">02</div>
-      <div class="how-step-content">
-        <div class="step-title">We launch April 1</div>
-        <div class="step-desc">You'll get a link the morning of launch. Create your account and start listening immediately.</div>
-      </div>
-    </div>
-    <div class="how-step">
-      <div class="step-num-badge">03</div>
-      <div class="how-step-content">
-        <div class="step-title">14 days on us</div>
-        <div class="step-desc">Explore everything — no card charge until your free period ends.</div>
-      </div>
-    </div>
-    <div class="how-step">
-      <div class="step-num-badge">04</div>
-      <div class="how-step-content">
-        <div class="step-title">Love it or leave</div>
-        <div class="step-desc">Keep going for $7.99/mo — or cancel in one tap. No hard feelings.</div>
+      <div class="proof-num">∞</div>
+      <div>
+        <div class="proof-name">New Stories Weekly</div>
+        <div class="proof-desc">Fresh releases every week. Never run out of something to listen to.</div>
       </div>
     </div>
   </div>
 </section>
 
 <!-- SIGNUP -->
-<section class="signup-section" id="signup">
-  <div class="signup-glow"></div>
-  <div class="signup-inner fade-up" id="signupForm">
-    <div class="offer-pills">
-      <div class="offer-pill"><span>🎁</span> 14 Days Free</div>
-      <div class="offer-pill"><span>🔓</span> Full Access</div>
-      <div class="offer-pill"><span>✂️</span> Cancel Anytime</div>
-    </div>
-
-    <h2 class="signup-title">Your first two<br>weeks are <em>on us.</em></h2>
-    <p class="signup-sub">
-      Join before April 1st and lock in early access. <strong>No charge for 14 days.</strong> After that, just $7.99/month to keep the stories coming.
-    </p>
-
-    <input type="email" class="email-field" id="emailInput" placeholder="your@email.com" inputmode="email" autocomplete="email" />
-    <button class="signup-btn" onclick="handleSignup()">Claim My Free 14 Days →</button>
-    <div class="signup-fine">
-      No spam ever. We'll email you once on April 1st with your link.<br>
-      <a href="#">Privacy Policy</a> &nbsp;·&nbsp; Cancel anytime after trial.
-    </div>
+<section class="signup-section fade-up">
+  <div class="section-label" style="justify-content: center;">Join the Waitlist</div>
+  <h2 class="section-title">Be first in line.</h2>
+  <p class="section-sub">Early bird members get 30 days free and locked-in pricing forever.</p>
+  <div class="email-row">
+    <input class="email-input" type="email" placeholder="your@email.com">
+    <button class="btn-primary">Claim Early Access →</button>
   </div>
-
-  <div class="success-box" id="successBox">
-    <span class="success-emoji">🎧</span>
-    <div class="success-title">You're on the list.</div>
-    <div class="success-sub">
-      We'll email you on April 1st with your early access link.<br><br>
-      In the meantime — <a href="#stories" onclick="scrollTo('stories')">go listen to a free story ↑</a>
-    </div>
-  </div>
+  <p class="fine-print">No spam. Unsubscribe any time. Launching April 1, 2026.</p>
 </section>
 
 <!-- FOOTER -->
 <footer>
   <div class="footer-logo">Endless<span>Tales</span></div>
-  <div class="footer-links">
-    <a href="#">Privacy</a>
-    <a href="#">Terms</a>
-    <a href="#">Contact</a>
-  </div>
-  <div class="footer-copy">© 2026 Wonder Books Press · endless-tales.com</div>
+  <p class="footer-text">© 2026 Wonder Books Press. All rights reserved.<br>Audio stories for ears in motion.</p>
 </footer>
 
-<!-- MINI PLAYER -->
-<div class="mini-player" id="miniPlayer">
-  <div class="nudge" id="nudge" onclick="scrollTo('signup')">👆 Enjoying this? Get 14 days free!</div>
-  <div class="mini-cover" id="miniCover">🎭</div>
-  <div class="mini-info">
-    <div class="mini-title" id="miniTitle">Story</div>
-    <div class="mini-sub" id="miniSub">GENRE · 0 MIN</div>
-  </div>
-  <button class="mini-btn" id="playBtn" onclick="togglePlay()">
-    <svg id="playIcon" width="20" height="20" fill="white" viewBox="0 0 24 24">
-      <path d="M6 4h4v16H6zm8 0h4v16h-4z"/>
-    </svg>
-  </button>
-  <button class="mini-close-btn" onclick="closePlayer()">
-    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-      <path d="M18 6L6 18M6 6l12 12"/>
-    </svg>
-  </button>
-  <div class="mini-bar" id="miniBar"></div>
-</div>
+
 
 <script>
-  // Smooth scroll helper
-  function scrollTo(id) {
-    document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
-  }
-
-  // Intersection observer for fade-up
   const io = new IntersectionObserver(entries => {
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
   }, { threshold: 0.12 });
   document.querySelectorAll('.fade-up').forEach(el => io.observe(el));
 
-  // Stories data
   const stories = [
-    { title: 'The Last Call from Room 9', sub: 'MYSTERY · 28 MIN', cover: '🕵️', mins: 28 },
-    { title: 'Miles Between Us',           sub: 'HEARTWARMING · 22 MIN', cover: '🌅', mins: 22 },
-    { title: 'From Nothing to Something',  sub: 'DOCUMENTARY · 19 MIN', cover: '🌌', mins: 19 },
+    { title: 'When Rosie Came Home', sub: 'DRAMA · DANIEL WREN', cover: 'https://vmyhlfeouzslixtkmddy.supabase.co/storage/v1/object/public/Covers/dog_lover_stories_1772655114.jpg', audio: 'https://vmyhlfeouzslixtkmddy.supabase.co/storage/v1/object/public/audio/dog_lover_stories_1772655114.mp3', mins: 3 },
+    { title: 'The Delacroix Method', sub: 'MYSTERY · 6 EPISODES', cover: '🕵️', mins: 28 },
+    { title: 'The Vanishing Hour', sub: 'THRILLER · SERIES', cover: '🌑', mins: 22 },
   ];
 
-  let current = null, playing = false, prog = 0, timer = null, nudgeShown = false;
+  // State per card: null | 'playing' | 'paused' | 'done'
+  const state = [null, null, null];
+  let audioEl = null;
+  let activeIdx = null;
+  let timer = null;
+  const prog = [0, 0, 0];
 
-  function playStory(idx) {
-    current = idx;
-    playing = true;
-    prog = 0;
+  const PLAY_ICON  = '<svg width="13" height="13" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>';
+  const PAUSE_ICON = '<svg width="13" height="13" fill="currentColor" viewBox="0 0 24 24"><path d="M6 4h4v16H6zm8 0h4v16h-4z"/></svg>';
+
+  function setBtn(idx) {
+    const btn = document.getElementById('btn' + idx);
+    const s = state[idx];
+    btn.className = 'play-tap' + (s === 'playing' ? ' playing' : s === 'done' ? ' done' : '');
+    if (s === 'playing')      btn.innerHTML = PAUSE_ICON + ' Pause';
+    else if (s === 'paused')  btn.innerHTML = PLAY_ICON  + ' Resume';
+    else if (s === 'done')    btn.innerHTML = PLAY_ICON  + ' Again';
+    else                      btn.innerHTML = PLAY_ICON  + ' Play';
+  }
+
+  function stopActive() {
+    if (activeIdx === null) return;
+    clearInterval(timer);
+    if (audioEl) { audioEl.pause(); }
+    if (state[activeIdx] === 'playing') state[activeIdx] = 'paused';
+    setBtn(activeIdx);
+    activeIdx = null;
+  }
+
+  function toggleStory(idx) {
     const s = stories[idx];
-    document.getElementById('miniCover').textContent = s.cover;
-    document.getElementById('miniTitle').textContent = s.title;
-    document.getElementById('miniSub').textContent = s.sub;
-    document.getElementById('miniBar').style.width = '0%';
-    document.getElementById('playIcon').innerHTML = '<path d="M6 4h4v16H6zm8 0h4v16h-4z"/>';
-    document.getElementById('miniPlayer').classList.add('up');
-    clearInterval(timer);
-    const dur = s.mins * 60;
-    timer = setInterval(() => {
-      if (!playing) return;
-      prog = Math.min(prog + 100 / dur, 100);
-      document.getElementById('miniBar').style.width = prog + '%';
-      if (prog >= 100) { clearInterval(timer); showNudge(); }
-    }, 1000);
-    if (!nudgeShown) setTimeout(() => { if (playing) showNudge(); }, 10000);
-  }
 
-  function showNudge() {
-    if (nudgeShown) return;
-    nudgeShown = true;
-    const n = document.getElementById('nudge');
-    n.classList.add('show');
-    setTimeout(() => n.classList.remove('show'), 6000);
-  }
-
-  function togglePlay() {
-    playing = !playing;
-    document.getElementById('playIcon').innerHTML = playing
-      ? '<path d="M6 4h4v16H6zm8 0h4v16h-4z"/>'
-      : '<path d="M8 5v14l11-7z"/>';
-  }
-
-  function closePlayer() {
-    document.getElementById('miniPlayer').classList.remove('up');
-    clearInterval(timer);
-    playing = false; current = null;
-  }
-
-  // Email signup
-  function handleSignup() {
-    const val = document.getElementById('emailInput').value.trim();
-    if (!val || !val.includes('@') || !val.includes('.')) {
-      const f = document.getElementById('emailInput');
-      f.style.borderColor = '#dc2626';
-      f.focus();
-      return;
+    // If another story is playing, pause it first
+    if (activeIdx !== null && activeIdx !== idx) {
+      stopActive();
     }
-    document.getElementById('signupForm').style.display = 'none';
-    document.getElementById('successBox').classList.add('show');
-    // TODO: POST to your signup API / Supabase
-  }
 
-  document.getElementById('emailInput').addEventListener('keydown', e => {
-    if (e.key === 'Enter') handleSignup();
-  });
-  document.getElementById('emailInput').addEventListener('input', function() {
-    this.style.borderColor = 'rgba(255,255,255,0.07)';
-  });
+    if (state[idx] === null || state[idx] === 'done') {
+      // Fresh start
+      prog[idx] = 0;
+      document.getElementById('bar' + idx).style.width = '0%';
+      state[idx] = 'playing';
+      activeIdx = idx;
+      if (audioEl) { audioEl.pause(); audioEl = null; }
+      if (s.audio) {
+        audioEl = new Audio(s.audio);
+        audioEl.play();
+        audioEl.addEventListener('timeupdate', () => {
+          if (activeIdx !== idx || !audioEl) return;
+          prog[idx] = (audioEl.currentTime / audioEl.duration) * 100 || 0;
+          document.getElementById('bar' + idx).style.width = prog[idx] + '%';
+        });
+        audioEl.addEventListener('ended', () => {
+          state[idx] = 'done';
+          activeIdx = null;
+          setBtn(idx);
+        });
+      } else {
+        // Simulated timer for stories without audio
+        const dur = s.mins * 60;
+        timer = setInterval(() => {
+          if (state[idx] !== 'playing') return;
+          prog[idx] = Math.min(prog[idx] + 100 / dur, 100);
+          document.getElementById('bar' + idx).style.width = prog[idx] + '%';
+          if (prog[idx] >= 100) { clearInterval(timer); state[idx] = 'done'; setBtn(idx); }
+        }, 1000);
+      }
+    } else if (state[idx] === 'playing') {
+      // Pause
+      clearInterval(timer);
+      if (audioEl) audioEl.pause();
+      state[idx] = 'paused';
+      activeIdx = null;
+    } else if (state[idx] === 'paused') {
+      // Resume
+      state[idx] = 'playing';
+      activeIdx = idx;
+      if (audioEl) {
+        audioEl.play();
+      } else if (!s.audio) {
+        const dur = s.mins * 60;
+        timer = setInterval(() => {
+          if (state[idx] !== 'playing') return;
+          prog[idx] = Math.min(prog[idx] + 100 / dur, 100);
+          document.getElementById('bar' + idx).style.width = prog[idx] + '%';
+          if (prog[idx] >= 100) { clearInterval(timer); state[idx] = 'done'; setBtn(idx); }
+        }, 1000);
+      }
+    }
+    setBtn(idx);
+  }
 </script>
 </body>
 </html>
