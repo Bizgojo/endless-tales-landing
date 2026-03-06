@@ -1000,7 +1000,8 @@
     </div>
 
     <div class="story-card" onclick="playStory(2)">
-      <div class="story-thumb g-warm" style="background-image:url('https://vmyhlfeouzslixtkmddy.supabase.co/storage/v1/object/public/Covers/dog_lover_stories_1772655114.jpg');background-size:cover;background-position:center">
+      <div class="story-thumb g-doc">
+        <div style="font-size:52px;z-index:1;position:relative">🌌</div>
         <div class="play-circle">
           <div class="play-icon-overlay">
             <svg width="18" height="18" fill="white" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
@@ -1010,12 +1011,12 @@
       </div>
       <div class="story-body">
         <div>
-          <div class="story-genre">Drama · Heartwarming</div>
-          <div class="story-title">When Rosie Came Home</div>
-          <div class="story-desc">A tear-jerker about a dog, a soldier, and the moment that changes everything. Get out your hankerchief.</div>
+          <div class="story-genre">Documentary · Science</div>
+          <div class="story-title">Origin 2.0: From Nothing to Something</div>
+          <div class="story-desc">Thirteen billion years of cosmic history, told like a thriller. The origin of everything — including you.</div>
         </div>
         <div class="story-footer-row">
-          <span class="story-meta">3 min · Daniel Wren</span>
+          <span class="story-meta">19 Episodes · Marc Postlewaite</span>
           <button class="play-tap">
             Play <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
           </button>
@@ -1231,7 +1232,7 @@
   const stories = [
     { title: 'The Delacroix Method', sub: 'MYSTERY · 6 EPISODES', cover: '🕵️', mins: 28 },
     { title: 'The Vanishing Hour',   sub: 'THRILLER · SERIES', cover: '🌑', mins: 22 },
-    { title: 'When Rosie Came Home', sub: 'DRAMA · DANIEL WREN', cover: 'https://vmyhlfeouzslixtkmddy.supabase.co/storage/v1/object/public/Covers/dog_lover_stories_1772655114.jpg', audio: 'https://vmyhlfeouzslixtkmddy.supabase.co/storage/v1/object/public/audio/dog_lover_stories_1772655114.mp3', mins: 3 },
+    { title: 'Origin 2.0: From Nothing to Something', sub: 'DOCUMENTARY · 19 EPISODES', cover: '🌌', mins: 19 },
   ];
 
   let current = null, playing = false, prog = 0, timer = null, nudgeShown = false;
@@ -1276,24 +1277,6 @@
     if (!nudgeShown) setTimeout(() => { if (playing) showNudge(); }, 10000);
   }
 
-      audioEl.addEventListener('timeupdate', () => {
-        if (!audioEl) return;
-        prog = (audioEl.currentTime / audioEl.duration) * 100 || 0;
-        document.getElementById('miniBar').style.width = prog + '%';
-      });
-      audioEl.addEventListener('ended', () => { clearInterval(timer); showNudge(); });
-    } else {
-      const dur = s.mins * 60;
-      timer = setInterval(() => {
-        if (!playing) return;
-        prog = Math.min(prog + 100 / dur, 100);
-        document.getElementById('miniBar').style.width = prog + '%';
-        if (prog >= 100) { clearInterval(timer); showNudge(); }
-      }, 1000);
-    }
-    if (!nudgeShown) setTimeout(() => { if (playing) showNudge(); }, 10000);
-  }
-
   function showNudge() {
     if (nudgeShown) return;
     nudgeShown = true;
@@ -1304,7 +1287,6 @@
 
   function togglePlay() {
     playing = !playing;
-    if (audioEl) { playing ? audioEl.play() : audioEl.pause(); }
     document.getElementById('playIcon').innerHTML = playing
       ? '<path d="M6 4h4v16H6zm8 0h4v16h-4z"/>'
       : '<path d="M8 5v14l11-7z"/>';
