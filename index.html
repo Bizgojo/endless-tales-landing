@@ -154,7 +154,7 @@
   .hero-sub {
     font-size: 17px;
     line-height: 1.65;
-    color: rgba(255,255,255,0.90);
+    color: rgba(255,255,255,0.55);
     margin-bottom: 36px;
     font-weight: 300;
     max-width: 480px;
@@ -187,7 +187,7 @@
 
   .btn-ghost {
     display: flex; align-items: center; justify-content: center; gap: 8px;
-    color: rgba(255,255,255,0.90);
+    color: rgba(255,255,255,0.55);
     font-size: 15px;
     font-weight: 500;
     cursor: pointer;
@@ -220,7 +220,7 @@
   .trust-num span { color: var(--ember); }
   .trust-label {
     font-size: 11px;
-    color: rgba(255,255,255,0.75);
+    color: rgba(255,255,255,0.35);
     letter-spacing: 0.08em;
     text-transform: uppercase;
     font-family: 'DM Mono', monospace;
@@ -247,7 +247,7 @@
     font-size: 11px;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: rgba(255,255,255,0.90);
+    color: rgba(255,255,255,0.3);
     flex-shrink: 0;
   }
   .ticker-dot { width: 4px; height: 4px; background: var(--ember); border-radius: 50%; }
@@ -260,7 +260,7 @@
   .section-label {
     display: flex; align-items: center; gap: 10px;
     font-family: 'DM Mono', monospace;
-    font-size: 13px;
+    font-size: 11px;
     letter-spacing: 0.16em;
     text-transform: uppercase;
     color: var(--ember);
@@ -282,7 +282,7 @@
   }
   .section-sub {
     font-size: 16px;
-    color: rgba(255,255,255,0.85);
+    color: rgba(255,255,255,0.45);
     line-height: 1.65;
     font-weight: 300;
     margin-bottom: 36px;
@@ -304,14 +304,13 @@
     -webkit-tap-highlight-color: transparent;
     transition: border-color 0.25s, transform 0.2s;
     display: flex;
-    flex-direction: column;
     align-items: stretch;
   }
   .story-card:last-child { margin-bottom: 0; }
   .story-card:active { transform: scale(0.99); border-color: var(--border-ember); }
 
   .story-thumb {
-    width: 100%;
+    width: 110px;
     flex-shrink: 0;
     position: relative;
     display: flex; align-items: center; justify-content: center;
@@ -372,7 +371,7 @@
   }
   .story-desc {
     font-size: 13px;
-    color: rgba(255,255,255,0.82);
+    color: rgba(255,255,255,0.42);
     line-height: 1.55;
     font-weight: 300;
     margin-bottom: 12px;
@@ -387,7 +386,7 @@
   .story-meta {
     font-family: 'DM Mono', monospace;
     font-size: 11px;
-    color: rgba(255,255,255,0.65);
+    color: rgba(255,255,255,0.28);
   }
   .play-tap {
     display: flex; align-items: center; gap: 5px;
@@ -436,51 +435,62 @@
   }
   .quality-desc {
     font-size: 14px;
-    color: rgba(255,255,255,0.78);
+    color: rgba(255,255,255,0.38);
     line-height: 1.6;
     font-weight: 300;
   }
 
   /* ── GENRES ── */
   .genres-section {
-    padding: 48px 20px 56px;
+    padding: 64px 20px 72px;
     background: var(--ink);
   }
-  .genre-scroll {
-    display: flex;
-    flex-wrap: wrap;
+  .genre-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     gap: 10px;
   }
-  .genre-pill {
-    display: inline-flex; align-items: center; gap: 8px;
-    padding: 12px 20px;
-    border-radius: 100px;
-    border: 1px solid rgba(255,255,255,0.12);
-    background: rgba(255,255,255,0.05);
-    font-size: 15px;
-    font-weight: 500;
-    color: rgba(255,255,255,0.92);
-    cursor: default;
-    white-space: nowrap;
-    transition: all 0.2s;
+  .genre-tile {
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+    aspect-ratio: 3/2;
+    display: flex; align-items: flex-end;
+    border: 1px solid var(--border);
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    transition: transform 0.2s;
   }
-  .genre-pill.featured { background: var(--ember); border-color: var(--ember); color: white; font-weight: 700; }
-  .genre-pill.gp-blue   { background: rgba(37,99,235,0.18);  border-color: rgba(37,99,235,0.35); }
-  .genre-pill.gp-purple { background: rgba(147,51,234,0.18); border-color: rgba(147,51,234,0.35); }
-  .genre-pill.gp-pink   { background: rgba(219,39,119,0.18); border-color: rgba(219,39,119,0.35); }
-  .genre-pill.gp-green  { background: rgba(22,163,74,0.18);  border-color: rgba(22,163,74,0.35); }
-  .genre-pill.gp-red    { background: rgba(185,28,28,0.18);  border-color: rgba(185,28,28,0.35); }
-  .genre-pill.gp-teal   { background: rgba(8,145,178,0.18);  border-color: rgba(8,145,178,0.35); }
-  .genre-pill.gp-gold   { background: rgba(201,168,76,0.18); border-color: rgba(201,168,76,0.35); }
-  .genre-pill.gp-amber  { background: rgba(180,83,9,0.18);   border-color: rgba(180,83,9,0.35); }
-  .genre-tagline {
-    font-size: 15px;
-    color: rgba(255,255,255,0.50);
-    line-height: 1.65;
-    margin-top: 20px;
-    font-weight: 300;
-    font-style: italic;
+  .genre-tile:active { transform: scale(0.97); }
+  .genre-tile.wide { grid-column: span 2; aspect-ratio: 16/6; }
+  .genre-bg { position: absolute; inset: 0; }
+  .genre-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.1) 60%, transparent 100%);
   }
+  .genre-label { position: relative; z-index: 1; padding: 12px 14px; width: 100%; }
+  .genre-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    font-weight: 700;
+    display: block;
+    line-height: 1.2;
+  }
+  .genre-tile.wide .genre-name { font-size: 22px; }
+  .genre-emoji {
+    position: absolute; top: 12px; right: 12px;
+    font-size: 22px; opacity: 0.7;
+  }
+  .genre-tile.wide .genre-emoji { font-size: 30px; }
+
+  .g-mystery  { background: linear-gradient(135deg,#0d0d2b,#1a1040); }
+  .g-thriller { background: linear-gradient(135deg,#1a0505,#2d0a0a); }
+  .g-romance  { background: linear-gradient(135deg,#1a0510,#2d0a1f); }
+  .g-horror   { background: linear-gradient(135deg,#080808,#1a0505); }
+  .g-doc      { background: linear-gradient(135deg,#031520,#062840); }
+  .g-warm     { background: linear-gradient(135deg,#1a1005,#2d1f0a); }
+  .g-edu      { background: linear-gradient(135deg,#051a0a,#0a2d12); }
+  .g-scifi    { background: linear-gradient(135deg,#050d1a,#0a1a2d); }
 
   /* ── PROOF ── */
   .proof-section {
@@ -520,7 +530,7 @@
   }
   .proof-desc {
     font-size: 13px;
-    color: rgba(255,255,255,0.78);
+    color: rgba(255,255,255,0.38);
     line-height: 1.5;
     font-weight: 300;
   }
@@ -563,7 +573,7 @@
   }
   .step-desc {
     font-size: 14px;
-    color: rgba(255,255,255,0.78);
+    color: rgba(255,255,255,0.38);
     line-height: 1.65;
     font-weight: 300;
   }
@@ -613,7 +623,7 @@
 
   .signup-sub {
     font-size: 16px;
-    color: rgba(255,255,255,0.85);
+    color: rgba(255,255,255,0.45);
     line-height: 1.65;
     font-weight: 300;
     margin-bottom: 32px;
@@ -634,7 +644,7 @@
     transition: border-color 0.2s;
     -webkit-appearance: none;
   }
-  .email-field::placeholder { color: rgba(255,255,255,0.65); }
+  .email-field::placeholder { color: rgba(255,255,255,0.28); }
   .email-field:focus { border-color: var(--ember); }
 
   .signup-btn {
@@ -656,14 +666,14 @@
   .signup-btn:active { background: var(--ember2); transform: scale(0.99); }
 
   .signup-fine {
-    font-size: 13px;
-    color: rgba(255,255,255,0.70);
+    font-size: 12px;
+    color: rgba(255,255,255,0.22);
     font-family: 'DM Mono', monospace;
     letter-spacing: 0.04em;
     line-height: 1.7;
     text-align: center;
   }
-  .signup-fine a { color: rgba(255,255,255,0.90); text-decoration: none; }
+  .signup-fine a { color: rgba(255,255,255,0.35); text-decoration: none; }
 
   /* Success */
   .success-box {
@@ -681,7 +691,7 @@
   }
   .success-sub {
     font-size: 15px;
-    color: rgba(255,255,255,0.85);
+    color: rgba(255,255,255,0.45);
     line-height: 1.65;
     font-weight: 300;
   }
@@ -707,13 +717,13 @@
   }
   .footer-links a {
     font-size: 12px;
-    color: rgba(255,255,255,0.65);
+    color: rgba(255,255,255,0.28);
     text-decoration: none;
     font-family: 'DM Mono', monospace;
   }
   .footer-copy {
     font-size: 11px;
-    color: rgba(255,255,255,0.45);
+    color: rgba(255,255,255,0.15);
     font-family: 'DM Mono', monospace;
   }
 
@@ -752,7 +762,7 @@
   }
   .mini-sub {
     font-size: 11px;
-    color: rgba(255,255,255,0.78);
+    color: rgba(255,255,255,0.38);
     font-family: 'DM Mono', monospace;
     letter-spacing: 0.05em;
   }
@@ -769,7 +779,7 @@
   .mini-btn:active { background: var(--ember2); }
   .mini-close-btn {
     background: none; border: none;
-    color: rgba(255,255,255,0.70);
+    color: rgba(255,255,255,0.3);
     cursor: pointer; padding: 8px; flex-shrink: 0;
     -webkit-tap-highlight-color: transparent;
   }
@@ -826,7 +836,8 @@
     .proof-section, .how-section, .signup-section { padding-left: 40px; padding-right: 40px; }
     .hero-btn-stack { flex-direction: row; }
     .btn-primary, .btn-ghost { width: auto; }
-
+    .genre-grid { grid-template-columns: repeat(3, 1fr); }
+    .genre-tile.wide { grid-column: span 3; }
     .proof-row { flex-direction: row; }
     .proof-item { border-bottom: none; border-right: 1px solid var(--border); flex: 1; flex-direction: column; align-items: flex-start; gap: 10px; }
     .proof-item:last-child { border-right: none; }
@@ -838,12 +849,14 @@
     .stories-section, .genres-section, .quality-section,
     .proof-section, .how-section, .signup-section { padding-left: 56px; padding-right: 56px; }
     .hero-headline { font-size: clamp(56px, 6vw, 80px); }
-
+    .genre-grid { grid-template-columns: repeat(4, 1fr); }
+    .genre-tile.wide { grid-column: span 2; aspect-ratio: 3/2; }
     .how-steps { flex-direction: row; gap: 0; }
     .how-step { flex-direction: column; gap: 16px; padding: 32px; border-bottom: none; border-right: 1px solid var(--border); flex: 1; }
     .how-step:last-child { border-right: none; }
     .step-title { padding-top: 0; }
     .story-card { max-width: 480px; }
+    .stories-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
     .story-card { flex-direction: column; margin-bottom: 0; }
     .story-thumb { width: 100%; min-height: 200px; aspect-ratio: 1; }
     .story-thumb .play-icon-overlay { opacity: 0; }
@@ -856,7 +869,7 @@
 <!-- NAV -->
 <nav>
   <a href="#" class="nav-logo">Endless<span>Tales</span></a>
-  <button class="nav-cta" onclick="scrollToSection('signup')">Get 14 Days Free</button>
+  <button class="nav-cta" onclick="scrollTo('signup')">Get 14 Days Free</button>
 </nav>
 
 <!-- HERO -->
@@ -887,7 +900,7 @@
   </p>
 
   <div class="hero-btn-stack">
-    <button class="btn-primary" onclick="scrollToSection('stories')">
+    <button class="btn-primary" onclick="scrollTo('stories')">
       <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
       Listen Free Now
     </button>
@@ -950,28 +963,6 @@
   <div class="stories-grid">
 
     <div class="story-card" onclick="playStory(0)">
-      <div class="story-thumb g-warm" style="background-image:url('https://vmyhlfeouzslixtkmddy.supabase.co/storage/v1/object/public/Covers/dog_lover_stories_1772655114.jpg');background-size:cover;background-position:center">
-        <div class="play-circle">
-          <div class="play-icon-overlay">
-            <svg width="18" height="18" fill="white" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-          </div>
-        </div>
-        <div class="story-thumb-badge">Free</div>
-      </div>
-      <div class="story-body">
-        <div>
-          <div class="story-genre">Drama · Heartwarming</div>
-          <div class="story-title">When Rosie Came Home</div>
-          <div class="story-desc">A tear-jerker about a dog, a soldier, and the moment that changes everything. Get out your handkerchief.</div>
-        </div>
-        <div class="story-footer-row">
-          <span class="story-meta">3 min · Daniel Wren</span>
-          <button class="play-tap">
-            Play <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-          </button>
-        </div>
-      </div>
-    <div class="story-card" onclick="playStory(1)">
       <div class="story-thumb g-mystery">
         <div style="font-size:52px;z-index:1;position:relative">🕵️</div>
         <div class="play-circle">
@@ -983,12 +974,12 @@
       </div>
       <div class="story-body">
         <div>
-          <div class="story-genre">Mystery · Murder</div>
-          <div class="story-title">The Delacroix Method</div>
-          <div class="story-desc">A forensic accountant stumbles onto a decades-old murder hidden inside a Paris estate's books — and the killer is still collecting rent.</div>
+          <div class="story-genre">Mystery</div>
+          <div class="story-title">The Last Call from Room 9</div>
+          <div class="story-desc">A motel clerk receives a desperate call at 2am — from a room that's been empty for three years.</div>
         </div>
         <div class="story-footer-row">
-          <span class="story-meta">6 Episodes · Series</span>
+          <span class="story-meta">28 min</span>
           <button class="play-tap">
             Play <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
           </button>
@@ -996,7 +987,7 @@
       </div>
     </div>
 
-    <div class="story-card" onclick="playStory(2)">
+    <div class="story-card" onclick="playStory(1)">
       <div class="story-thumb g-warm">
         <div style="font-size:52px;z-index:1;position:relative">🌅</div>
         <div class="play-circle">
@@ -1008,12 +999,12 @@
       </div>
       <div class="story-body">
         <div>
-          <div class="story-genre">Thriller · Series</div>
-          <div class="story-title">The Vanishing Hour</div>
-          <div class="story-desc">Every night at 3am, someone disappears from the same small town — and the detective assigned to the case hasn't slept in days.</div>
+          <div class="story-genre">Heartwarming</div>
+          <div class="story-title">Miles Between Us</div>
+          <div class="story-desc">A trucker and a rest-stop waitress exchange letters for five years before either dares to speak.</div>
         </div>
         <div class="story-footer-row">
-          <span class="story-meta">Series · New Episodes Weekly</span>
+          <span class="story-meta">22 min</span>
           <button class="play-tap">
             Play <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
           </button>
@@ -1021,6 +1012,29 @@
       </div>
     </div>
 
+    <div class="story-card" onclick="playStory(2)">
+      <div class="story-thumb g-doc">
+        <div style="font-size:52px;z-index:1;position:relative">🌌</div>
+        <div class="play-circle">
+          <div class="play-icon-overlay">
+            <svg width="18" height="18" fill="white" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+        </div>
+        <div class="story-thumb-badge">Free</div>
+      </div>
+      <div class="story-body">
+        <div>
+          <div class="story-genre">Documentary</div>
+          <div class="story-title">From Nothing to Something</div>
+          <div class="story-desc">Thirteen billion years of cosmic history, told like a thriller. The origin of everything — including you.</div>
+        </div>
+        <div class="story-footer-row">
+          <span class="story-meta">19 min · Marc Postlewaite</span>
+          <button class="play-tap">
+            Play <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          </button>
+        </div>
+      </div>
     </div>
 
   </div>
@@ -1049,7 +1063,7 @@
       <div class="quality-icon">⏱</div>
       <div class="quality-text">
         <div class="quality-name">Timed for Your Drive</div>
-        <div class="quality-desc">Stories run 5, 15, 30, 45, or 60 minutes — crafted to fit your drive, workout, chores, or me-time. Not a minute of padding.</div>
+        <div class="quality-desc">Stories run 15, 30, 45, or 60 minutes — crafted to fit a commute, errand run, or workout, not to pad runtime.</div>
       </div>
     </div>
     <div class="quality-item">
@@ -1066,24 +1080,58 @@
 <section class="genres-section fade-up">
   <div class="section-label">The Catalog</div>
   <h2 class="section-title">Every mood.<br>Every mile.</h2>
+  <p class="section-sub">Whatever headspace you're in — there's a story waiting.</p>
 
-  <div class="genre-scroll">
-    <div class="genre-pill featured">🔍 Mystery &amp; Crime</div>
-    <div class="genre-pill gp-red">⚡ Thriller</div>
-    <div class="genre-pill gp-purple">🌑 Horror</div>
-    <div class="genre-pill gp-pink">💌 Romance</div>
-    <div class="genre-pill gp-amber">🌅 Heartwarming</div>
-    <div class="genre-pill gp-blue">🎙 Documentary</div>
-    <div class="genre-pill gp-green">🧠 Educational</div>
-    <div class="genre-pill gp-teal">🚀 Sci-Fi</div>
-    <div class="genre-pill gp-gold">🤠 Western</div>
-    <div class="genre-pill">👻 Supernatural</div>
-    <div class="genre-pill gp-pink">😂 Comedy</div>
-    <div class="genre-pill gp-blue">🌍 True Crime</div>
-    <div class="genre-pill gp-green">🧘 Inspirational</div>
-    <div class="genre-pill gp-purple">🔮 Fantasy</div>
+  <div class="genre-grid">
+    <div class="genre-tile wide g-mystery">
+      <div class="genre-bg"></div>
+      <div class="genre-overlay"></div>
+      <div class="genre-emoji">🔍</div>
+      <div class="genre-label"><span class="genre-name">Mystery & Crime</span></div>
+    </div>
+    <div class="genre-tile g-thriller">
+      <div class="genre-bg"></div>
+      <div class="genre-overlay"></div>
+      <div class="genre-emoji">⚡</div>
+      <div class="genre-label"><span class="genre-name">Thriller</span></div>
+    </div>
+    <div class="genre-tile g-horror">
+      <div class="genre-bg"></div>
+      <div class="genre-overlay"></div>
+      <div class="genre-emoji">🌑</div>
+      <div class="genre-label"><span class="genre-name">Horror</span></div>
+    </div>
+    <div class="genre-tile g-romance">
+      <div class="genre-bg"></div>
+      <div class="genre-overlay"></div>
+      <div class="genre-emoji">💌</div>
+      <div class="genre-label"><span class="genre-name">Romance</span></div>
+    </div>
+    <div class="genre-tile g-warm">
+      <div class="genre-bg"></div>
+      <div class="genre-overlay"></div>
+      <div class="genre-emoji">🌅</div>
+      <div class="genre-label"><span class="genre-name">Heartwarming</span></div>
+    </div>
+    <div class="genre-tile g-doc">
+      <div class="genre-bg"></div>
+      <div class="genre-overlay"></div>
+      <div class="genre-emoji">🎙</div>
+      <div class="genre-label"><span class="genre-name">Documentary</span></div>
+    </div>
+    <div class="genre-tile g-edu">
+      <div class="genre-bg"></div>
+      <div class="genre-overlay"></div>
+      <div class="genre-emoji">🧠</div>
+      <div class="genre-label"><span class="genre-name">Educational</span></div>
+    </div>
+    <div class="genre-tile g-scifi">
+      <div class="genre-bg"></div>
+      <div class="genre-overlay"></div>
+      <div class="genre-emoji">🚀</div>
+      <div class="genre-label"><span class="genre-name">Sci-Fi</span></div>
+    </div>
   </div>
-  <p class="genre-tagline">Something for every mile, every mood, every moment of free ears.</p>
 </section>
 
 <!-- PROOF -->
@@ -1178,7 +1226,7 @@
     <div class="success-title">You're on the list.</div>
     <div class="success-sub">
       We'll email you on April 1st with your early access link.<br><br>
-      In the meantime — <a href="#stories" onclick="scrollToSection('stories')">go listen to a free story ↑</a>
+      In the meantime — <a href="#stories" onclick="scrollTo('stories')">go listen to a free story ↑</a>
     </div>
   </div>
 </section>
@@ -1196,7 +1244,7 @@
 
 <!-- MINI PLAYER -->
 <div class="mini-player" id="miniPlayer">
-  <div class="nudge" id="nudge" onclick="scrollToSection('signup')">👆 Enjoying this? Get 14 days free!</div>
+  <div class="nudge" id="nudge" onclick="scrollTo('signup')">👆 Enjoying this? Get 14 days free!</div>
   <div class="mini-cover" id="miniCover">🎭</div>
   <div class="mini-info">
     <div class="mini-title" id="miniTitle">Story</div>
@@ -1217,7 +1265,7 @@
 
 <script>
   // Smooth scroll helper
-  function scrollToSection(id) {
+  function scrollTo(id) {
     document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
   }
 
@@ -1229,50 +1277,32 @@
 
   // Stories data
   const stories = [
-    { title: 'When Rosie Came Home', sub: 'DRAMA · DANIEL WREN', cover: 'https://vmyhlfeouzslixtkmddy.supabase.co/storage/v1/object/public/Covers/dog_lover_stories_1772655114.jpg', audio: 'https://vmyhlfeouzslixtkmddy.supabase.co/storage/v1/object/public/audio/dog_lover_stories_1772655114.mp3', mins: 3 },
-    { title: 'The Delacroix Method', sub: 'MYSTERY · 6 EPISODES', cover: '🕵️', mins: 28 },
-    { title: 'The Vanishing Hour',   sub: 'THRILLER · SERIES', cover: '🌑', mins: 22 },
+    { title: 'The Last Call from Room 9', sub: 'MYSTERY · 28 MIN', cover: '🕵️', mins: 28 },
+    { title: 'Miles Between Us',           sub: 'HEARTWARMING · 22 MIN', cover: '🌅', mins: 22 },
+    { title: 'From Nothing to Something',  sub: 'DOCUMENTARY · 19 MIN', cover: '🌌', mins: 19 },
   ];
 
   let current = null, playing = false, prog = 0, timer = null, nudgeShown = false;
 
-  let audioEl = null;
   function playStory(idx) {
     current = idx;
     playing = true;
     prog = 0;
     const s = stories[idx];
-    const coverEl = document.getElementById('miniCover');
-    if (s.audio) {
-      coverEl.innerHTML = '<img src="' + s.cover + '" style="width:100%;height:100%;object-fit:cover;border-radius:6px">';
-    } else {
-      coverEl.textContent = s.cover;
-    }
+    document.getElementById('miniCover').textContent = s.cover;
     document.getElementById('miniTitle').textContent = s.title;
     document.getElementById('miniSub').textContent = s.sub;
     document.getElementById('miniBar').style.width = '0%';
     document.getElementById('playIcon').innerHTML = '<path d="M6 4h4v16H6zm8 0h4v16h-4z"/>';
     document.getElementById('miniPlayer').classList.add('up');
     clearInterval(timer);
-    if (audioEl) { audioEl.pause(); audioEl = null; }
-    if (s.audio) {
-      audioEl = new Audio(s.audio);
-      audioEl.play();
-      audioEl.addEventListener('timeupdate', () => {
-        if (!audioEl) return;
-        prog = (audioEl.currentTime / audioEl.duration) * 100 || 0;
-        document.getElementById('miniBar').style.width = prog + '%';
-      });
-      audioEl.addEventListener('ended', () => { clearInterval(timer); showNudge(); });
-    } else {
-      const dur = s.mins * 60;
-      timer = setInterval(() => {
-        if (!playing) return;
-        prog = Math.min(prog + 100 / dur, 100);
-        document.getElementById('miniBar').style.width = prog + '%';
-        if (prog >= 100) { clearInterval(timer); showNudge(); }
-      }, 1000);
-    }
+    const dur = s.mins * 60;
+    timer = setInterval(() => {
+      if (!playing) return;
+      prog = Math.min(prog + 100 / dur, 100);
+      document.getElementById('miniBar').style.width = prog + '%';
+      if (prog >= 100) { clearInterval(timer); showNudge(); }
+    }, 1000);
     if (!nudgeShown) setTimeout(() => { if (playing) showNudge(); }, 10000);
   }
 
@@ -1294,23 +1324,11 @@
   function closePlayer() {
     document.getElementById('miniPlayer').classList.remove('up');
     clearInterval(timer);
-    if (audioEl) { audioEl.pause(); audioEl = null; }
     playing = false; current = null;
   }
 
-  // Capture UTM params from URL
-  function getUTMs() {
-    const p = new URLSearchParams(window.location.search);
-    return {
-      source:   p.get('utm_source')   || document.referrer ? new URL(document.referrer || location.href).hostname.replace('www.','').split('.')[0] : 'direct',
-      medium:   p.get('utm_medium')   || null,
-      campaign: p.get('utm_campaign') || null,
-      referrer: document.referrer || null
-    };
-  }
-
   // Email signup
-  async function handleSignup() {
+  function handleSignup() {
     const val = document.getElementById('emailInput').value.trim();
     if (!val || !val.includes('@') || !val.includes('.')) {
       const f = document.getElementById('emailInput');
@@ -1318,38 +1336,9 @@
       f.focus();
       return;
     }
-
-    const btn = document.querySelector('.signup-btn');
-    btn.textContent = 'Saving your spot...';
-    btn.disabled = true;
-
-    try {
-      const res = await fetch('https://vmyhlfeouzslixtkmddy.supabase.co/rest/v1/waitlist', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZteWhsZmVvdXpzbGl4dGttZGR5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjYwODk2MTIsImV4cCI6MjA4MTY2NTYxMn0.7asAd8ctLKJLdv2AojbF8WEo-N6dVheVA3mWxjkFwkk',
-          'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZteWhsZmVvdXpzbGl4dGttZGR5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjYwODk2MTIsImV4cCI6MjA4MTY2NTYxMn0.7asAd8ctLKJLdv2AojbF8WEo-N6dVheVA3mWxjkFwkk',
-          'Prefer': 'return=minimal',
-          'Content-Profile': 'public'
-        },
-        body: JSON.stringify({ email: val, ...getUTMs() })
-      });
-
-      if (res.ok || res.status === 409) {
-        // 409 = duplicate email, still show success
-        document.getElementById('signupForm').style.display = 'none';
-        document.getElementById('successBox').classList.add('show');
-      } else {
-        const errText = await res.text();
-        console.error('Supabase error:', res.status, errText);
-        throw new Error('Server error');
-      }
-    } catch (err) {
-      btn.textContent = 'Something went wrong — try again';
-      btn.disabled = false;
-      btn.style.background = '#dc2626';
-    }
+    document.getElementById('signupForm').style.display = 'none';
+    document.getElementById('successBox').classList.add('show');
+    // TODO: POST to your signup API / Supabase
   }
 
   document.getElementById('emailInput').addEventListener('keydown', e => {
