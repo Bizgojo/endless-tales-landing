@@ -71,7 +71,17 @@
     background: radial-gradient(circle, rgba(232,82,10,0.18) 0%, transparent 70%);
     pointer-events: none;
   }
-  .hero-eyebrow {
+  .hero-ears {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(38px, 10vw, 52px);
+    font-weight: 900;
+    font-style: italic;
+    color: var(--ember);
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    margin-top: -4px;
+    margin-bottom: 20px;
+  }
     display: inline-flex; align-items: center; gap: 8px;
     font-family: 'DM Mono', monospace;
     font-size: 14px; letter-spacing: 0.18em; text-transform: uppercase;
@@ -84,7 +94,7 @@
     font-family: 'Playfair Display', serif;
     font-size: clamp(38px, 10vw, 52px);
     font-weight: 900; line-height: 1.08;
-    letter-spacing: -0.02em; margin-bottom: 20px;
+    letter-spacing: -0.02em; margin-bottom: 0;
   }
   .hero h1 em { font-style: italic; color: var(--ember); }
   .hero-sub {
@@ -390,7 +400,8 @@
     <span>Gym Goers.</span>
     <span>Long Haulers.</span>
     <span>Commuters.</span>
-  </span></span><br><em>Your ears.</em></h1>
+  </span></span></h1>
+  <div class="hero-ears">Your ears.</div>
   <p class="hero-sub"><strong>Short stories. Big productions. Made for your me-time.</strong><br><br>Picture a full cast of voice actors. An original score. Sound design that puts you inside the story. That's what we put into every Endless Tales drama — mystery, thriller, romance, heartwarming, and more. New stories weekly. No ads ever. Just you, your ears, and somewhere else entirely.</p>
   <div class="hero-cta-row">
     <button class="btn-primary">▶ Listen Free Now</button>
