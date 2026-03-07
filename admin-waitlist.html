@@ -657,8 +657,46 @@
   function capitalize(s) { return s ? s.charAt(0).toUpperCase() + s.slice(1) : ''; }
   function truncate(s, n) { return s.length > n ? s.slice(0, n) + '…' : s; }
 
+  async function sendBlast() {
+    const btn = document.getElementById("blastBtn");
+    const status = document.getElementById("blastStatus");
+    if (!confirm("Send launch day email to ALL unnotified subscribers? This cannot be undone.")) return;
+    btn.disabled = true;
+    btn.textContent = "Sending...";
+    status.textContent = "Sending emails...";
+    const res = await fetch("https://vmyhlfeouzslixtkmddy.supabase.co/functions/v1/waitlist-blast", {
+      method: "POST",
+      headers: { "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZteWhsZmVvdXpzbGl4dGttZGR5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjYwODk2MTIsImV4cCI6MjA4MTY2NTYxMn0.7asAd8ctLKJLdv2AojbF8WEo-N6dVheVA3mWxjkFwkk" }
+    });
+    const data = await res.json();
+    if (res.ok) {
+      status.style.color = "green";
+      status.textContent = "✓ Sent " + data.sent + " of " + data.total + " emails successfully.";
+      btn.textContent = "Blast Sent";
+    } else {
+      status.style.color = "red";
+      status.textContent = "Error: " + JSON.stringify(data);
+      btn.disabled = false;
+      btn.textContent = "Send Launch Day Email to All Subscribers";
+    }
+  }
   // Init
   loadData();
-</script>
+<!-- BLAST EMAIL SECTION -->
+<div style="margin:40px 20px;padding:32px;background:#fff;border-radius:12px;border:1px solid #e0e0e0;max-width:900px;">
+  <h2 style="font-size:20px;font-weight:700;color:#111;margin-bottom:8px;">🚀 Launch Day Blast Email</h2>
+  <p style="font-size:14px;color:#555;margin-bottom:20px;">Sends the launch day email to all waitlist subscribers who have not yet been notified. Marks each as notified after sending.</p>
+  <div style="background:#f5f5f5;border-radius:8px;padding:16px;margin-bottom:20px;">
+    <div style="font-size:14px;color:#333;margin-bottom:8px;font-weight:600;">Email Preview</div>
+    <div style="font-size:13px;color:#555;line-height:1.6;">
+      <strong>Subject:</strong> Endless Tales is live — start your 14-day free trial now<br>
+      <strong>From:</strong> hello@endless-tales.com<br>
+      <strong>To:</strong> All unnotified waitlist subscribers<br><br>
+      Your 14-day free trial is ready. Click the button in the email to sign up with your credit card — you will not be charged until after your trial ends. Your price is locked at $7.99/month.
+    </div>
+  </div>
+  <div id="blastStatus" style="margin-bottom:16px;font-size:14px;color:#555;"></div>
+  <button id="blastBtn" onclick="sendBlast()" style="background:#e8520a;color:white;border:none;border-radius:8px;padding:14px 32px;font-size:16px;font-weight:700;cursor:pointer;">Send Launch Day Email to All Subscribers</button>
+</div></script>
 </body>
 </html>
