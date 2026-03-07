@@ -705,8 +705,19 @@
     'https://vmyhlfeouzslixtkmddy.supabase.co',
     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZteWhsZmVvdXpzbGl4dGttZGR5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjYwODk2MTIsImV4cCI6MjA4MTY2NTYxMn0.7asAd8ctLKJLdv2AojbF8WEo-N6dVheVA3mWxjkFwkk'
   );
+  // Read UTM params from URL
+  function getUTM() {
+    const p = new URLSearchParams(window.location.search);
+    return {
+      source: p.get('utm_source') || p.get('source') || 'direct',
+      medium: p.get('utm_medium') || p.get('medium') || null,
+      campaign: p.get('utm_campaign') || p.get('campaign') || null,
+      referrer: document.referrer || null
+    };
+  }
+
   async function handleSignup(inputId, btn) {
-    
+    const utm = getUTM();
     const input = document.getElementById(inputId);
     const email = input ? input.value.trim() : '';
     if (!email || !email.includes('@')) {
@@ -718,7 +729,10 @@
     btn.disabled = true;
     const { error } = await _sb.from('waitlist').insert({
       email,
-      source: 'landing_page',
+      source: utm.source,
+      medium: utm.medium,
+      campaign: utm.campaign,
+      referrer: utm.referrer,
       locked_price: 7.99
     });
     if (error && error.code === '23505') {
