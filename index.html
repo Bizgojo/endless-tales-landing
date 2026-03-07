@@ -699,5 +699,39 @@
     setBtn(idx);
   }
 </script>
-</body>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  const _sb = supabase.createClient(
+    'https://vmyhlfeouzslixtkmddy.supabase.co',
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZteWhsZmVvdXpzbGl4dGttZGR5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjYwODk2MTIsImV4cCI6MjA4MTY2NTYxMn0.7asAd8ctLKJLdv2AojbF8WEo-N6dVheVA3mWxjkFwkk'
+  );
+  async function handleSignup() {
+    const input = document.querySelector('input[type="email"]');
+    const btn = document.querySelector('button[onclick="handleSignup()"]');
+    const email = input ? input.value.trim() : '';
+    if (!email || !email.includes('@')) {
+      input.style.border = '2px solid #e8520a';
+      input.placeholder = 'Please enter a valid email';
+      return;
+    }
+    btn.textContent = 'Saving...';
+    btn.disabled = true;
+    const { error } = await _sb.from('waitlist').insert({
+      email,
+      source: 'landing_page',
+      locked_price: 7.99
+    });
+    if (error && error.code === '23505') {
+      btn.textContent = 'You're already on the list!';
+      btn.style.background = '#333';
+    } else if (error) {
+      btn.textContent = 'Something went wrong. Try again.';
+      btn.disabled = false;
+    } else {
+      input.style.display = 'none';
+      btn.textContent = '✓ You're in! See you April 15.';
+      btn.style.background = '#2a7a2a';
+    }
+  }
+</script></body>
 </html>
