@@ -728,9 +728,16 @@
       btn.textContent = 'Something went wrong. Try again.';
       btn.disabled = false;
     } else {
-      input.style.display = 'none';
-      btn.textContent = "✓ You are in! See you April 15.";
-      btn.style.background = '#2a7a2a';
+      // Update both forms
+      ['email1','email2'].forEach(id => {
+        const inp = document.getElementById(id);
+        if (inp) inp.style.display = 'none';
+      });
+      document.querySelectorAll('[onclick*="handleSignup"]').forEach(b => {
+        b.textContent = "✓ You are in! See you April 15.";
+        b.style.background = '#2a7a2a';
+        b.disabled = true;
+      });
     }
   }
 </script></body>
