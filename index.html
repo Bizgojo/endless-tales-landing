@@ -722,14 +722,14 @@
       locked_price: 7.99
     });
     if (error && error.code === '23505') {
-      btn.textContent = 'You're already on the list!';
+      btn.textContent = "You are already on the list.";
       btn.style.background = '#333';
     } else if (error) {
       btn.textContent = 'Something went wrong. Try again.';
       btn.disabled = false;
     } else {
       input.style.display = 'none';
-      btn.textContent = '✓ You're in! See you April 15.';
+      btn.textContent = "✓ You are in! See you April 15.";
       btn.style.background = '#2a7a2a';
     }
   }
