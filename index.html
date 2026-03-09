@@ -418,7 +418,7 @@
       <img src="https://vmyhlfeouzslixtkmddy.supabase.co/storage/v1/object/public/Covers/dog_lover_stories_1772655114.jpg" alt="When Rosie Came Home">
       
       <div class="cover-play" style="position:absolute;top:12px;right:12px;opacity:1;">
-        <button onclick="toggleStory(0)" style="background:var(--ember);color:white;border:none;border-radius:8px;padding:10px 18px;font-size:14px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:8px;"><svg width="12" height="12" fill="white" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>Play Now</button>
+        <button id="btn0" onclick="toggleStory(0)" style="background:var(--ember);color:white;border:none;border-radius:8px;padding:10px 18px;font-size:14px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:8px;"><svg width="12" height="12" fill="white" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>Play Now</button>
       </div>
     </div>
     <div class="story-title-bar">
@@ -439,7 +439,7 @@
       <img src="https://vmyhlfeouzslixtkmddy.supabase.co/storage/v1/object/public/Covers/cipher-st-augustine-cover.jpg" alt="The Cipher of St. Augustine" style="width:100%;height:100%;object-fit:cover;border-radius:14px;">
       
       <div class="cover-play" style="position:absolute;top:12px;right:12px;opacity:1;">
-        <button onclick="toggleStory(1)" style="background:var(--ember);color:white;border:none;border-radius:8px;padding:10px 18px;font-size:14px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:8px;"><svg width="12" height="12" fill="white" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>Play Now</button>
+        <button id="btn1" onclick="toggleStory(1)" style="background:var(--ember);color:white;border:none;border-radius:8px;padding:10px 18px;font-size:14px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:8px;"><svg width="12" height="12" fill="white" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>Play Now</button>
       </div>
     </div>
     <div class="story-title-bar">
@@ -460,7 +460,7 @@
       <div class="cover-placeholder">🌑</div>
       
       <div class="cover-play" style="position:absolute;top:12px;right:12px;opacity:1;">
-        <button onclick="toggleStory(2)" style="background:var(--ember);color:white;border:none;border-radius:8px;padding:10px 18px;font-size:14px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:8px;"><svg width="12" height="12" fill="white" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>Play Now</button>
+        <button id="btn2" onclick="toggleStory(2)" style="background:var(--ember);color:white;border:none;border-radius:8px;padding:10px 18px;font-size:14px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:8px;"><svg width="12" height="12" fill="white" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>Play Now</button>
       </div>
     </div>
     <div class="story-title-bar">
@@ -823,14 +823,6 @@
       mins: 22
     }
   ];
-
-  // Initialize state arrays
-  state.length = 0;
-  prog.length = 0;
-  stories.forEach(() => {
-    state.push(null);
-    prog.push(0);
-  });
 </script>
 <section id="audio-sample" style="background:#0a0a0a;padding:60px 20px;text-align:center;">
   <div style="max-width:700px;margin:0 auto;">
