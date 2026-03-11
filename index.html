@@ -608,18 +608,25 @@
 
   async function loadStories() {
     try {
-      const res = await fetch(SUPABASE_URL + '/rest/v1/landing_stories?active=eq.true&order=sort_order.asc', {
+      // Load active slots ordered by slot number (1, 2, 3)
+      const res = await fetch(SUPABASE_URL + '/rest/v1/landing_stories?active=eq.true&order=slot.asc&limit=3', {
         headers: { 'apikey': SUPABASE_ANON, 'Authorization': 'Bearer ' + SUPABASE_ANON }
       });
       const data = await res.json();
-      stories = data.map(s => ({
-        id: s.id, title: s.title, sub: s.subtitle || '',
-        cover: s.cover_url || null, audio: s.audio_url || null, mins: s.duration_mins || 15
-      }));
+      if (Array.isArray(data) && data.length > 0) {
+        stories = data.map(s => ({
+          id: s.id,
+          title: s.title,
+          sub: s.subtitle || (s.genre ? s.genre.toUpperCase() : ''),
+          cover: s.cover_url || null,
+          audio: s.audio_url || null,
+          mins: s.duration_mins || 15,
+          description: s.description || ''
+        }));
+      }
+      // If DB returned nothing, keep the hardcoded fallback below
     } catch(e) {
-      stories = [
-        { title: 'When Rosie Came Home', sub: 'DRAMA', cover: 'https://vmyhlfeouzslixtkmddy.supabase.co/storage/v1/object/public/Covers/dog_lover_stories_1772655114.jpg', audio: 'https://vmyhlfeouzslixtkmddy.supabase.co/storage/v1/object/public/audio/dog_lover_stories_1772655114.mp3', mins: 3 },
-      ];
+      // Fallback to hardcoded — will be overwritten by the static init below if DB fails
     }
     renderStories();
   }
