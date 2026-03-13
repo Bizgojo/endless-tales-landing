@@ -746,6 +746,7 @@
   }
 </script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://www.google.com/recaptcha/api.js?render=6LeTdoksAAAAAIJT6xkiY_xZV20zEiGmmu24JFOj"></script>
 <script>
   const _sb = supabase.createClient(
     'https://vmyhlfeouzslixtkmddy.supabase.co',
@@ -763,6 +764,25 @@
   }
 
   async function handleSignup(inputId, btn) {
+    // reCAPTCHA v3 verification
+    let recaptchaToken = null
+    try {
+      recaptchaToken = await grecaptcha.execute('6LeTdoksAAAAAIJT6xkiY_xZV20zEiGmmu24JFOj', { action: 'waitlist_signup' })
+      const verifyRes = await fetch('https://drivetimetales.vercel.app/api/waitlist/verify-recaptcha', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ token: recaptchaToken })
+      })
+      const verifyData = await verifyRes.json()
+      if (!verifyData.success) {
+        btn.textContent = '⚠️ Verification failed. Please try again.'
+        setTimeout(() => { btn.textContent = 'Opt in now for 14 free days →'; btn.disabled = false }, 3000)
+        return
+      }
+    } catch(e) {
+      // If reCAPTCHA fails to load, allow signup anyway (don't block real users)
+      console.warn('reCAPTCHA check skipped:', e)
+    }
     const utm = getUTM();
     const input = document.getElementById(inputId);
     const email = input ? input.value.trim() : '';
