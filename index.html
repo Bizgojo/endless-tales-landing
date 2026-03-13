@@ -789,6 +789,13 @@
       btn.disabled = false;
     } else {
       // Update both forms
+      // Send confirmation email
+      fetch('https://drivetimetales.vercel.app/api/waitlist/confirm', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email })
+      }).catch(() => {}) // fire and forget — don't block UI on email failure
+
       ['email1','email2'].forEach(id => {
         const inp = document.getElementById(id);
         if (inp) inp.style.display = 'none';
