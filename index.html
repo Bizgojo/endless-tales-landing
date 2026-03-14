@@ -763,6 +763,19 @@
     };
   }
 
+  // Log this page visit with UTM params (only if UTM campaign is present)
+  (function logVisit() {
+    const utm = getUTM();
+    if (!utm.campaign) return; // only log UTM-tagged visits
+    _sb.from('utm_visits').insert({
+      source: utm.source,
+      medium: utm.medium,
+      campaign: utm.campaign,
+      referrer: utm.referrer,
+      visited_at: new Date().toISOString()
+    }).then(() => {}).catch(() => {});
+  })();
+
   async function handleSignup(inputId, btn) {
     // reCAPTCHA v3 verification
     let recaptchaToken = null
