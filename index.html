@@ -688,96 +688,124 @@
     stories.forEach(() => { state.push(null); prog.push(0); });
   }
 
-  // State per card: null | 'playing' | 'paused' | 'done'
-  const state = [null, null, null];
-  let audioEl = null;
-  let activeIdx = null;
-  let timer = null;
-  const prog = [0, 0, 0];
+  // ── Audio Player — each story owns its own Audio element, never shared ──────
+  // State: null | 'loading' | 'playing' | 'paused' | 'done'
+  const state    = stories.map(() => null);
+  const prog     = stories.map(() => 0);
+  const audioEls = stories.map(() => null);   // ONE Audio element per story, locked
+  let   activeIdx = null;
 
   const PLAY_ICON  = '<svg width="13" height="13" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>';
   const PAUSE_ICON = '<svg width="13" height="13" fill="currentColor" viewBox="0 0 24 24"><path d="M6 4h4v16H6zm8 0h4v16h-4z"/></svg>';
+  const SPIN_ICON  = '⏳';
 
   function setBtn(idx) {
     const btn = document.getElementById('btn' + idx);
+    if (!btn) return;
     const s = state[idx];
     btn.className = 'play-tap' + (s === 'playing' ? ' playing' : s === 'done' ? ' done' : '');
-    if (s === 'playing')      btn.innerHTML = PAUSE_ICON + ' Pause';
+    if      (s === 'loading') btn.innerHTML = SPIN_ICON  + ' Loading…';
+    else if (s === 'playing') btn.innerHTML = PAUSE_ICON + ' Pause';
     else if (s === 'paused')  btn.innerHTML = PLAY_ICON  + ' Resume';
     else if (s === 'done')    btn.innerHTML = PLAY_ICON  + ' Again';
     else                      btn.innerHTML = PLAY_ICON  + ' Play';
   }
 
-  function stopActive() {
-    if (activeIdx === null) return;
-    clearInterval(timer);
-    if (audioEl) { audioEl.pause(); }
-    if (state[activeIdx] === 'playing') state[activeIdx] = 'paused';
-    setBtn(activeIdx);
-    activeIdx = null;
+  // Pause every story except `exceptIdx` (-1 = pause all)
+  function pauseAllExcept(exceptIdx) {
+    stories.forEach((_, i) => {
+      if (i === exceptIdx) return;
+      if (audioEls[i]) audioEls[i].pause();
+      if (state[i] === 'playing') { state[i] = 'paused'; setBtn(i); }
+    });
+    if (activeIdx !== exceptIdx) activeIdx = null;
+  }
+
+  // Initialize a story's Audio element exactly once, locked to its URL
+  function initAudio(idx) {
+    if (audioEls[idx]) return;                    // already created — never recreate
+    const url = stories[idx].audio;
+    if (!url) return;
+    const el = new Audio(url);
+    el.preload = 'metadata';
+    el.addEventListener('canplay', () => {
+      // Only update button if we're still in loading state for this story
+      if (state[idx] === 'loading') { state[idx] = 'playing'; setBtn(idx); }
+    });
+    el.addEventListener('timeupdate', () => {
+      if (!el.duration) return;
+      prog[idx] = (el.currentTime / el.duration) * 100;
+      const bar = document.getElementById('bar' + idx);
+      if (bar) bar.style.width = prog[idx] + '%';
+    });
+    el.addEventListener('ended', () => {
+      state[idx] = 'done';
+      if (activeIdx === idx) activeIdx = null;
+      setBtn(idx);
+    });
+    el.addEventListener('error', (e) => {
+      console.error('Audio error story ' + idx, e);
+      state[idx] = null;
+      setBtn(idx);
+    });
+    audioEls[idx] = el;
   }
 
   function toggleStory(idx) {
     const s = stories[idx];
 
-    // If another story is playing, pause it first
-    if (activeIdx !== null && activeIdx !== idx) {
-      stopActive();
-    }
+    // Stop all other stories first — no crossover possible
+    pauseAllExcept(idx);
 
     if (state[idx] === null || state[idx] === 'done') {
-      // Fresh start
+      // ── Fresh start (or replay) ──────────────────────────────────────────
       prog[idx] = 0;
-      document.getElementById('bar' + idx).style.width = '0%';
-      state[idx] = 'playing';
-      activeIdx = idx;
-      if (audioEl) { audioEl.pause(); audioEl = null; }
+      const bar = document.getElementById('bar' + idx);
+      if (bar) bar.style.width = '0%';
+
       if (s.audio) {
-        audioEl = new Audio(s.audio);
-        audioEl.play();
-        audioEl.addEventListener('timeupdate', () => {
-          if (activeIdx !== idx || !audioEl) return;
-          prog[idx] = (audioEl.currentTime / audioEl.duration) * 100 || 0;
-          document.getElementById('bar' + idx).style.width = prog[idx] + '%';
-        });
-        audioEl.addEventListener('ended', () => {
-          state[idx] = 'done';
-          activeIdx = null;
+        initAudio(idx);                           // creates el if needed
+        const el = audioEls[idx];
+        if (state[idx] === 'done') el.currentTime = 0;   // rewind for replay
+        state[idx] = 'loading';
+        activeIdx  = idx;
+        setBtn(idx);
+        el.play().then(() => {
+          state[idx] = 'playing';
+          setBtn(idx);
+        }).catch(err => {
+          console.warn('Play blocked:', err);
+          state[idx] = 'paused';
           setBtn(idx);
         });
       } else {
-        // Simulated timer for stories without audio
-        const dur = s.mins * 60;
-        timer = setInterval(() => {
-          if (state[idx] !== 'playing') return;
-          prog[idx] = Math.min(prog[idx] + 100 / dur, 100);
-          document.getElementById('bar' + idx).style.width = prog[idx] + '%';
-          if (prog[idx] >= 100) { clearInterval(timer); state[idx] = 'done'; setBtn(idx); }
-        }, 1000);
+        // No audio — show "Coming Soon"
+        state[idx] = 'done';
+        const btn = document.getElementById('btn' + idx);
+        if (btn) btn.innerHTML = '🔒 Coming Soon';
       }
-    } else if (state[idx] === 'playing') {
-      // Pause
-      clearInterval(timer);
-      if (audioEl) audioEl.pause();
+
+    } else if (state[idx] === 'loading' || state[idx] === 'playing') {
+      // ── Pause ────────────────────────────────────────────────────────────
+      if (audioEls[idx]) audioEls[idx].pause();
       state[idx] = 'paused';
-      activeIdx = null;
+      activeIdx  = null;
+      setBtn(idx);
+
     } else if (state[idx] === 'paused') {
-      // Resume
-      state[idx] = 'playing';
-      activeIdx = idx;
-      if (audioEl) {
-        audioEl.play();
-      } else if (!s.audio) {
-        const dur = s.mins * 60;
-        timer = setInterval(() => {
-          if (state[idx] !== 'playing') return;
-          prog[idx] = Math.min(prog[idx] + 100 / dur, 100);
-          document.getElementById('bar' + idx).style.width = prog[idx] + '%';
-          if (prog[idx] >= 100) { clearInterval(timer); state[idx] = 'done'; setBtn(idx); }
-        }, 1000);
+      // ── Resume — always uses this story's own locked Audio element ────────
+      const el = audioEls[idx];
+      if (el) {
+        state[idx] = 'playing';
+        activeIdx  = idx;
+        setBtn(idx);
+        el.play().catch(err => {
+          console.warn('Resume blocked:', err);
+          state[idx] = 'paused';
+          setBtn(idx);
+        });
       }
     }
-    setBtn(idx);
   }
 </script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
