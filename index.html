@@ -300,6 +300,19 @@
   .proof-desc { font-size: 14px; color: rgba(255,255,255,1); line-height: 1.55; }
 
   /* ── SIGNUP ── */
+  /* Founding Member Counter */
+  .founding-section { background: linear-gradient(135deg, #1a0a00 0%, #0d0d0d 100%); border-top: 1px solid var(--border-ember); border-bottom: 1px solid var(--border-ember); padding: 52px 20px; text-align: center; }
+  .founding-badge { display: inline-block; background: var(--ember); color: white; font-size: 11px; font-weight: 800; letter-spacing: 1.5px; padding: 5px 14px; border-radius: 999px; margin-bottom: 18px; }
+  .founding-title { font-size: clamp(24px, 5vw, 36px); font-weight: 800; color: white; margin-bottom: 12px; }
+  .founding-price-highlight { color: var(--ember); }
+  .founding-sub { font-size: 15px; color: rgba(255,255,255,0.8); max-width: 480px; margin: 0 auto 32px; line-height: 1.6; }
+  .founding-counter-wrap { max-width: 420px; margin: 0 auto; }
+  .founding-bar-label { display: flex; justify-content: space-between; font-size: 13px; color: rgba(255,255,255,0.7); margin-bottom: 8px; font-weight: 600; }
+  .founding-bar-track { width: 100%; height: 12px; background: rgba(255,255,255,0.1); border-radius: 999px; overflow: hidden; margin-bottom: 10px; }
+  .founding-bar-fill { height: 100%; background: linear-gradient(90deg, var(--ember), #ff8c42); border-radius: 999px; transition: width 1s ease; }
+  .founding-spots-remaining { font-size: 18px; font-weight: 800; color: white; }
+  .founding-spots-remaining span { color: var(--ember); }
+
   .signup-section {
     padding: 64px 20px;
     background: var(--ink2);
@@ -385,7 +398,7 @@
 <!-- NAV -->
 <nav>
   <a class="nav-logo" href="#">Endless<span>Tales</span></a>
-  <button class="nav-cta">Get 14 Days Free</button>
+  <button class="nav-cta">Get 7 Days Free</button>
 </nav>
 
 <!-- HERO -->
@@ -409,7 +422,7 @@
 <section class="stories-section fade-up" id="stories">
 <section style="padding:20px 0 0 0;background:transparent;">
   <h2 style="font-family:'Playfair Display',serif;font-size:clamp(32px,8vw,42px);font-weight:900;color:#fff;margin-bottom:12px;">Launching April 17</h2>
-  <p style="font-size:15px;color:#ffffff;line-height:1.6;margin-bottom:24px;">Sign up now to get notified on Launch Day and get 14 days free to test out Endless Tales. But before you sign up for the free trial you may want to test out one or more of the three stories below to be sure it is right for you — and then opt in for the 14-day free trial.</p>
+  <p style="font-size:15px;color:#ffffff;line-height:1.6;margin-bottom:24px;">Sign up now to get notified on Launch Day and get 7 days free to test out Endless Tales. But before you sign up for the free trial you may want to test out one or more of the three stories below to be sure it is right for you — and then opt in for the 7-day free trial.</p>
 </section>  <h2 class="section-title">Test Endless Tales stories right now.</h2>
   <p class="section-sub">Three complete stories, yours right now. No signup. No credit card. Just press "Play Now" and enjoy.</p>
 
@@ -476,7 +489,7 @@
 
   <div style="margin-top:28px;padding:32px 20px;background:#1a1a24;border-radius:14px;border:1px solid rgba(232,82,10,0.25);text-align:center;">
     <h2 style="font-family:'Playfair Display',serif;font-size:clamp(32px,8vw,42px);font-weight:900;color:#fff;margin-bottom:12px;">Opt In Now</h2>
-    <p style="font-size:15px;color:rgba(255,255,255,0.8);line-height:1.6;margin-bottom:24px;">Get 14 days free of Endless Tales and unlimited access to 100s of Tales in our library — no credit card needed.</p>
+    <p style="font-size:15px;color:rgba(255,255,255,0.8);line-height:1.6;margin-bottom:24px;">Get 7 days free of Endless Tales and unlimited access to 100s of Tales in our library — no credit card needed.</p>
     <input id="email1" type="email" placeholder="your@email.com" style="width:100%;box-sizing:border-box;padding:14px 16px;border-radius:10px;border:none;background:#d0d0d8;font-size:16px;color:#111;margin-bottom:12px;">
     <button onclick="handleSignup('email1', this)" style="width:100%;padding:16px;background:var(--ember);color:white;border:none;border-radius:10px;font-size:16px;font-weight:700;cursor:pointer;">Opt in now for 14 free days →</button>
   </div></section>
@@ -519,7 +532,7 @@
         <div class="quality-icon">💰</div>
         <div>
           <div class="quality-name">Reasonably Priced.</div>
-          <div class="quality-desc">If after your 14-day free trial you decide you like it, the monthly price is only $7.99 per month — unlimited usage, 100s of stories, and new stories added every week. Cancel anytime with an easy-to-find cancel button.</div>
+          <div class="quality-desc">If after your 7-day free trial you decide you like it, the monthly price is only <span id="quality-price">$2.99</span> per month — unlimited usage, 100s of stories, and new stories added every week. Cancel anytime with an easy-to-find cancel button.</div>
         </div>
       </div>    </div>
   </div>
@@ -574,14 +587,31 @@
   </div>
 </section>
 
+<!-- FOUNDING MEMBER COUNTER -->
+<section class="founding-section fade-up" id="founding-section">
+  <div class="founding-badge">🔥 FOUNDING MEMBER OFFER</div>
+  <h2 class="founding-title">Lock in <span class="founding-price-highlight">$2.99/month</span> — forever.</h2>
+  <p class="founding-sub">The first 500 subscribers get our founding member rate, locked for life as long as they stay subscribed. After that, it's $7.99/month for everyone new.</p>
+  <div class="founding-counter-wrap">
+    <div class="founding-bar-label">
+      <span>Founding spots claimed</span>
+      <span id="founding-count-label">Loading...</span>
+    </div>
+    <div class="founding-bar-track">
+      <div class="founding-bar-fill" id="founding-bar-fill" style="width: 0%"></div>
+    </div>
+    <div class="founding-spots-remaining" id="founding-spots-remaining">— spots remaining</div>
+  </div>
+</section>
+
 <!-- SIGNUP -->
 <section class="signup-section fade-up">
   <div class="section-label" style="justify-content: center;">Join the Waitlist</div>
   <h2 class="section-title">Be first in line.</h2>
-  <p class="section-sub">Early bird members get 14 days free and locked-in pricing forever.</p>
+  <p class="section-sub">Founding members get 7 days free and <strong>$2.99/month locked forever</strong>. Spots are limited.</p>
   <div class="email-row">
     <input id="email2" class="email-input" type="email" placeholder="your@email.com">
-    <button class="btn-primary" onclick="handleSignup('email2', this)">Opt in now for 14 free days →</button>
+    <button class="btn-primary" onclick="handleSignup('email2', this)">Claim your founding rate →</button>
   </div>
   <p class="fine-print" style="color:white;">No spam. Unsubscribe any time. Launching April 17, 2026.</p>
 </section>
@@ -589,7 +619,12 @@
 <!-- FOOTER -->
 <footer>
   <div class="footer-logo">Endless<span>Tales</span></div>
-  <p class="footer-text">© 2026 Wonder Books Press. All rights reserved.<br>Audio stories for ears in motion.</p>
+  <p class="footer-text">© 2026 Wonder Books Press LLC. All rights reserved.<br>Audio stories for ears in motion.</p>
+  <p style="margin-top:12px;font-size:12px;">
+    <a href="/terms.html" style="color:rgba(255,255,255,0.35);text-decoration:none;margin:0 10px;">Terms of Service</a>·
+    <a href="/privacy.html" style="color:rgba(255,255,255,0.35);text-decoration:none;margin:0 10px;">Privacy Policy</a>·
+    <a href="mailto:support@endless-tales.com" style="color:rgba(255,255,255,0.35);text-decoration:none;margin:0 10px;">support@endless-tales.com</a>
+  </p>
 </footer>
 
 
@@ -840,6 +875,38 @@
       });
     }
   }
+
+  // Founding member counter
+  async function loadFoundingCounter() {
+    try {
+      const res = await fetch('https://drivetimetales.vercel.app/api/subscription/price')
+      const data = await res.json()
+      const { spotsRemaining, foundingLimit, foundingCount, isFoundingAvailable } = data
+      const pct = Math.min(100, (foundingCount / foundingLimit) * 100)
+
+      document.getElementById('founding-bar-fill').style.width = pct + '%'
+      document.getElementById('founding-count-label').textContent = foundingCount + ' / ' + foundingLimit
+
+      if (isFoundingAvailable) {
+        document.getElementById('founding-spots-remaining').innerHTML =
+          '<span>' + spotsRemaining + ' founding spots remaining</span>'
+        // Update quality section price
+        const qp = document.getElementById('quality-price')
+        if (qp) qp.textContent = '$2.99'
+      } else {
+        document.getElementById('founding-spots-remaining').innerHTML =
+          'Founding spots filled — now <span>$7.99/month</span>'
+        document.getElementById('founding-section').style.display = 'none'
+        const qp = document.getElementById('quality-price')
+        if (qp) qp.textContent = '$7.99'
+      }
+    } catch (e) {
+      // Silently fail — show static fallback
+      document.getElementById('founding-count-label').textContent = '— / 500'
+      document.getElementById('founding-spots-remaining').innerHTML = '<span>500 founding spots available</span>'
+    }
+  }
+  loadFoundingCounter()
 
   // Initialize stories array with hardcoded data
   stories = [
