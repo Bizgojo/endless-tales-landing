@@ -491,7 +491,7 @@
     <h2 style="font-family:'Playfair Display',serif;font-size:clamp(32px,8vw,42px);font-weight:900;color:#fff;margin-bottom:12px;">Opt In Now</h2>
     <p style="font-size:15px;color:rgba(255,255,255,0.8);line-height:1.6;margin-bottom:24px;">Get 7 days free of Endless Tales and unlimited access to 100s of Tales in our library — no credit card needed.</p>
     <input id="email1" type="email" placeholder="your@email.com" style="width:100%;box-sizing:border-box;padding:14px 16px;border-radius:10px;border:none;background:#d0d0d8;font-size:16px;color:#111;margin-bottom:12px;">
-    <button onclick="handleSignup('email1', this)" style="width:100%;padding:16px;background:var(--ember);color:white;border:none;border-radius:10px;font-size:16px;font-weight:700;cursor:pointer;">Opt in now for 14 free days →</button>
+    <button onclick="handleSignup('email1', this)" style="width:100%;padding:16px;background:var(--ember);color:white;border:none;border-radius:10px;font-size:16px;font-weight:700;cursor:pointer;">Opt in now for 7 free days →</button>
   </div></section>
 
 <!-- QUALITY -->
@@ -855,7 +855,7 @@
       const verifyData = await verifyRes.json()
       if (!verifyData.success) {
         btn.textContent = '⚠️ Verification failed. Please try again.'
-        setTimeout(() => { btn.textContent = 'Opt in now for 14 free days →'; btn.disabled = false }, 3000)
+        setTimeout(() => { btn.textContent = 'Opt in now for 7 free days →'; btn.disabled = false }, 3000)
         return
       }
     } catch(e) {
