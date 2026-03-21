@@ -674,8 +674,8 @@
         : '<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:64px;background:#1a1a1a;border-radius:14px;">' + (s.cover || '🎧') + '</div>';
       container.innerHTML += '<div class="story-card fade-up" style="background:#111;border-radius:16px;overflow:hidden;position:relative;">'
         + '<div style="position:relative;aspect-ratio:1;width:100%;">' + coverHtml
-        + '<button id="playbtn' + idx + '" onclick="toggleStory(' + idx + ')" style="position:absolute;bottom:10px;right:10px;background:#e8520a;color:#fff;border:none;border-radius:999px;padding:7px 16px;font-size:13px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:6px;">'
-        + '<span id="playbtnicon' + idx + '">' + PLAY_ICON + '</span><span id="playbtntxt' + idx + '">Play Now</span></button></div>'
+        + '<button id="btn' + idx + '" onclick="toggleStory(' + idx + ')" style="position:absolute;bottom:10px;right:10px;background:#e8520a;color:#fff;border:none;border-radius:999px;padding:7px 16px;font-size:13px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:6px;">'
+        + PLAY_ICON + ' Play Now</button></div>'
         + '<div style="padding:14px 16px 6px;">'
         + '<div style="color:#fff;font-weight:700;font-size:15px;margin-bottom:2px;">' + s.title + '</div>'
         + '<div style="color:#aaa;font-size:11px;letter-spacing:.06em;">' + s.sub + '</div>'
@@ -684,8 +684,8 @@
         + '</div>';
     });
     document.querySelectorAll('.story-card').forEach(el => io.observe(el));
-    state.length = 0; prog.length = 0;
-    stories.forEach(() => { state.push(null); prog.push(0); });
+    state.length = 0; prog.length = 0; audioEls.length = 0;
+    stories.forEach(() => { state.push(null); prog.push(0); audioEls.push(null); });
   }
 
   // ── Audio Player — each story owns its own Audio element, never shared ──────
