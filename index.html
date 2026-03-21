@@ -690,9 +690,10 @@
 
   // ── Audio Player — each story owns its own Audio element, never shared ──────
   // State: null | 'loading' | 'playing' | 'paused' | 'done'
-  const state    = stories.map(() => null);
-  const prog     = stories.map(() => 0);
-  const audioEls = stories.map(() => null);   // ONE Audio element per story, locked
+  // Fixed 3-slot arrays — stories array may not be populated yet at init time
+  const state    = [null, null, null];
+  const prog     = [0, 0, 0];
+  const audioEls = [null, null, null];   // ONE Audio element per story, locked
   let   activeIdx = null;
 
   const PLAY_ICON  = '<svg width="13" height="13" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>';
@@ -757,7 +758,7 @@
     // Stop all other stories first — no crossover possible
     pauseAllExcept(idx);
 
-    if (state[idx] === null || state[idx] === 'done') {
+    if (state[idx] == null || state[idx] === 'done') {
       // ── Fresh start (or replay) ──────────────────────────────────────────
       prog[idx] = 0;
       const bar = document.getElementById('bar' + idx);
