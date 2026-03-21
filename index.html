@@ -872,39 +872,76 @@
     }
     btn.textContent = 'Saving...';
     btn.disabled = true;
-    const { error } = await _sb.from('waitlist').insert({
-      email,
-      source: utm.source,
-      medium: utm.medium,
-      campaign: utm.campaign,
-      referrer: utm.referrer,
-      locked_price: 7.99
-    });
-    if (error && error.code === '23505') {
-      btn.textContent = "You are already a subscriber to Endless Tales.";
-      btn.style.background = '#333';
-    } else if (error) {
-      btn.textContent = 'Something went wrong. Try again.';
-      btn.disabled = false;
-    } else {
-      // Update both forms
-      // Send confirmation email
-      fetch('https://drivetimetales.vercel.app/api/waitlist/confirm', {
+
+    let result;
+    try {
+      const res = await fetch('https://drivetimetales.vercel.app/api/waitlist/join', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email })
-      }).catch(() => {}) // fire and forget — don't block UI on email failure
+        body: JSON.stringify({ email, source: utm.source, medium: utm.medium, campaign: utm.campaign, referrer: utm.referrer })
+      });
+      result = await res.json();
+    } catch(e) {
+      btn.textContent = 'Something went wrong. Try again.';
+      btn.disabled = false;
+      return;
+    }
 
+    if (result.already) {
+      showSuccessModal(email, true);
+      btn.textContent = "✓ Already registered!";
+      btn.style.background = '#2a7a2a';
+    } else if (result.error) {
+      btn.textContent = result.error;
+      btn.disabled = false;
+      setTimeout(() => { btn.textContent = 'Save my spot →'; btn.disabled = false; }, 3000);
+    } else {
+      showSuccessModal(email, false);
       ['email1','email2'].forEach(id => {
         const inp = document.getElementById(id);
         if (inp) inp.style.display = 'none';
       });
       document.querySelectorAll('[onclick*="handleSignup"]').forEach(b => {
-        b.textContent = "✓ You are in! See you April 17.";
+        b.textContent = "✓ Spot saved! See you April 17.";
         b.style.background = '#2a7a2a';
         b.disabled = true;
       });
     }
+  }
+
+  function showSuccessModal(email, alreadyExists) {
+    const existing = document.getElementById('et-success-modal');
+    if (existing) existing.remove();
+    const modal = document.createElement('div');
+    modal.id = 'et-success-modal';
+    modal.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;';
+    modal.innerHTML = `
+      <div style="background:#1a1a1a;border:1px solid #e8520a;border-radius:20px;padding:36px 28px;max-width:400px;width:100%;text-align:center;position:relative;">
+        <div style="font-size:48px;margin-bottom:12px;">🎉</div>
+        <h2 style="color:#fff;font-size:22px;font-weight:800;margin:0 0 12px;font-family:'Playfair Display',serif;">
+          ${alreadyExists ? 'You\'re already in!' : 'Your spot is saved!'}
+        </h2>
+        <p style="color:#e8520a;font-weight:700;font-size:16px;margin:0 0 8px;">
+          Founding Member — $2.99/month locked forever
+        </p>
+        <p style="color:rgba(255,255,255,0.7);font-size:14px;line-height:1.6;margin:0 0 20px;">
+          ${alreadyExists
+            ? `<strong style="color:#fff">${email}</strong> is already registered as a founding member. We'll notify you the moment Endless Tales goes live on <strong style="color:#e8520a">April 17, 2026</strong>.`
+            : `We've saved your founding member spot for <strong style="color:#fff">${email}</strong>. You'll be notified the moment Endless Tales goes live on <strong style="color:#e8520a">April 17, 2026</strong>.`
+          }
+        </p>
+        <p style="color:rgba(255,255,255,0.5);font-size:13px;margin:0 0 20px;">
+          7 days free · then just $2.99/month · cancel anytime
+        </p>
+        <button onclick="document.getElementById('et-success-modal').remove()"
+          style="background:#e8520a;color:#fff;border:none;border-radius:999px;padding:12px 32px;font-size:15px;font-weight:700;cursor:pointer;width:100%;">
+          Got it — see you April 17! 🚀
+        </button>
+      </div>`;
+    document.body.appendChild(modal);
+    modal.addEventListener('click', function(e) {
+      if (e.target === modal) modal.remove();
+    });
   }
 
   // Founding member counter
