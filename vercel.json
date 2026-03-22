@@ -1,0 +1,10 @@
+{
+  "rewrites": [],
+  "redirects": [
+    {
+      "source": "/api/podcast/rss",
+      "destination": "https://drivetimetales.vercel.app/api/podcast/rss",
+      "permanent": false
+    }
+  ]
+}
