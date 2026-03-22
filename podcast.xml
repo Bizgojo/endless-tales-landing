@@ -9,7 +9,7 @@
     <description>Short-form audio dramas for your commute. Full cast, original music, stories that fit the time you have - 3 to 30 minutes. New episodes every week.</description>
     <language>en-us</language>
     <copyright>2026 Endless Tales</copyright>
-    <managingEditor>hello@endless-tales.com (Endless Tales)</managingEditor>
+    <managingEditor>m.postlewaite@gmail.com (Endless Tales)</managingEditor>
     <pubDate>Fri, 14 Mar 2026 12:00:00 +0000</pubDate>
     <lastBuildDate>Sun, 22 Mar 2026 12:00:00 +0000</lastBuildDate>
     <atom:link href="https://www.endless-tales.com/podcast.xml" rel="self" type="application/rss+xml"/>
@@ -21,7 +21,7 @@
     <itunes:author>Endless Tales</itunes:author>
     <itunes:owner>
       <itunes:name>Endless Tales</itunes:name>
-      <itunes:email>hello@endless-tales.com</itunes:email>
+      <itunes:email>m.postlewaite@gmail.com</itunes:email>
     </itunes:owner>
     <itunes:image href="https://www.endless-tales.com/podcast-cover.png"/>
     <itunes:category text="Arts">
