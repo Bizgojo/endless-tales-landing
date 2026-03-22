@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0"
+  xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd"
+  xmlns:content="http://purl.org/rss/1.0/modules/content/"
+  xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Endless Tales</title>
+    <link>https://endless-tales.com</link>
+    <description>Short-form audio dramas for your commute. Full cast, original music, stories that fit the time you have - 3 to 30 minutes. New episodes every week.</description>
+    <language>en-us</language>
+    <copyright>2026 Endless Tales</copyright>
+    <managingEditor>hello@endless-tales.com (Endless Tales)</managingEditor>
+    <pubDate>Fri, 14 Mar 2026 12:00:00 +0000</pubDate>
+    <lastBuildDate>Sun, 22 Mar 2026 12:00:00 +0000</lastBuildDate>
+    <atom:link href="https://www.endless-tales.com/podcast.xml" rel="self" type="application/rss+xml"/>
+    <image>
+      <url>https://www.endless-tales.com/podcast-cover.png</url>
+      <title>Endless Tales</title>
+      <link>https://endless-tales.com</link>
+    </image>
+    <itunes:author>Endless Tales</itunes:author>
+    <itunes:owner>
+      <itunes:name>Endless Tales</itunes:name>
+      <itunes:email>hello@endless-tales.com</itunes:email>
+    </itunes:owner>
+    <itunes:image href="https://www.endless-tales.com/podcast-cover.png"/>
+    <itunes:category text="Arts">
+      <itunes:category text="Fiction"/>
+    </itunes:category>
+    <itunes:explicit>false</itunes:explicit>
+    <itunes:type>episodic</itunes:type>
+
+    <item>
+      <title>When Rosie Came Home</title>
+      <description><![CDATA[A dog goes missing for two years. Then she shows up on the porch - muddy, thin, and somehow, impossibly, smiling. A 3-minute story about love, loss, and the ones who find their way back. Listen to more at https://endless-tales.com]]></description>
+      <enclosure url="https://vmyhlfeouzslixtkmddy.supabase.co/storage/v1/object/public/audio/dog_lover_stories_1772655114.mp3" length="2880000" type="audio/mpeg"/>
+      <guid isPermaLink="false">et-when-rosie-came-home-001</guid>
+      <pubDate>Mon, 10 Mar 2026 12:00:00 +0000</pubDate>
+      <link>https://endless-tales.com</link>
+      <itunes:title>When Rosie Came Home</itunes:title>
+      <itunes:author>Daniel Wren</itunes:author>
+      <itunes:summary><![CDATA[A dog goes missing for two years. Then she shows up on the porch - muddy, thin, and somehow, impossibly, smiling. A 3-minute heartwarming story.]]></itunes:summary>
+      <itunes:duration>00:03:00</itunes:duration>
+      <itunes:episode>1</itunes:episode>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+
+    <item>
+      <title>The Grave He Dug Himself</title>
+      <description><![CDATA[A retired sheriff comes home to bury his estranged brother - only to find the grave already dug and his brother standing next to it, holding a rifle and thirty years of unfinished business. A 14-minute western thriller. Listen to more at https://endless-tales.com]]></description>
+      <enclosure url="https://vmyhlfeouzslixtkmddy.supabase.co/storage/v1/object/public/audio/audio/asc3/871b25af-5ce5-4052-afae-853d086e828f/final_v2359.mp3" length="13440000" type="audio/mpeg"/>
+      <guid isPermaLink="false">et-the-grave-he-dug-himself-001</guid>
+      <pubDate>Wed, 12 Mar 2026 12:00:00 +0000</pubDate>
+      <link>https://endless-tales.com</link>
+      <itunes:title>The Grave He Dug Himself</itunes:title>
+      <itunes:author>James Calloway</itunes:author>
+      <itunes:summary><![CDATA[A retired sheriff. A dug grave. A brother with a rifle and thirty years of secrets. A 14-minute western thriller.]]></itunes:summary>
+      <itunes:duration>00:14:00</itunes:duration>
+      <itunes:episode>2</itunes:episode>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+
+    <item>
+      <title>The Letters He Was Meant to Carry</title>
+      <description><![CDATA[A widowed bus driver finds a backpack full of handwritten letters addressed to strangers across the country - and decides to deliver every one of them. A 14-minute drama about connection, grief, and small acts of kindness. Listen to more at https://endless-tales.com]]></description>
+      <enclosure url="https://vmyhlfeouzslixtkmddy.supabase.co/storage/v1/object/public/audio/asc3/5ccce3b8-39fa-4083-96d3-87dac449f45e/final_mix_1773359050597.mp3" length="13440000" type="audio/mpeg"/>
+      <guid isPermaLink="false">et-the-letters-he-was-meant-to-carry-001</guid>
+      <pubDate>Fri, 14 Mar 2026 12:00:00 +0000</pubDate>
+      <link>https://endless-tales.com</link>
+      <itunes:title>The Letters He Was Meant to Carry</itunes:title>
+      <itunes:author>Sarah Mitchell</itunes:author>
+      <itunes:summary><![CDATA[47 undelivered letters. One bus driver who decides to change that. A 14-minute drama about connection and small acts of kindness.]]></itunes:summary>
+      <itunes:duration>00:14:00</itunes:duration>
+      <itunes:episode>3</itunes:episode>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+
+  </channel>
+</rss>
