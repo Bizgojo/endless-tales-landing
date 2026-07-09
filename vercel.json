@@ -5,6 +5,11 @@
       "source": "/api/podcast/rss",
       "destination": "https://drivetimetales.vercel.app/api/podcast/rss",
       "permanent": false
+    },
+    {
+      "source": "/(.*)",
+      "destination": "https://app.endless-tales.com",
+      "permanent": true
     }
   ]
 }
