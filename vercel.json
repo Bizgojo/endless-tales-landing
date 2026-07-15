@@ -8,7 +8,7 @@
     },
     {
       "source": "/(.*)",
-      "destination": "https://app.endless-tales.com",
+      "destination": "https://app.endless-tales.com/$1",
       "permanent": true
     }
   ]
