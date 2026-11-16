@@ -8,6 +8,28 @@
     },
     {
       "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "endless-tales.com"
+        }
+      ],
+      "destination": "https://www.endless-tales.com/$1",
+      "permanent": true
+    },
+    {
+      "source": "/((?!$).*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.endless-tales.com"
+        }
+      ],
+      "destination": "https://app.endless-tales.com/$1",
+      "permanent": true
+    },
+    {
+      "source": "/((?!$).*)",
       "destination": "https://app.endless-tales.com/$1",
       "permanent": true
     }
