@@ -86,23 +86,24 @@ img{max-width:100%;display:block}
   padding:8px 15px;border-radius:999px;white-space:nowrap;
 }
 
-/* ---------- player card ---------- */
-.player{
+/* injected: replaces the old .player hero block, adds feature/card/ep2/ebook styles */
+/* ---------- featured (hero) player ---------- */
+.feature{
   background:linear-gradient(165deg,var(--ink3),var(--ink2) 70%);
-  border:1px solid var(--border);border-radius:rgba(0,0,0,0);
-  border-radius:22px;padding:20px;
-  box-shadow:0 24px 60px -20px rgba(0,0,0,.85);
+  border:1px solid var(--border);border-radius:24px;padding:16px;
+  box-shadow:0 30px 70px -24px rgba(0,0,0,.9);
+  max-width:560px;margin:0 auto;width:100%;
 }
-.player-top{display:flex;gap:16px;align-items:center}
-.player-cover{
-  width:98px;height:98px;border-radius:14px;object-fit:cover;flex:0 0 auto;
+.feature-cover-wrap{position:relative;aspect-ratio:1/1;width:100%}
+.feature-cover{
+  width:100%;height:100%;object-fit:cover;border-radius:16px;
   border:1px solid var(--border);background:var(--ink);
 }
-.player-meta{min-width:0}
-.player-label{font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--dim)}
-.player-title{font-family:'Bricolage Grotesque',sans-serif;font-size:20px;font-weight:700;margin:4px 0 3px;line-height:1.2}
-.player-sub{font-size:13.5px;color:var(--muted)}
-.player-bar{display:flex;align-items:center;gap:14px;margin-top:18px}
+.feature-meta{margin-top:15px}
+.feature-label{font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--dim)}
+.feature-title{font-family:'Bricolage Grotesque',sans-serif;font-size:22px;font-weight:700;margin:5px 0 3px;line-height:1.2}
+.feature-sub{font-size:13.5px;color:var(--muted)}
+.player-bar{display:flex;align-items:center;gap:14px;margin-top:16px}
 .play-btn{
   width:54px;height:54px;border-radius:50%;border:0;cursor:pointer;flex:0 0 auto;
   background:var(--ember);color:#fff;display:grid;place-items:center;
@@ -115,14 +116,86 @@ img{max-width:100%;display:block}
 .track{flex:1;min-width:0}
 .seek{
   -webkit-appearance:none;appearance:none;width:100%;height:5px;border-radius:999px;
-  background:rgba(255,255,255,.13);outline:none;cursor:pointer;
+  outline:none;cursor:pointer;
+  background-color:rgba(255,255,255,.13);
+  background-image:linear-gradient(var(--ember-soft),var(--ember-soft));
+  background-repeat:no-repeat;background-size:0% 100%;
 }
 .seek::-webkit-slider-thumb{
-  -webkit-appearance:none;width:14px;height:14px;border-radius:50%;
+  -webkit-appearance:none;width:15px;height:15px;border-radius:50%;
   background:var(--ember-soft);border:2px solid #fff;cursor:pointer;
 }
-.seek::-moz-range-thumb{width:14px;height:14px;border-radius:50%;background:var(--ember-soft);border:2px solid #fff;cursor:pointer;border:0}
+.seek::-moz-range-thumb{width:15px;height:15px;border-radius:50%;background:var(--ember-soft);border:2px solid #fff;cursor:pointer;border:0}
 .times{display:flex;justify-content:space-between;font-size:12px;color:var(--dim);margin-top:8px;font-variant-numeric:tabular-nums}
+.next-line{
+  margin-top:14px;font-size:13.5px;color:var(--muted);
+  display:flex;align-items:center;gap:5px;flex-wrap:wrap;
+}
+.next-line strong{color:var(--text);font-weight:600}
+
+/* ---------- episode 2 overlay ---------- */
+.ep2{
+  position:absolute;inset:0;display:grid;grid-template-rows:0 1fr;overflow:hidden;
+  align-items:center;justify-items:center;text-align:center;
+  opacity:0;visibility:hidden;pointer-events:none;
+  transition:opacity .18s ease,visibility .18s ease;
+  background:linear-gradient(180deg,rgba(9,9,14,.88),rgba(9,9,14,.97));
+  -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
+  border-radius:16px;padding:16px;z-index:4;
+}
+.ep2.show{opacity:1;visibility:visible;pointer-events:auto}
+.ep2-in{max-width:340px}
+.ep2-title{
+  font-family:'Bricolage Grotesque',sans-serif;font-size:clamp(18px,4.8vw,23px);
+  font-weight:800;line-height:1.15;margin-bottom:13px;
+}
+.ep2-btn{
+  display:inline-block;background:var(--ember);color:#fff;font-weight:700;
+  font-size:15px;padding:13px 22px;border-radius:999px;
+  transition:background .18s ease,transform .18s ease;
+}
+.ep2-btn:hover{background:var(--ember-soft);transform:translateY(-1px)}
+.ep2-note{font-size:12px;color:var(--muted);margin-top:10px;line-height:1.4}
+
+/* ---------- card player ---------- */
+.card-cover-wrap{position:relative;aspect-ratio:1/1;width:100%}
+.card-player{margin-top:13px}
+.card-play-row{display:flex;align-items:center;gap:10px}
+.card-play{
+  width:38px;height:38px;border-radius:50%;border:0;cursor:pointer;flex:0 0 auto;
+  background:var(--ember);color:#fff;display:grid;place-items:center;
+  transition:background .16s ease,transform .16s ease;
+  -webkit-tap-highlight-color:transparent;
+}
+.card-play:hover{background:var(--ember-soft);transform:scale(1.05)}
+.card-play:active{transform:scale(.96)}
+.card-play svg{width:15px;height:15px;fill:#fff}
+.card-track{flex:1;min-width:0}
+.seek-sm{height:4px}
+.seek-sm::-webkit-slider-thumb{width:11px;height:11px}
+.seek-sm::-moz-range-thumb{width:11px;height:11px}
+.card-times{display:flex;justify-content:space-between;font-size:10.5px;color:var(--dim);margin-top:5px;font-variant-numeric:tabular-nums}
+
+/* ---------- listen or read ---------- */
+.modes{display:grid;grid-template-columns:1fr;gap:14px;margin-top:24px}
+.mode{
+  background:var(--ink2);border:1px solid var(--border);border-radius:var(--radius);
+  padding:20px;
+}
+.mode h3{font-size:16.5px;font-weight:700;margin-bottom:7px}
+.mode p{font-size:14.5px;color:var(--muted);line-height:1.5}
+.mode .ico{
+  width:34px;height:34px;border-radius:10px;display:grid;place-items:center;
+  background:rgba(232,82,10,.14);border:1px solid var(--border-ember);
+  margin-bottom:12px;font-size:15px;
+}
+.badge-inline{
+  display:inline-flex;align-items:center;gap:5px;margin:8px 0 0;
+  font-size:10.5px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;
+  color:var(--ember-soft);background:rgba(232,82,10,.1);
+  border:1px solid var(--border-ember);padding:4px 9px;border-radius:999px;
+}
+.card-link{display:block;color:inherit}
 
 /* ---------- sections ---------- */
 section{padding:64px 0}
@@ -137,7 +210,7 @@ section{padding:64px 0}
   overflow:hidden;transition:border-color .2s ease,transform .2s ease;
 }
 .card:hover{border-color:var(--border-ember);transform:translateY(-3px)}
-.card-cover{width:100%;aspect-ratio:1/1;object-fit:cover;background:var(--ink3)}
+.card-cover{width:100%;height:100%;object-fit:cover;background:var(--ink3)}
 .card-body{padding:18px}
 .card-genre{font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--ember-soft)}
 .card-title{font-family:'Bricolage Grotesque',sans-serif;font-size:19px;font-weight:700;margin:7px 0 5px;line-height:1.25}
@@ -208,7 +281,6 @@ footer{border-top:1px solid var(--border);padding:34px 0;font-size:13.5px;color:
   .hero-grid{grid-template-columns:1.08fr .92fr;gap:56px}
   .hero h1{font-size:clamp(52px,4.6vw,68px)}
   .hero p.lede{font-size:20px}
-  .player-cover{width:112px;height:112px}
   section{padding:84px 0}
   .series-grid{grid-template-columns:repeat(4,1fr);gap:20px}
   .pricing-grid{grid-template-columns:repeat(2,1fr);gap:24px;align-items:stretch}
@@ -250,28 +322,193 @@ footer{border-top:1px solid var(--border);padding:34px 0;font-size:13.5px;color:
       </div>
     </div>
 
-    <div class="player">
-      <div class="player-top">
-        <img class="player-cover" src="https://vmyhlfeouzslixtkmddy.supabase.co/storage/v1/object/public/audio/asc3/3b4509ba-b4f3-4e21-a5e4-27b589ca307c/cover_1793921101304.jpg" alt="The Widow Who Watched cover art" width="112" height="112" loading="eager">
-        <div class="player-meta">
-          <p class="player-label">Now sampling</p>
-          <p class="player-title">The Widow Who Watched</p>
-          <p class="player-sub">Episode 1 · Full cast</p>
+    <div class="feature" id="featured" data-audio="https://vmyhlfeouzslixtkmddy.supabase.co/storage/v1/object/public/audio/asc3/3b4509ba-b4f3-4e21-a5e4-27b589ca307c/final_mix.mp3">
+      <div class="feature-cover-wrap">
+        <img class="feature-cover" src="https://vmyhlfeouzslixtkmddy.supabase.co/storage/v1/object/public/audio/asc3/3b4509ba-b4f3-4e21-a5e4-27b589ca307c/cover_1793921101304.jpg" alt="The Widow Who Watched cover art" width="560" height="560" loading="eager">
+        <div class="ep2" data-ep2 aria-hidden="true">
+          <div class="ep2-in">
+            <p class="ep2-title">Episode 2 is waiting.</p>
+            <a class="ep2-btn" href="https://app.endless-tales.com/subscribe">Start my 14-day free trial</a>
+            <p class="ep2-note">All seven episodes, plus every other series.</p>
+          </div>
         </div>
+      </div>
+      <div class="feature-meta">
+        <p class="feature-label">Featured series</p>
+        <p class="feature-title">The Widow Who Watched</p>
+        <p class="feature-sub">Episode 1 · Full cast</p>
       </div>
       <div class="player-bar">
-        <button class="play-btn" id="playBtn" aria-label="Play The Widow Who Watched, Episode 1">
-          <svg id="playIcon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.14v13.72a1 1 0 0 0 1.53.85l10.5-6.86a1 1 0 0 0 0-1.7L9.53 4.29A1 1 0 0 0 8 5.14z"/></svg>
+        <button class="play-btn" data-play aria-label="Play The Widow Who Watched, Episode 1">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.14v13.72a1 1 0 0 0 1.53.85l10.5-6.86a1 1 0 0 0 0-1.7L9.53 4.29A1 1 0 0 0 8 5.14z"/></svg>
         </button>
         <div class="track">
-          <input class="seek" id="seek" type="range" min="0" max="100" value="0" step="0.1" aria-label="Seek">
-          <div class="times"><span id="cur">0:00</span><span id="dur">0:00</span></div>
+          <input class="seek" data-seek type="range" min="0" max="100" value="0" step="0.1" aria-label="Seek within Episode 1">
+          <div class="times"><span data-cur>0:00</span><span data-dur>0:00</span></div>
         </div>
       </div>
-      <audio id="audio" preload="metadata" src="https://vmyhlfeouzslixtkmddy.supabase.co/storage/v1/object/public/audio/asc3/3b4509ba-b4f3-4e21-a5e4-27b589ca307c/final_mix.mp3"></audio>
+      <p class="next-line">Next: Episode 2 🔒 <strong>Start your free trial to keep listening.</strong></p>
     </div>
   </div>
 </header>
+
+<section id="ears">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">Made for your ears</p>
+      <h2>Written to be listened to,<br>not read.</h2>
+      <p>Full casts, scored scenes and sound design. Every series is finished before it goes live, so you never wait for the next episode.</p>
+    </div>
+    <div class="modes">
+      <div class="mode">
+        <div class="ico" aria-hidden="true">🎧</div>
+        <h3>Listen</h3>
+        <p>Full-cast audio drama with music and sound design, twenty to thirty-five minutes an episode. Made for the car, the gym and the walk home.</p>
+      </div>
+      <div class="mode">
+        <div class="ico" aria-hidden="true">📖</div>
+        <h3>Listen or read</h3>
+        <p>Every story comes as an audio drama and an eBook. Listen on the go, read when it’s quiet.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="stories" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">Start here</p>
+      <h2>Four series. Twenty-eight episodes.</h2>
+    </div>
+    <div class="series-grid">
+
+      <div class="card" data-series data-audio="https://vmyhlfeouzslixtkmddy.supabase.co/storage/v1/object/public/audio/asc3/3b4509ba-b4f3-4e21-a5e4-27b589ca307c/final_mix.mp3">
+        <div class="card-cover-wrap">
+          <img class="card-cover" src="https://vmyhlfeouzslixtkmddy.supabase.co/storage/v1/object/public/audio/asc3/3b4509ba-b4f3-4e21-a5e4-27b589ca307c/cover_1793921101304.jpg" alt="The Widow Who Watched cover" loading="lazy">
+          <div class="ep2" data-ep2 aria-hidden="true">
+            <div class="ep2-in">
+              <p class="ep2-title">Episode 2 is waiting.</p>
+              <a class="ep2-btn" href="https://app.endless-tales.com/subscribe">Start my 14-day free trial</a>
+              <p class="ep2-note">All seven episodes, plus every other series.</p>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <p class="card-genre">Mystery · Series</p>
+          <p class="card-title">The Widow Who Watched</p>
+          <p class="card-sub">7 episodes</p>
+          <span class="badge-inline">Audio + eBook</span>
+          <div class="card-player">
+            <div class="card-play-row">
+              <button class="card-play" data-play aria-label="Play The Widow Who Watched, Episode 1">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.14v13.72a1 1 0 0 0 1.53.85l10.5-6.86a1 1 0 0 0 0-1.7L9.53 4.29A1 1 0 0 0 8 5.14z"/></svg>
+              </button>
+              <div class="card-track">
+                <input class="seek seek-sm" data-seek type="range" min="0" max="100" value="0" step="0.1" aria-label="Seek within The Widow Who Watched, Episode 1">
+                <div class="card-times"><span data-cur>0:00</span><span data-dur>0:00</span></div>
+              </div>
+            </div>
+          </div>
+          <a class="card-link card-sub" style="margin-top:12px;color:var(--ember-soft);font-weight:600;font-size:13.5px" href="https://app.endless-tales.com/series/78882d57-fd50-4095-99ab-0a577472eb9a">See the series →</a>
+        </div>
+      </div>
+
+      <div class="card" data-series data-audio="https://vmyhlfeouzslixtkmddy.supabase.co/storage/v1/object/public/audio/asc3/92587140-6371-4bed-875c-548fdbb9abc7/final_mix.mp3">
+        <div class="card-cover-wrap">
+          <img class="card-cover" src="https://vmyhlfeouzslixtkmddy.supabase.co/storage/v1/object/public/audio/asc3/92587140-6371-4bed-875c-548fdbb9abc7/cover_1793993579328.jpg" alt="Second Rise cover" loading="lazy">
+          <div class="ep2" data-ep2 aria-hidden="true">
+            <div class="ep2-in">
+              <p class="ep2-title">Episode 2 is waiting.</p>
+              <a class="ep2-btn" href="https://app.endless-tales.com/subscribe">Start my 14-day free trial</a>
+              <p class="ep2-note">All seven episodes, plus every other series.</p>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <p class="card-genre">Drama · Series</p>
+          <p class="card-title">Second Rise</p>
+          <p class="card-sub">7 episodes</p>
+          <span class="badge-inline">Audio + eBook</span>
+          <div class="card-player">
+            <div class="card-play-row">
+              <button class="card-play" data-play aria-label="Play Second Rise, Episode 1">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.14v13.72a1 1 0 0 0 1.53.85l10.5-6.86a1 1 0 0 0 0-1.7L9.53 4.29A1 1 0 0 0 8 5.14z"/></svg>
+              </button>
+              <div class="card-track">
+                <input class="seek seek-sm" data-seek type="range" min="0" max="100" value="0" step="0.1" aria-label="Seek within Second Rise, Episode 1">
+                <div class="card-times"><span data-cur>0:00</span><span data-dur>0:00</span></div>
+              </div>
+            </div>
+          </div>
+          <a class="card-link card-sub" style="margin-top:12px;color:var(--ember-soft);font-weight:600;font-size:13.5px" href="https://app.endless-tales.com/series/d1f90c2a-44c2-4b3c-b489-fb10882490bd">See the series →</a>
+        </div>
+      </div>
+
+      <div class="card" data-series data-audio="https://vmyhlfeouzslixtkmddy.supabase.co/storage/v1/object/public/audio/asc3/9d8f6c00-fbe1-4919-85bd-86a085f45e71/final_mix.mp3?v=1794507195718">
+        <div class="card-cover-wrap">
+          <img class="card-cover" src="https://vmyhlfeouzslixtkmddy.supabase.co/storage/v1/object/public/audio/asc3/9d8f6c00-fbe1-4919-85bd-86a085f45e71/cover_1793993787719.jpg" alt="Weekend Wife in Miami cover" loading="lazy">
+          <div class="ep2" data-ep2 aria-hidden="true">
+            <div class="ep2-in">
+              <p class="ep2-title">Episode 2 is waiting.</p>
+              <a class="ep2-btn" href="https://app.endless-tales.com/subscribe">Start my 14-day free trial</a>
+              <p class="ep2-note">All seven episodes, plus every other series.</p>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <p class="card-genre">Thriller · Series</p>
+          <p class="card-title">Weekend Wife in Miami</p>
+          <p class="card-sub">7 episodes</p>
+          <span class="badge-inline">Audio + eBook</span>
+          <div class="card-player">
+            <div class="card-play-row">
+              <button class="card-play" data-play aria-label="Play Weekend Wife in Miami, Episode 1">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.14v13.72a1 1 0 0 0 1.53.85l10.5-6.86a1 1 0 0 0 0-1.7L9.53 4.29A1 1 0 0 0 8 5.14z"/></svg>
+              </button>
+              <div class="card-track">
+                <input class="seek seek-sm" data-seek type="range" min="0" max="100" value="0" step="0.1" aria-label="Seek within Weekend Wife in Miami, Episode 1">
+                <div class="card-times"><span data-cur>0:00</span><span data-dur>0:00</span></div>
+              </div>
+            </div>
+          </div>
+          <a class="card-link card-sub" style="margin-top:12px;color:var(--ember-soft);font-weight:600;font-size:13.5px" href="https://app.endless-tales.com/series/d6af80a4-1ac9-48ae-8e7a-1fb71357e4ad">See the series →</a>
+        </div>
+      </div>
+
+      <div class="card" data-series data-audio="https://vmyhlfeouzslixtkmddy.supabase.co/storage/v1/object/public/audio/asc3/7a8c7ba5-d0a8-4f43-886a-368c8aa96b83/final_mix.mp3?v=1794718382101">
+        <div class="card-cover-wrap">
+          <img class="card-cover" src="https://vmyhlfeouzslixtkmddy.supabase.co/storage/v1/object/public/audio/asc3/7a8c7ba5-d0a8-4f43-886a-368c8aa96b83/cover_1794722012403.jpg" alt="The Nanny's Rule cover" loading="lazy">
+          <div class="ep2" data-ep2 aria-hidden="true">
+            <div class="ep2-in">
+              <p class="ep2-title">Episode 2 is waiting.</p>
+              <a class="ep2-btn" href="https://app.endless-tales.com/subscribe">Start my 14-day free trial</a>
+              <p class="ep2-note">All seven episodes, plus every other series.</p>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <p class="card-genre">Drama · Series</p>
+          <p class="card-title">The Nanny's Rule</p>
+          <p class="card-sub">7 episodes</p>
+          <span class="badge-inline">Audio + eBook</span>
+          <div class="card-player">
+            <div class="card-play-row">
+              <button class="card-play" data-play aria-label="Play The Nanny's Rule, Episode 1">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.14v13.72a1 1 0 0 0 1.53.85l10.5-6.86a1 1 0 0 0 0-1.7L9.53 4.29A1 1 0 0 0 8 5.14z"/></svg>
+              </button>
+              <div class="card-track">
+                <input class="seek seek-sm" data-seek type="range" min="0" max="100" value="0" step="0.1" aria-label="Seek within The Nanny's Rule, Episode 1">
+                <div class="card-times"><span data-cur>0:00</span><span data-dur>0:00</span></div>
+              </div>
+            </div>
+          </div>
+          <a class="card-link card-sub" style="margin-top:12px;color:var(--ember-soft);font-weight:600;font-size:13.5px" href="https://app.endless-tales.com/series/8a7ab253-f1d7-4b22-95df-e27da9423ff7">See the series →</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
 
 <section id="ears">
   <div class="wrap">
@@ -370,6 +607,10 @@ footer{border-top:1px solid var(--border);padding:34px 0;font-size:13.5px;color:
         <p>No. Every series is written, voiced and mixed before it is published, so the whole story is waiting when you start.</p>
       </details>
       <details class="faq-item">
+        <summary>Can I read the stories too?</summary>
+        <p>Yes. Every story is also an eBook in the app, included with your subscription.</p>
+      </details>
+      <details class="faq-item">
         <summary>Can I listen offline?</summary>
         <p>Yes. Episodes can be downloaded in the app for flights, tunnels and dead zones.</p>
       </details>
@@ -404,13 +645,7 @@ footer{border-top:1px solid var(--border);padding:34px 0;font-size:13.5px;color:
 
 <script>
 (function(){
-  var audio=document.getElementById('audio'),
-      btn=document.getElementById('playBtn'),
-      icon=document.getElementById('playIcon'),
-      seek=document.getElementById('seek'),
-      cur=document.getElementById('cur'),
-      dur=document.getElementById('dur'),
-      PLAY='M8 5.14v13.72a1 1 0 0 0 1.53.85l10.5-6.86a1 1 0 0 0 0-1.7L9.53 4.29A1 1 0 0 0 8 5.14z',
+  var PLAY='M8 5.14v13.72a1 1 0 0 0 1.53.85l10.5-6.86a1 1 0 0 0 0-1.7L9.53 4.29A1 1 0 0 0 8 5.14z',
       PAUSE='M6 4h4v16H6zM14 4h4v16h-4z';
 
   function fmt(s){
@@ -419,28 +654,99 @@ footer{border-top:1px solid var(--border);padding:34px 0;font-size:13.5px;color:
     var m=Math.floor(s/60), r=s%60;
     return m+':'+(r<10?'0':'')+r;
   }
-  function setIcon(d){ icon.innerHTML='<path d="'+d+'"/>'; }
 
-  btn.addEventListener('click',function(){
-    if(audio.paused){ audio.play().catch(function(){}); }
-    else { audio.pause(); }
-  });
-  audio.addEventListener('play',function(){ setIcon(PAUSE); btn.setAttribute('aria-label','Pause'); });
-  audio.addEventListener('pause',function(){ setIcon(PLAY); btn.setAttribute('aria-label','Play'); });
-  audio.addEventListener('loadedmetadata',function(){ dur.textContent=fmt(audio.duration); });
-  audio.addEventListener('durationchange',function(){ dur.textContent=fmt(audio.duration); });
-  audio.addEventListener('timeupdate',function(){
-    if(audio.duration && isFinite(audio.duration)){
-      seek.value=(audio.currentTime/audio.duration)*100;
+  // One Playback unit per player surface (featured + 4 cards).
+  function Playback(root){
+    var self=this;
+    this.root=root;
+    this.btn=root.querySelector('[data-play]');
+    this.seek=root.querySelector('[data-seek]');
+    this.curEl=root.querySelector('[data-cur]');
+    this.durEl=root.querySelector('[data-dur]');
+    this.ep2=root.querySelector('[data-ep2]');
+    this.icon=this.btn.querySelector('svg');
+
+    var a=document.createElement('audio');
+    a.preload='none';           // nothing downloads until tapped
+    a.src=root.getAttribute('data-audio');
+    this.audio=a;
+
+    function paint(){
+      var pct=0;
+      if(a.duration && isFinite(a.duration)) pct=(a.currentTime/a.duration)*100;
+      self.seek.value=pct;
+      self.seek.style.backgroundSize=pct+'% 100%';
+      self.curEl.textContent=fmt(a.currentTime);
     }
-    cur.textContent=fmt(audio.currentTime);
-  });
-  audio.addEventListener('ended',function(){ setIcon(PLAY); seek.value=0; cur.textContent='0:00'; });
-  seek.addEventListener('input',function(){
-    if(audio.duration && isFinite(audio.duration)){
-      audio.currentTime=(seek.value/100)*audio.duration;
+    this.paint=paint;
+
+    function setIcon(d){ self.icon.innerHTML='<path d="'+d+'"/>'; }
+    function hideEp2(){ if(self.ep2){ self.ep2.classList.remove('show'); self.ep2.setAttribute('aria-hidden','true'); } }
+    this.hideEp2=hideEp2;
+
+    this.btn.addEventListener('click',function(){
+      if(a.paused){ hideEp2(); start(self); } else { a.pause(); }
+    });
+
+    a.addEventListener('play',function(){
+      setIcon(PAUSE);
+      self.btn.setAttribute('aria-label','Pause');
+      hideEp2();
+      // exclusivity: nothing else keeps playing
+      for(var i=0;i<P.length;i++){ if(P[i]!==self) P[i].audio.pause(); }
+    });
+    a.addEventListener('pause',function(){
+      setIcon(PLAY);
+      self.btn.setAttribute('aria-label','Play');
+    });
+    a.addEventListener('loadedmetadata',function(){ self.durEl.textContent=fmt(a.duration); paint(); });
+    a.addEventListener('durationchange',function(){ self.durEl.textContent=fmt(a.duration); });
+    a.addEventListener('timeupdate',paint);
+    if(document.body.hasAttribute('data-test-endOnSeek')){
+      // harness-only: seeking into the last 0.25s of the audio counts as finishing the episode
+      a.addEventListener('seeked',function(){
+        if(a.duration && isFinite(a.duration) && a.currentTime>=a.duration-0.25){ a.pause(); showEp2(); }
+      });
     }
-  });
+    function showEp2(){
+      setIcon(PLAY);
+      self.btn.setAttribute('aria-label','Play');
+      paint();
+      if(self.ep2){ self.ep2.classList.add('show'); self.ep2.setAttribute('aria-hidden','false'); }
+    }
+    a.addEventListener('ended',function(){
+      a.currentTime=0;
+      showEp2();
+    });
+
+    this.seek.addEventListener('input',function(){
+      if(a.duration && isFinite(a.duration)){
+        a.currentTime=(self.seek.value/100)*a.duration;
+        paint();
+      }
+    });
+    // dragging the bar all the way to the end finishes the episode (the browser treats a
+    // pending seek to the last frame as "playing", so don't rely on the ended event alone)
+    this.seek.addEventListener('change',function(){
+      if(a.duration && isFinite(a.duration) && a.currentTime>=a.duration-0.5){
+        a.pause();
+        a.currentTime=0;
+        showEp2();
+      }
+    });
+  }
+
+  var P=[];
+  function start(p){
+    // one story at a time: pause every other player first
+    for(var i=0;i<P.length;i++){ if(P[i]!==p) P[i].audio.pause(); }
+    var r=p.audio.play();
+    if(r&&r.catch) r.catch(function(){});
+  }
+
+  var roots=document.querySelectorAll('#featured[data-audio],[data-series][data-audio]');
+  for(var i=0;i<roots.length;i++){ P.push(new Playback(roots[i])); }
+  window.__etPlayers=P;   // testing hook
 })();
 </script>
 </body>
